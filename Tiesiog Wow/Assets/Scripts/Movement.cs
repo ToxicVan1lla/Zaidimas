@@ -16,8 +16,10 @@ public class Movement : MonoBehaviour
     private float horizontalInput, wallJumpCooldown;
     private float vytautoDydis = 4;
     private float moveAccelaration = 10;
+    private float currentSpeed;
     private float cayotiTime = 0.15f;
     private float cayotiTimeCounter;
+    private int jumpCounter;
     void Start()
     {
         body = gameObject.GetComponent<Rigidbody2D>();
@@ -30,14 +32,17 @@ public class Movement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
 
-        if (horizontalInput > 0.1f)
+        if (horizontalInput > 0)
             transform.localScale = new Vector3(vytautoDydis, vytautoDydis, 1);
-        else if (horizontalInput < -0.1f)
+        else if (horizontalInput < 0)
             transform.localScale = new Vector3(-vytautoDydis, vytautoDydis, 1);
         anim.SetBool("Run", horizontalInput != 0 && !onWall());
 
         if (isGrounded())
+        {
+            jumpCounter = 2;
             cayotiTimeCounter = cayotiTime;
+        }
         else
             cayotiTimeCounter -= Time.deltaTime;
 
@@ -53,7 +58,7 @@ public class Movement : MonoBehaviour
             {
                 body.gravityScale = 0;
                 body.velocity = Vector2.zero;
-                if (Input.GetKey(KeyCode.Space) && !isGrounded())
+                if (Input.GetButtonDown("Jump") && !isGrounded())
                 {
                     body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 15, jumpForce);
                     transform.localScale = new Vector3(-Mathf.Sign(transform.localScale.x) * vytautoDydis, vytautoDydis, 1);
@@ -65,11 +70,15 @@ public class Movement : MonoBehaviour
                     body.velocity = new Vector2(0, climbSpeed);
             }
 
-            else if (Input.GetKey(KeyCode.Space) && cayotiTimeCounter>=0)
-                body.velocity = new Vector2(body.velocity.x, jumpForce);
+            else if (Input.GetButtonDown("Jump") && (cayotiTimeCounter>=0 || jumpCounter>0))
+            {
+                jumpCounter--;
+                 body.velocity = new Vector2(body.velocity.x, jumpForce);
+            }
             if (Input.GetButtonUp("Jump") && body.velocity.y > 0)
             {
-                body.velocity = new Vector2(body.velocity.x, body.velocity.y * 0.3f);
+
+                body.velocity = new Vector2(body.velocity.x, body.velocity.y * 0.5f);
                 cayotiTimeCounter = 0;
             }
 
