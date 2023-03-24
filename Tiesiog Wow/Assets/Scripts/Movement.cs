@@ -1,42 +1,54 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField]private float speed;
+    [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
-    [SerializeField] private float climbSpeed;
     [SerializeField] private float slideSpeed;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
     private Animator anim;
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
-    private float horizontalInput, wallJumpCooldown;
-    private float vytautoDydis = 4;
-    private float moveAccelaration = 10;
-    private float currentSpeed;
-    private float cayotiTime = 0.15f;
+    private float horizontalInput;
+    private float cayotiTime = 0.2f;
     private float cayotiTimeCounter;
     private int jumpCounter;
+    private bool isFacingRight;
+    private float accelerationSpeed = 7;
+    private float decelerationSpeed = 7;
+    private float accelerationInAir = 10;
+    private float decelerationInAir = 10;
+    private bool isWallSliding;
+    private float wallJumpTime = 0.2f;
+    private float wallJumpCounter;
+    private bool  lettingGoJump;
+    private float jumpBufferTime = 0.2f;
+    private float jumpBufferCounter;
+   
     void Start()
     {
         body = gameObject.GetComponent<Rigidbody2D>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         anim = gameObject.GetComponent<Animator>();
+        isFacingRight = true;
     }
 
-    
+
     void Update()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
+        if (Input.GetButtonDown("Jump"))
+            jumpBufferCounter = jumpBufferTime;
+        else
+            jumpBufferCounter -= Time.deltaTime;
+        if (Input.GetButtonUp("Jump"))
+            lettingGoJump = true;
+        
+        if (horizontalInput != 0 && (horizontalInput > 0) != isFacingRight)
+            Flip();
 
-        if (horizontalInput > 0)
-            transform.localScale = new Vector3(vytautoDydis, vytautoDydis, 1);
-        else if (horizontalInput < 0)
-            transform.localScale = new Vector3(-vytautoDydis, vytautoDydis, 1);
-        anim.SetBool("Run", horizontalInput != 0 && !onWall());
+        anim.SetBool("Run", Mathf.Abs(body.velocity.x) > 0.5 && !onWall());
 
         if (isGrounded())
         {
@@ -46,50 +58,118 @@ public class Movement : MonoBehaviour
         else
             cayotiTimeCounter -= Time.deltaTime;
 
-        if(!onWall())
+        if (!isWallSliding)
             body.gravityScale = 7;
 
+        if (isWallSliding)
+            wallJumpCounter = wallJumpTime;
+        else
+            wallJumpCounter -= Time.deltaTime;
+    }
 
-        if (wallJumpCooldown > 0.2f)
+    private void FixedUpdate()
+    {
+        Run();
+        wallSlide();
+        if (isWallSliding)
+            wallJump();
+        else
+            Jump();
+    }
+
+    private void Run()
+    {
+        Debug.Log(body.velocity.x);
+        float targetSpeed = horizontalInput * speed;
+        float accelRate;
+        if(cayotiTime > 0)
+            accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? accelerationSpeed : decelerationSpeed;
+        else
+            accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? accelerationSpeed * accelerationInAir : decelerationSpeed * decelerationInAir;
+
+        float speedDif = targetSpeed - body.velocity.x;
+
+        float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, 0.9f) * Mathf.Sign(speedDif);
+        body.AddForce(movement * Vector2.right, ForceMode2D.Force);
+
+        addFriction();
+
+    }
+    private void addFriction()
+    {
+        if(cayotiTime > 0 && horizontalInput == 0)
         {
+            float amount = Mathf.Min(Mathf.Abs(body.velocity.x), 0.2f);
 
-            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
-            if (onWall())
-            {
-                body.gravityScale = 0;
-                body.velocity = Vector2.zero;
-                if (Input.GetButtonDown("Jump") && !isGrounded())
-                {
-                    body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 15, jumpForce);
-                    transform.localScale = new Vector3(-Mathf.Sign(transform.localScale.x) * vytautoDydis, vytautoDydis, 1);
-                    wallJumpCooldown = 0;
-                }
-                else if (horizontalInput == 0)
-                    body.velocity = new Vector2(0, -slideSpeed);
-                else
-                    body.velocity = new Vector2(0, climbSpeed);
-            }
-
-            else if (Input.GetButtonDown("Jump") && (cayotiTimeCounter>=0 || jumpCounter>0))
-            {
-                jumpCounter--;
-                 body.velocity = new Vector2(body.velocity.x, jumpForce);
-            }
-            if (Input.GetButtonUp("Jump") && body.velocity.y > 0)
-            {
-
-                body.velocity = new Vector2(body.velocity.x, body.velocity.y * 0.5f);
-                cayotiTimeCounter = 0;
-            }
-
+            amount *= Mathf.Sign(body.velocity.x);
+            body.AddForce(-amount * Vector2.right, ForceMode2D.Impulse);
 
         }
+    }
+
+    private void wallSlide()
+    {
+        if (onWall() && !isGrounded())
+        {
+            if (horizontalInput != 0 && (Mathf.Sign(horizontalInput)==1) == isFacingRight)
+                isWallSliding = true;
+        }
         else
-            wallJumpCooldown += Time.deltaTime;
+            isWallSliding = false;
+        if (isWallSliding)
+        {
+            body.gravityScale = 0;
+            body.velocity = new Vector2(body.velocity.x, -slideSpeed);
+        }
+
+
+    }
+    private void wallJump()
+    {
+        if(jumpBufferCounter > 0 && wallJumpCounter > 0)
+        {
+            body.velocity = new Vector2(-Mathf.Sign(body.transform.localScale.x) * 10, 20);
+            wallJumpCounter = 0;
+            Flip();
+            isWallSliding = false;
+            jumpBufferCounter = 0;
+            jumpCounter = 1;
+        }
+
+        lettingGoJump = false;
+    }
+
+    private void Jump()
+    {
+        if (jumpBufferCounter > 0 && (cayotiTimeCounter >= 0 || jumpCounter > 0))
+        {
+            jumpCounter--;
+            if (cayotiTimeCounter < 0)
+                jumpCounter = 0;
+
+            body.velocity = new Vector2(body.velocity.x, jumpForce);
+            jumpBufferCounter = 0;
+
+        }
+
+        if (lettingGoJump && body.velocity.y > 0)
+        {
+
+            body.velocity = new Vector2(body.velocity.x, body.velocity.y * 0.5f);
+            cayotiTimeCounter = 0;
+        }
+            lettingGoJump = false;
 
     }
 
-    
+    private void Flip()
+    {
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+        isFacingRight = !isFacingRight;
+    }
+
     private bool isGrounded()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
@@ -102,3 +182,4 @@ public class Movement : MonoBehaviour
     }
 
 }
+
