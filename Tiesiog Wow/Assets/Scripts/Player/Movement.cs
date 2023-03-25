@@ -18,7 +18,7 @@ public class Movement : MonoBehaviour
     private float accelerationSpeed = 7;
     private float decelerationSpeed = 7;
     private float accelerationInAir = 10;
-    private float decelerationInAir = 10;
+    private float decelerationInAir = 20;
     private bool isWallSliding;
     private float wallJumpTime = 0.2f;
     private float wallJumpCounter;
@@ -79,7 +79,7 @@ public class Movement : MonoBehaviour
 
     private void Run()
     {
-        Debug.Log(body.velocity.x);
+       // Debug.Log(body.velocity.x);
         float targetSpeed = horizontalInput * speed;
         float accelRate;
         if(cayotiTime > 0)
@@ -111,9 +111,11 @@ public class Movement : MonoBehaviour
     {
         if (onWall() && !isGrounded())
         {
-            if (horizontalInput != 0 && (Mathf.Sign(horizontalInput)==1) == isFacingRight)
+            if (horizontalInput != 0 && (Mathf.Sign(horizontalInput) == 1) == isFacingRight)
                 isWallSliding = true;
         }
+        else if (onWall() && isGrounded() && horizontalInput != 0)
+            isWallSliding = true;
         else
             isWallSliding = false;
         if (isWallSliding)
@@ -159,6 +161,10 @@ public class Movement : MonoBehaviour
             cayotiTimeCounter = 0;
         }
             lettingGoJump = false;
+        if (body.velocity.y < 0)
+            body.gravityScale = 11;
+        else
+            body.gravityScale = 7;
 
     }
 
