@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    private Rigidbody2D body;
+    private new BoxCollider2D collider;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float repelForce;
     [SerializeField] private float damage;
@@ -15,7 +15,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Start()
     {
-        body = gameObject.GetComponent<Rigidbody2D>();
+        collider = gameObject.GetComponent<BoxCollider2D>();
     }
 
     private bool attack;
@@ -26,13 +26,17 @@ public class PlayerAttack : MonoBehaviour
         if (attack && attackRateCounter > attackRateTime)
         {
             Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemys);
-
             foreach (Collider2D enemy in hitEnemys)
             {
-                Vector2 direction = (enemy.GetComponent<Rigidbody2D>().transform.position - body.transform.position).normalized;
-                enemy.GetComponent<PatrolMovement>().stopCounter = 0.5f;
-                enemy.GetComponent<Rigidbody2D>().AddForce(repelForce * direction, ForceMode2D.Impulse);
-                enemy.GetComponent<EnemyHealth>().takeDamageEnemie(damage);
+                enemy.GetComponent<EnemyMove>().stopCounter = 0.5f;
+                int directionX = (collider.bounds.min.x > enemy.GetComponent<BoxCollider2D>().bounds.min.x)? -1 : 1;
+                int directionY = (collider.bounds.min.y > enemy.GetComponent<BoxCollider2D>().bounds.min.y) ? -1 : 1;
+                enemy.GetComponent<Rigidbody2D>().AddForce(repelForce * directionX * Vector2.right, ForceMode2D.Impulse);
+                enemy.GetComponent<Rigidbody2D>().AddForce(repelForce * directionY * Vector2.up, ForceMode2D.Impulse);
+
+
+                if (enemy.GetComponent<EnemyHealth>().takeDamageEnemie(damage) == 0)
+                    enemy.GetComponent<EnemyMove>().isAlive = false;
             }
             attackRateCounter = 0;
         }
@@ -41,5 +45,10 @@ public class PlayerAttack : MonoBehaviour
 
 
     }
-  
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
 }

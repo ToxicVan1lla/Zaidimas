@@ -8,20 +8,19 @@ public class EnemyHealth : MonoBehaviour
 
     [SerializeField] private float maxHealth;
     [SerializeField] private SpriteRenderer spriteRend;
+    [SerializeField] PatrolMovement patrolMovement;
 
     private void Awake()
     {
         health = maxHealth;
 
     }
-    public void takeDamageEnemie(float _damage)
+    public float takeDamageEnemie(float _damage)
     {
         health = Mathf.Clamp(health - _damage, 0, maxHealth);
-        if (health == 0)
-        {
-            //dead
-        }
+
         StartCoroutine(Flash());
+        return health;
     }
 
     private IEnumerator Flash()
