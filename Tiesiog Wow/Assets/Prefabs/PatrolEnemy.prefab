@@ -149,13 +149,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  body: {fileID: 0}
+  body: {fileID: 8402533010246293577}
   damage: 1
-  repelForce: 1
+  repelForce: 1.5
   stopCounter: 0
   isAlive: 1
   playerCollider: {fileID: 0}
-  boxCollider: {fileID: 0}
+  boxCollider: {fileID: 8402533010246293582}
   playerBody: {fileID: 0}
   playerHealth: {fileID: 0}
 --- !u!114 &8402533010246293578

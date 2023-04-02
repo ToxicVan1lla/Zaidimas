@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
@@ -7,13 +6,12 @@ public class EnemyHealth : MonoBehaviour
     private float health;
 
     [SerializeField] private float maxHealth;
-    [SerializeField] private SpriteRenderer spriteRend;
-    [SerializeField] PatrolMovement patrolMovement;
+    private SpriteRenderer spriteRend;
 
     private void Awake()
     {
         health = maxHealth;
-
+        spriteRend = GetComponent<SpriteRenderer>();
     }
     public float takeDamageEnemie(float _damage)
     {

@@ -2,21 +2,38 @@ using UnityEngine;
 
 public class EnemyMove : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    [SerializeField] public float speed;
+    [SerializeField] private int coinAmount;
     public Rigidbody2D body;
     public float damage;
     public float repelForce;
-    public float stopCounter;
+    [HideInInspector] public float stopCounter;
     public bool isAlive = true;
-    [SerializeField] public BoxCollider2D playerCollider;
+    private GameObject player;
+    [HideInInspector] public BoxCollider2D playerCollider;
     [SerializeField] public BoxCollider2D boxCollider;
-    [SerializeField] private Rigidbody2D playerBody;
-    [SerializeField] private PlayerHealth playerHealth;
+    [HideInInspector] public Rigidbody2D playerBody;
+    private PlayerHealth playerHealth;
+    private Movement movement;
+    private CoinSpawn coinSpawn;
+
+    private void Awake()
+    {
+        player = GameObject.Find("Player");
+        playerCollider = player.GetComponent<BoxCollider2D>();
+        playerBody = player.GetComponent<Rigidbody2D>();
+        movement = player.GetComponent<Movement>();
+        playerHealth = player.GetComponent<PlayerHealth>();
+        coinSpawn = gameObject.GetComponent<CoinSpawn>();
+    }
 
     public void Move()
     {
         if (!isAlive)
         {
+            for(int i=0;i<coinAmount;i++)
+                coinSpawn.spawnCoin(gameObject.transform);
+
             Destroy(gameObject);
         }
 
@@ -31,8 +48,15 @@ public class EnemyMove : MonoBehaviour
 
     public void Attack()
     {
-        Vector2 direction = (playerBody.transform.position - body.transform.position).normalized;
-        playerBody.AddForce(repelForce * direction, ForceMode2D.Impulse);
+        int directionX = (playerCollider.bounds.min.x > boxCollider.bounds.min.x) ? 1 : -1;
+        int directionY = (playerCollider.bounds.min.y < boxCollider.bounds.min.y) ? -1 : 1;
+        if(movement.dash)
+            movement.endDash();
+        playerBody.velocity = Vector2.zero;
+
+        playerBody.AddForce(repelForce * directionX * Vector2.right, ForceMode2D.Impulse);
+        playerBody.AddForce(repelForce * directionY * Vector2.up, ForceMode2D.Impulse);
+
         playerHealth.takeDamagePlayer(damage);
     }
 
@@ -51,7 +75,7 @@ public class EnemyMove : MonoBehaviour
             Flip();
         }
     }
-    private void Flip()
+    public void Flip()
     {
         Vector3 scale = transform.localScale;
         scale.x *= -1;
