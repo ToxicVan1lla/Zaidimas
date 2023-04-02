@@ -26,17 +26,20 @@ public class PlayerAttack : MonoBehaviour
     private bool attack;
     private void Update()
     {
-        attack = Input.GetButtonDown("Fire1");
-
-        if (attack && attackRateCounter > attackRateTime && !isAttacking && !movement.dash)
+        if(!Menu.gameIsPaused)
         {
-            isAttacking = true;
-            animator.SetBool("Attack", true);
-            
-        }
-        else
-            attackRateCounter += Time.deltaTime;
+            attack = Input.GetButtonDown("Fire1");
 
+            if (attack && attackRateCounter > attackRateTime && !isAttacking && !movement.dash)
+            {
+                isAttacking = true;
+                animator.SetBool("Attack", true);
+            
+            }
+            else
+                attackRateCounter += Time.deltaTime;
+
+        }
 
     }
     private void finishAttack()

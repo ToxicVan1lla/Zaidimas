@@ -51,51 +51,54 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-
-        if (Input.GetKeyDown("left shift") && !playerAttack.isAttacking)
-            dash = true;
-        dashCounter +=Time.deltaTime;
-
-        if(hasControl)
-            if (horizontalInput != 0 && (horizontalInput > 0) != isFacingRight)
-            {
-                Flip();
-            }
-        if (dashCounter <= dashTime || numberOfDashes == 0)
-            dash = false;
-        anim.SetBool("Dash", dash == true);
-        anim.SetBool("Slide", isWallSliding && !isGrounded() && !playerAttack.isAttacking);
-
-        if (Input.GetButtonDown("Jump"))
-            jumpBufferCounter = jumpBufferTime;
-        else
-            jumpBufferCounter -= Time.deltaTime;
-        if (Input.GetButtonUp("Jump"))
-            lettingGoJump = true;
-
-        if (body.velocity.y < -0.5f && !isWallSliding && !playerAttack.isAttacking)
-            anim.SetTrigger("Falling");
-
-        anim.SetBool("Run", Mathf.Abs(body.velocity.x) > 0.5 && !onWall());
-        anim.SetBool("Grounded", isGrounded() && !playerAttack.isAttacking);
-
-        if (isGrounded())
+        if (!Menu.gameIsPaused)
         {
-            numberOfDashes = 1;
-            jumpCounter = 2;
-            cayotiTimeCounter = cayotiTime;
+            horizontalInput = Input.GetAxisRaw("Horizontal");
+
+            if (Input.GetKeyDown("left shift") && !playerAttack.isAttacking)
+                dash = true;
+            dashCounter += Time.deltaTime;
+
+            if (hasControl)
+                if (horizontalInput != 0 && (horizontalInput > 0) != isFacingRight)
+                {
+                    Flip();
+                }
+            if (dashCounter <= dashTime || numberOfDashes == 0)
+                dash = false;
+            anim.SetBool("Dash", dash == true);
+            anim.SetBool("Slide", isWallSliding && !isGrounded() && !playerAttack.isAttacking);
+
+            if (Input.GetButtonDown("Jump"))
+                jumpBufferCounter = jumpBufferTime;
+            else
+                jumpBufferCounter -= Time.deltaTime;
+            if (Input.GetButtonUp("Jump"))
+                lettingGoJump = true;
+
+            if (body.velocity.y < -0.5f && !isWallSliding && !playerAttack.isAttacking)
+                anim.SetTrigger("Falling");
+
+            anim.SetBool("Run", Mathf.Abs(body.velocity.x) > 0.5 && !onWall());
+            anim.SetBool("Grounded", isGrounded() && !playerAttack.isAttacking);
+
+            if (isGrounded())
+            {
+                numberOfDashes = 1;
+                jumpCounter = 2;
+                cayotiTimeCounter = cayotiTime;
+            }
+            else
+                cayotiTimeCounter -= Time.deltaTime;
+
+            if (!isWallSliding)
+                body.gravityScale = 7;
+
+            if (isWallSliding)
+                wallJumpCounter = wallJumpTime;
+            else
+                wallJumpCounter -= Time.deltaTime;
         }
-        else
-            cayotiTimeCounter -= Time.deltaTime;
-
-        if (!isWallSliding)
-            body.gravityScale = 7;
-
-        if (isWallSliding)
-            wallJumpCounter = wallJumpTime;
-        else
-            wallJumpCounter -= Time.deltaTime;
     }
 
     private void FixedUpdate()

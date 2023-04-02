@@ -4,6 +4,7 @@ public class EnemyMove : MonoBehaviour
 {
     [SerializeField] public float speed;
     [SerializeField] private int coinAmount;
+    [SerializeField] public bool detectEdges;
     public Rigidbody2D body;
     public float damage;
     public float repelForce;
@@ -63,14 +64,14 @@ public class EnemyMove : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
 
-        if (collision.tag == "Ground")
+        if (collision.tag == "Ground" && detectEdges)
         {
             Flip();
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Wall")
+        if (collision.tag == "Wall" && detectEdges)
         {
             Flip();
         }
