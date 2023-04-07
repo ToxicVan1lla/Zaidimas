@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Movement : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class Movement : MonoBehaviour
     private float decelerationInAir = 20;
 
     private bool isWallSliding;
+    private bool canWallSlide = true;
 
     private float wallJumpTime = 0.2f;
     private float wallJumpCounter;
@@ -39,8 +41,13 @@ public class Movement : MonoBehaviour
     private float dashCounter = float.PositiveInfinity;
     [SerializeField] private float dashTime;
     [SerializeField] SpriteRenderer spr;
+    [SerializeField] private float howLongDoesDashLast;
+
+
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
+
         playerAttack = gameObject.GetComponent<PlayerAttack>();
         body = gameObject.GetComponent<Rigidbody2D>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
@@ -127,6 +134,7 @@ public class Movement : MonoBehaviour
         jumpBufferCounter -= Time.deltaTime;
         body.gravityScale = 0;
         body.velocity = new Vector2(dashSpeed * Mathf.Sign(body.transform.localScale.x), 0);
+        StartCoroutine(dashCoroutine());
 
     }
 
@@ -165,7 +173,7 @@ public class Movement : MonoBehaviour
     private void wallSlide()
     {
 
-        if (onWall() && !isGrounded())
+        if (onWall() && !isGrounded() && canWallSlide)
         {
             if (horizontalInput != 0 && (Mathf.Sign(horizontalInput) == 1) == isFacingRight)
                 isWallSliding = true;
@@ -245,6 +253,11 @@ public class Movement : MonoBehaviour
         return raycastHit.collider != null;
     }
 
+    private IEnumerator dashCoroutine()
+    {
+        yield return new WaitForSeconds(howLongDoesDashLast);  
+        endDash();
+    }
     public void endDash()
     {
         if (onWall())
@@ -255,13 +268,27 @@ public class Movement : MonoBehaviour
         dashCounter = 0;
         anim.SetBool("Dash", false);
         hasControl = true;
-       // body.velocity = new Vector2(0, body.velocity.y);
         body.gravityScale = 7;
     }
+
     private void transitionToIdle()
     {
         anim.SetTrigger("TransitionToIdle");
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if ((collision.tag == "Wall" || collision.tag == "Ground") && isWallSliding)
+        {
+            isWallSliding = false;
+            canWallSlide = false;
+        }
+
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Wall" || collision.tag == "Ground")
+            canWallSlide = true;
+    }   
 
 }
 

@@ -17,12 +17,15 @@ public class ChargingEnemy : EnemyMove
     private bool isRollingForwards;
     [SerializeField] private Animator animator;
     private bool isRolling = false;
-    
+    private bool finishedRolling;
 
-    private float startTime;
+    private float startPossition;
+    private EnemyHealth enemyHealth;
+    private bool turnAround = false;
 
     void Start()
     {
+        enemyHealth = gameObject.GetComponent<EnemyHealth>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
         rb = gameObject.GetComponent<Rigidbody2D>();
         Physics2D.IgnoreLayerCollision(8, 8, true);
@@ -32,6 +35,17 @@ public class ChargingEnemy : EnemyMove
 
     private void Update()
     {
+        if (enemyHealth.gotHit && isRollingForwards)
+        {
+            turnAround = true;
+            isRollingForwards = false;
+            StopCoroutine(roll);
+            StartCoroutine(RollBack());
+            stopCounter = 0.2f;
+        }
+        else
+            turnAround = false;
+
         Move();
         if (boxCollider.IsTouching(playerCollider) || circleCollider.IsTouching(playerCollider))
         {
@@ -54,6 +68,7 @@ public class ChargingEnemy : EnemyMove
     
     private IEnumerator RollForwards()
     {
+        startPossition = rb.position.x;
         isRolling = true;        
         animator.SetBool("Idle", false);
         animator.SetTrigger("Transform");
@@ -67,37 +82,47 @@ public class ChargingEnemy : EnemyMove
         boxCollider.enabled = false;
         speed = rollSpeed;
         animator.SetBool("Roll", true);
-        startTime = Time.time;
         yield return new WaitForSeconds(rollDuration);
         isRollingForwards = false;
         StartCoroutine(RollBack());
     }
     private IEnumerator RollBack()
     {
-        float moveDuration = Time.time - startTime;
-        speed = 0;
-        animator.SetBool("Roll", false);
-        animator.SetTrigger("TransformToStanding");
-        do
+        if (!turnAround)
         {
-          yield return null;
-        } while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
+            speed = 0;
+            animator.SetBool("Roll", false);
+            animator.SetTrigger("TransformToStanding");
+            do
+            {
+                yield return null;
+            } while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
 
-        animator.SetTrigger("Attack");
-        do
-        {
-            yield return null;
-        } while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
+            animator.SetTrigger("Attack");
+            do
+            {
+                yield return null;
+            } while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
 
-        animator.SetTrigger("Transform");
+            animator.SetTrigger("Transform");
 
-        do
-        {
-          yield return null;
-        } while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
+            do
+            {
+                yield return null;
+            } while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
+        }
         animator.SetBool("Roll", true);
         speed = -rollSpeed;
-        yield return new WaitForSeconds(moveDuration);
+        finishedRolling = false;
+        while(!finishedRolling)
+        {
+            if (rb.transform.localScale.x > 0 && rb.position.x <= startPossition)
+                finishedRolling = true;
+            else if (rb.transform.localScale.x < 0 && rb.position.x >= startPossition)
+                finishedRolling = true;
+
+            yield return null;
+        }
 
         animator.SetTrigger("TransformToStanding");
 

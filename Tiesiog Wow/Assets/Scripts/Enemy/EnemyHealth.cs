@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
 
     [SerializeField] private float maxHealth;
     private SpriteRenderer spriteRend;
+    [HideInInspector] public bool gotHit;
 
     private void Awake()
     {
@@ -23,8 +24,10 @@ public class EnemyHealth : MonoBehaviour
 
     private IEnumerator Flash()
     {
+        gotHit = true;
         spriteRend.color = new Color(1, 0, 0, 0.5f);
         yield return new WaitForSeconds(0.2f);
         spriteRend.color = Color.white;
+        gotHit = false;
     }
 }
