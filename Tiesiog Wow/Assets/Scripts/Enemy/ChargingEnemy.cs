@@ -28,7 +28,6 @@ public class ChargingEnemy : EnemyMove
         enemyHealth = gameObject.GetComponent<EnemyHealth>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
         rb = gameObject.GetComponent<Rigidbody2D>();
-        Physics2D.IgnoreLayerCollision(8, 8, true);
         circleCollider.enabled = false;
 
     }

@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: New Sprite Atlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 475993506, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
+  - {fileID: 299731854, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
+  - {fileID: -243065137, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
+  - {fileID: 2016898162, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
+  - {fileID: 1516348832, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
+  - {fileID: 168371665, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
+  - {fileID: 228860907, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
+  - {fileID: 1986211132, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
+  - {fileID: 407458054, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
+  - {fileID: -1515988490, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - TEKSTUROS SU DIDELIAIS TARPAIS_8
+  - TEKSTUROS SU DIDELIAIS TARPAIS_9
+  - TEKSTUROS SU DIDELIAIS TARPAIS_2
+  - TEKSTUROS SU DIDELIAIS TARPAIS_3
+  - TEKSTUROS SU DIDELIAIS TARPAIS_0
+  - TEKSTUROS SU DIDELIAIS TARPAIS_1
+  - TEKSTUROS SU DIDELIAIS TARPAIS_6
+  - TEKSTUROS SU DIDELIAIS TARPAIS_7
+  - TEKSTUROS SU DIDELIAIS TARPAIS_4
+  - TEKSTUROS SU DIDELIAIS TARPAIS_5
+  m_RenderDataMap: {}
+  m_Tag: New Sprite Atlas
+  m_IsVariant: 0

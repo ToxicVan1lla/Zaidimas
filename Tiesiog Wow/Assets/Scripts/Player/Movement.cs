@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    [SerializeField] private float defaultSpeed;
+    private float speed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float slideSpeed;
     [SerializeField] private LayerMask groundLayer;
@@ -42,23 +44,55 @@ public class Movement : MonoBehaviour
     [SerializeField] private float dashTime;
     [SerializeField] SpriteRenderer spr;
     [SerializeField] private float howLongDoesDashLast;
+    [SerializeField] KeepData keepData;
 
-
+    [SerializeField] GameObject Grave;
+    public bool detectInput;
+    private GameObject grave;
+    private bool onGrave;
+    private PlayerCoins playerCoins;
+    public float lastGroundedX, lastGroundedY;
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
-
+        playerCoins = GameObject.Find("CoinAmount").GetComponent<PlayerCoins>();
+        speed = defaultSpeed;
         playerAttack = gameObject.GetComponent<PlayerAttack>();
         body = gameObject.GetComponent<Rigidbody2D>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         anim = gameObject.GetComponent<Animator>();
+        body.transform.position = new Vector3(keepData.positionX, keepData.positionY, 0);
         isFacingRight = true;
+        if (keepData.facingDirection == -1)
+        {
+            Flip();
+        }
+
+        if (keepData.enteredRoom)
+        {
+            horizontalInput = keepData.facingDirection==1 ? 1 : -1;
+            StartCoroutine(walkAfterEnteringRoom());
+        }
+        else
+            detectInput = true;
+        if(keepData.graveActive && SceneManager.GetActiveScene().name == keepData.graveScene)
+        {
+            grave = Instantiate(Grave, new Vector3(keepData.graveX, keepData.graveY, 0), transform.rotation);
+        }
     }
 
 
     void Update()
     {
-        if (!Menu.gameIsPaused)
+        if (onGrave && Input.GetKeyDown(KeyCode.E) && onGrave)
+        {
+            keepData.graveActive = false;
+            playerCoins.addCoins(keepData.graveValue);
+            Destroy(grave);
+        }
+           
+        
+
+        if (!Menu.gameIsPaused && detectInput)
         {
             horizontalInput = Input.GetAxisRaw("Horizontal");
 
@@ -91,6 +125,8 @@ public class Movement : MonoBehaviour
 
             if (isGrounded())
             {
+                lastGroundedX = body.transform.position.x;
+                lastGroundedY = body.transform.position.y - 0.27f;
                 numberOfDashes = 1;
                 jumpCounter = 2;
                 cayotiTimeCounter = cayotiTime;
@@ -282,13 +318,25 @@ public class Movement : MonoBehaviour
             isWallSliding = false;
             canWallSlide = false;
         }
+        if (collision.tag == "Grave")
+            onGrave = false;
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Wall" || collision.tag == "Ground")
             canWallSlide = true;
-    }   
+        if (collision.tag == "Grave")
+            onGrave = true;
+    }
+
+    private IEnumerator walkAfterEnteringRoom()
+    {
+        speed = 5;
+        yield return new WaitForSeconds(0.5f);
+        detectInput = true;
+        speed = defaultSpeed;
+    }
 
 }
 

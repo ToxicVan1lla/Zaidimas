@@ -71,7 +71,7 @@ public class EnemyMove : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Wall" && detectEdges)
+        if (collision.tag == "Wall" && collision.tag == "Ground" && detectEdges)
         {
             Flip();
         }
