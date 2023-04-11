@@ -35,4 +35,8 @@ public class Menu : MonoBehaviour
         Time.timeScale = 0;
         gameIsPaused = true;
     }
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }

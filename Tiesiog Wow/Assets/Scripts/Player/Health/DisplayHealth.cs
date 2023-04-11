@@ -8,7 +8,7 @@ public class DisplayHealth : MonoBehaviour
 
     private void Start()
     {
-        totalHealthBar.fillAmount = playerHealth.health / 10;
+        totalHealthBar.fillAmount = playerHealth.maxHealth / 10;
     }
     private void Update()
     {
