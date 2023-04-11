@@ -26,7 +26,7 @@ public class PlayerAttack : MonoBehaviour
     private bool attack;
     private void Update()
     {
-        if(!Menu.gameIsPaused && movement.detectInput)
+        if(!Menu.gameIsPaused)
         {
             attack = Input.GetButtonDown("Fire1");
 

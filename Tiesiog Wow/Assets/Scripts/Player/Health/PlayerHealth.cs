@@ -1,56 +1,37 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] public float maxHealth;
-    public float health;
+    [SerializeField] private float maxHealth;
+    public float health { get; private set; }
     [SerializeField] private SpriteRenderer spriteRend;
     [SerializeField] private float iFramesDuration;
     [SerializeField] private int numberOfFlashes;
-    [SerializeField] private KeepData keepData;
-    private bool invulnerable;
-    private Movement movement;
-    void Start()
+    private bool ilnvulnerable;
+    private void Awake()
     {
-        movement = gameObject.GetComponent<Movement>();
-        Physics2D.IgnoreLayerCollision(7, 8, false);
         health = maxHealth;
-        health = keepData.health;
-        invulnerable = false;
 
     }
     public void takeDamagePlayer(float _damage)
     {
-        if (!invulnerable)
+
+        if (!ilnvulnerable)
         {
             health = Mathf.Clamp(health - _damage, 0, maxHealth);
             if (health == 0)
             {
-                keepData.positionX = keepData.checkpointX;
-                keepData.positionY = keepData.checkpointY;
-                keepData.health = maxHealth;
-                keepData.enteredRoom = false;
-                keepData.graveValue = keepData.coinAmount;
-                keepData.graveActive = true;
-                keepData.graveScene = SceneManager.GetActiveScene().name;
-                keepData.graveX = movement.lastGroundedX;
-                keepData.graveY = movement.lastGroundedY;
-                keepData.coinAmount = 0;
-                SceneManager.LoadScene(keepData.checkpointSceneName);
-
+                //dead
             }
-            else
-                StartCoroutine(invulnerability());
+            StartCoroutine(invulnerability());
 
         }
     }
 
     private IEnumerator invulnerability()
     {
-        invulnerable = true;
+        ilnvulnerable = true;
         Physics2D.IgnoreLayerCollision(7, 8, true);
         for (int i = 0; i < numberOfFlashes; i++)
         {
@@ -61,7 +42,7 @@ public class PlayerHealth : MonoBehaviour
 
         }
         Physics2D.IgnoreLayerCollision(7, 8, false);
-        invulnerable = false;
+        ilnvulnerable = false;
 
     }
 }
