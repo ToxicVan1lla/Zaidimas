@@ -14,7 +14,6 @@ public class KeepData : ScriptableObject
     public string graveScene;
     public float graveX, graveY;
     public int graveValue;
-
     private void OnEnable()
     {
         positionX = checkpointX = -7.03f;

@@ -30,7 +30,7 @@ public class Movement : MonoBehaviour
     private float cayotiTime = 0.2f;
     private float cayotiTimeCounter;
 
-    private bool  lettingGoJump;
+    private bool lettingGoJump;
     private float jumpBufferTime = 0.2f;
     private float jumpBufferCounter;
 
@@ -52,6 +52,7 @@ public class Movement : MonoBehaviour
     private bool onGrave;
     private PlayerCoins playerCoins;
     public float lastGroundedX, lastGroundedY;
+    [SerializeField] ParticleSystem walkParticles;
     void Start()
     {
         playerCoins = GameObject.Find("CoinAmount").GetComponent<PlayerCoins>();
@@ -69,12 +70,12 @@ public class Movement : MonoBehaviour
 
         if (keepData.enteredRoom)
         {
-            horizontalInput = keepData.facingDirection==1 ? 1 : -1;
+            horizontalInput = keepData.facingDirection == 1 ? 1 : -1;
             StartCoroutine(walkAfterEnteringRoom());
         }
         else
             detectInput = true;
-        if(keepData.graveActive && SceneManager.GetActiveScene().name == keepData.graveScene)
+        if (keepData.graveActive && SceneManager.GetActiveScene().name == keepData.graveScene)
         {
             grave = Instantiate(Grave, new Vector3(keepData.graveX, keepData.graveY, 0), transform.rotation);
         }
@@ -89,8 +90,8 @@ public class Movement : MonoBehaviour
             playerCoins.addCoins(keepData.graveValue);
             Destroy(grave);
         }
-           
-        
+
+
 
         if (!Menu.gameIsPaused && detectInput)
         {
@@ -119,7 +120,8 @@ public class Movement : MonoBehaviour
 
             if (body.velocity.y < -0.5f && !isWallSliding && !playerAttack.isAttacking)
                 anim.SetTrigger("Falling");
-
+            if (Mathf.Abs(body.velocity.x) > 6 && isGrounded())
+                walkParticles.Play();
             anim.SetBool("Run", Mathf.Abs(body.velocity.x) > 0.5 && !onWall());
             anim.SetBool("Grounded", isGrounded() && !playerAttack.isAttacking);
 
@@ -146,14 +148,14 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(dash && dashCounter > dashTime)
+        if (dash && dashCounter > dashTime)
         {
             spr.color = Color.blue;
             hasControl = false;
             Dash();
         }
 
-        if(hasControl)
+        if (hasControl)
         {
             Run();
             wallSlide();
@@ -180,7 +182,7 @@ public class Movement : MonoBehaviour
         // Debug.Log(body.velocity.x);
         float targetSpeed = horizontalInput * speed;
         float accelRate;
-        if(cayotiTime > 0)
+        if (cayotiTime > 0)
             accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? accelerationSpeed : decelerationSpeed;
         else
             accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? accelerationSpeed * accelerationInAir : decelerationSpeed * decelerationInAir;
@@ -196,7 +198,7 @@ public class Movement : MonoBehaviour
     }
     private void addFriction()
     {
-        if(cayotiTime > 0 && horizontalInput == 0)
+        if (cayotiTime > 0 && horizontalInput == 0)
         {
             float amount = Mathf.Min(Mathf.Abs(body.velocity.x), 0.2f);
 
@@ -229,9 +231,9 @@ public class Movement : MonoBehaviour
     }
     private void wallJump()
     {
-        if(jumpBufferCounter > 0 && wallJumpCounter > 0)
+        if (jumpBufferCounter > 0 && wallJumpCounter > 0)
         {
-            if(!playerAttack.isAttacking)
+            if (!playerAttack.isAttacking)
                 anim.SetTrigger("Jump");
             body.velocity = new Vector2(-Mathf.Sign(body.transform.localScale.x) * 10, 20);
             wallJumpCounter = 0;
@@ -246,10 +248,10 @@ public class Movement : MonoBehaviour
 
     private void Jump()
     {
-        
+
         if (jumpBufferCounter > 0 && (cayotiTimeCounter >= 0 || jumpCounter > 0))
         {
-            if(!playerAttack.isAttacking)
+            if (!playerAttack.isAttacking)
                 anim.SetTrigger("Jump");
             jumpCounter--;
             if (cayotiTimeCounter < 0)
@@ -266,7 +268,7 @@ public class Movement : MonoBehaviour
             body.velocity = new Vector2(body.velocity.x, body.velocity.y * 0.5f);
             cayotiTimeCounter = 0;
         }
-            lettingGoJump = false;
+        lettingGoJump = false;
 
     }
 
@@ -291,7 +293,7 @@ public class Movement : MonoBehaviour
 
     private IEnumerator dashCoroutine()
     {
-        yield return new WaitForSeconds(howLongDoesDashLast);  
+        yield return new WaitForSeconds(howLongDoesDashLast);
         endDash();
     }
     public void endDash()
@@ -339,4 +341,3 @@ public class Movement : MonoBehaviour
     }
 
 }
-

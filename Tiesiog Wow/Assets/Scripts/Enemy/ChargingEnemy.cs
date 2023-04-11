@@ -12,7 +12,6 @@ public class ChargingEnemy : EnemyMove
     [SerializeField] private float rollDuration;
     private float untilCharge;
     private CircleCollider2D circleCollider;
-    private Rigidbody2D rb;
     private Coroutine roll;
     private bool isRollingForwards;
     [SerializeField] private Animator animator;
@@ -27,7 +26,6 @@ public class ChargingEnemy : EnemyMove
     {
         enemyHealth = gameObject.GetComponent<EnemyHealth>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
-        rb = gameObject.GetComponent<Rigidbody2D>();
         circleCollider.enabled = false;
 
     }
@@ -67,7 +65,7 @@ public class ChargingEnemy : EnemyMove
     
     private IEnumerator RollForwards()
     {
-        startPossition = rb.position.x;
+        startPossition = enemyBody.position.x;
         isRolling = true;        
         animator.SetBool("Idle", false);
         animator.SetTrigger("Transform");
@@ -115,9 +113,9 @@ public class ChargingEnemy : EnemyMove
         finishedRolling = false;
         while(!finishedRolling)
         {
-            if (rb.transform.localScale.x > 0 && rb.position.x <= startPossition)
+            if (enemyBody.transform.localScale.x > 0 && enemyBody.position.x <= startPossition)
                 finishedRolling = true;
-            else if (rb.transform.localScale.x < 0 && rb.position.x >= startPossition)
+            else if (enemyBody.transform.localScale.x < 0 && enemyBody.position.x >= startPossition)
                 finishedRolling = true;
 
             yield return null;
@@ -141,7 +139,7 @@ public class ChargingEnemy : EnemyMove
 
     private bool seesPlayer()
     {
-        RaycastHit2D hit = Physics2D.Raycast(boxCollider.bounds.center, new Vector2(1 * Mathf.Sign(rb.transform.localScale.x), 0), range, Enemy);
+        RaycastHit2D hit = Physics2D.Raycast(boxCollider.bounds.center, new Vector2(1 * Mathf.Sign(enemyBody.transform.localScale.x), 0), range, Enemy);
         if (hit.collider != null && hit.collider.CompareTag("Player"))
             return true;
         else

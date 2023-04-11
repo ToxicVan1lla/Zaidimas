@@ -20,7 +20,19 @@ SpriteAtlas:
       readable: 0
       crunchedCompression: 0
       sRGB: 1
-    platformSettings: []
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
     packingSettings:
       serializedVersion: 2
       padding: 4
@@ -32,33 +44,47 @@ SpriteAtlas:
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
-    - {fileID: 2800000, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
+    - {fileID: 2800000, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 475993506, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
-  - {fileID: 299731854, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
-  - {fileID: -243065137, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
-  - {fileID: 2016898162, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
-  - {fileID: 1516348832, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
-  - {fileID: 168371665, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
-  - {fileID: 228860907, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
-  - {fileID: 1986211132, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
-  - {fileID: 407458054, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
-  - {fileID: -1515988490, guid: 865ce6515336d4b40ad890f27ff43704, type: 3}
+  - {fileID: -1470504659, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: 79612506, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: -796515284, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: -1774674374, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: 114371294, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: 1867617434, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: 575285406, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: -287515747, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: 1477098377, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: 2039545556, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: 788478445, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: -926137459, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: 1737468911, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: 1504486321, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: -1000245571, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: 506059485, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+  - {fileID: -326660695, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
   m_PackedSpriteNamesToIndex:
-  - TEKSTUROS SU DIDELIAIS TARPAIS_8
-  - TEKSTUROS SU DIDELIAIS TARPAIS_9
-  - TEKSTUROS SU DIDELIAIS TARPAIS_2
-  - TEKSTUROS SU DIDELIAIS TARPAIS_3
-  - TEKSTUROS SU DIDELIAIS TARPAIS_0
-  - TEKSTUROS SU DIDELIAIS TARPAIS_1
-  - TEKSTUROS SU DIDELIAIS TARPAIS_6
-  - TEKSTUROS SU DIDELIAIS TARPAIS_7
-  - TEKSTUROS SU DIDELIAIS TARPAIS_4
-  - TEKSTUROS SU DIDELIAIS TARPAIS_5
+  - DAUGIAU TEKSTURU_12
+  - DAUGIAU TEKSTURU_13
+  - DAUGIAU TEKSTURU_10
+  - DAUGIAU TEKSTURU_11
+  - DAUGIAU TEKSTURU_16
+  - DAUGIAU TEKSTURU_14
+  - DAUGIAU TEKSTURU_15
+  - DAUGIAU TEKSTURU_7
+  - DAUGIAU TEKSTURU_6
+  - DAUGIAU TEKSTURU_5
+  - DAUGIAU TEKSTURU_4
+  - DAUGIAU TEKSTURU_3
+  - DAUGIAU TEKSTURU_2
+  - DAUGIAU TEKSTURU_1
+  - DAUGIAU TEKSTURU_0
+  - DAUGIAU TEKSTURU_9
+  - DAUGIAU TEKSTURU_8
   m_RenderDataMap: {}
   m_Tag: New Sprite Atlas
   m_IsVariant: 0
