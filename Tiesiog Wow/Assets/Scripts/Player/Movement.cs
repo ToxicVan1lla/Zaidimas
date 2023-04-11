@@ -1,8 +1,11 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    [SerializeField] private float defaultSpeed;
+    private float speed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float slideSpeed;
     [SerializeField] private LayerMask groundLayer;
@@ -19,6 +22,7 @@ public class Movement : MonoBehaviour
     private float decelerationInAir = 20;
 
     private bool isWallSliding;
+    private bool canWallSlide = true;
 
     private float wallJumpTime = 0.2f;
     private float wallJumpCounter;
@@ -26,7 +30,7 @@ public class Movement : MonoBehaviour
     private float cayotiTime = 0.2f;
     private float cayotiTimeCounter;
 
-    private bool  lettingGoJump;
+    private bool lettingGoJump;
     private float jumpBufferTime = 0.2f;
     private float jumpBufferCounter;
 
@@ -39,19 +43,57 @@ public class Movement : MonoBehaviour
     private float dashCounter = float.PositiveInfinity;
     [SerializeField] private float dashTime;
     [SerializeField] SpriteRenderer spr;
+    [SerializeField] private float howLongDoesDashLast;
+    [SerializeField] KeepData keepData;
+
+    [SerializeField] GameObject Grave;
+    public bool detectInput;
+    private GameObject grave;
+    private bool onGrave;
+    private PlayerCoins playerCoins;
+    public float lastGroundedX, lastGroundedY;
+    [SerializeField] ParticleSystem walkParticles;
     void Start()
     {
+        playerCoins = GameObject.Find("CoinAmount").GetComponent<PlayerCoins>();
+        speed = defaultSpeed;
         playerAttack = gameObject.GetComponent<PlayerAttack>();
         body = gameObject.GetComponent<Rigidbody2D>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         anim = gameObject.GetComponent<Animator>();
+        body.transform.position = new Vector3(keepData.positionX, keepData.positionY, 0);
         isFacingRight = true;
+        if (keepData.facingDirection == -1)
+        {
+            Flip();
+        }
+
+        if (keepData.enteredRoom)
+        {
+            horizontalInput = keepData.facingDirection == 1 ? 1 : -1;
+            StartCoroutine(walkAfterEnteringRoom());
+        }
+        else
+            detectInput = true;
+        if (keepData.graveActive && SceneManager.GetActiveScene().name == keepData.graveScene)
+        {
+            grave = Instantiate(Grave, new Vector3(keepData.graveX, keepData.graveY, 0), transform.rotation);
+        }
     }
 
 
     void Update()
     {
-        if (!Menu.gameIsPaused)
+        if (onGrave && Input.GetKeyDown(KeyCode.E) && onGrave)
+        {
+            keepData.graveActive = false;
+            playerCoins.addCoins(keepData.graveValue);
+            Destroy(grave);
+        }
+
+
+
+        if (!Menu.gameIsPaused && detectInput)
         {
             horizontalInput = Input.GetAxisRaw("Horizontal");
 
@@ -78,12 +120,15 @@ public class Movement : MonoBehaviour
 
             if (body.velocity.y < -0.5f && !isWallSliding && !playerAttack.isAttacking)
                 anim.SetTrigger("Falling");
-
+            if (Mathf.Abs(body.velocity.x) > 6 && isGrounded())
+                walkParticles.Play();
             anim.SetBool("Run", Mathf.Abs(body.velocity.x) > 0.5 && !onWall());
             anim.SetBool("Grounded", isGrounded() && !playerAttack.isAttacking);
 
             if (isGrounded())
             {
+                lastGroundedX = body.transform.position.x;
+                lastGroundedY = body.transform.position.y - 0.27f;
                 numberOfDashes = 1;
                 jumpCounter = 2;
                 cayotiTimeCounter = cayotiTime;
@@ -103,14 +148,14 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(dash && dashCounter > dashTime)
+        if (dash && dashCounter > dashTime)
         {
             spr.color = Color.blue;
             hasControl = false;
             Dash();
         }
 
-        if(hasControl)
+        if (hasControl)
         {
             Run();
             wallSlide();
@@ -127,6 +172,7 @@ public class Movement : MonoBehaviour
         jumpBufferCounter -= Time.deltaTime;
         body.gravityScale = 0;
         body.velocity = new Vector2(dashSpeed * Mathf.Sign(body.transform.localScale.x), 0);
+        StartCoroutine(dashCoroutine());
 
     }
 
@@ -136,7 +182,7 @@ public class Movement : MonoBehaviour
         // Debug.Log(body.velocity.x);
         float targetSpeed = horizontalInput * speed;
         float accelRate;
-        if(cayotiTime > 0)
+        if (cayotiTime > 0)
             accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? accelerationSpeed : decelerationSpeed;
         else
             accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? accelerationSpeed * accelerationInAir : decelerationSpeed * decelerationInAir;
@@ -152,7 +198,7 @@ public class Movement : MonoBehaviour
     }
     private void addFriction()
     {
-        if(cayotiTime > 0 && horizontalInput == 0)
+        if (cayotiTime > 0 && horizontalInput == 0)
         {
             float amount = Mathf.Min(Mathf.Abs(body.velocity.x), 0.2f);
 
@@ -165,7 +211,7 @@ public class Movement : MonoBehaviour
     private void wallSlide()
     {
 
-        if (onWall() && !isGrounded())
+        if (onWall() && !isGrounded() && canWallSlide)
         {
             if (horizontalInput != 0 && (Mathf.Sign(horizontalInput) == 1) == isFacingRight)
                 isWallSliding = true;
@@ -185,9 +231,9 @@ public class Movement : MonoBehaviour
     }
     private void wallJump()
     {
-        if(jumpBufferCounter > 0 && wallJumpCounter > 0)
+        if (jumpBufferCounter > 0 && wallJumpCounter > 0)
         {
-            if(!playerAttack.isAttacking)
+            if (!playerAttack.isAttacking)
                 anim.SetTrigger("Jump");
             body.velocity = new Vector2(-Mathf.Sign(body.transform.localScale.x) * 10, 20);
             wallJumpCounter = 0;
@@ -202,10 +248,10 @@ public class Movement : MonoBehaviour
 
     private void Jump()
     {
-        
+
         if (jumpBufferCounter > 0 && (cayotiTimeCounter >= 0 || jumpCounter > 0))
         {
-            if(!playerAttack.isAttacking)
+            if (!playerAttack.isAttacking)
                 anim.SetTrigger("Jump");
             jumpCounter--;
             if (cayotiTimeCounter < 0)
@@ -222,7 +268,7 @@ public class Movement : MonoBehaviour
             body.velocity = new Vector2(body.velocity.x, body.velocity.y * 0.5f);
             cayotiTimeCounter = 0;
         }
-            lettingGoJump = false;
+        lettingGoJump = false;
 
     }
 
@@ -245,6 +291,11 @@ public class Movement : MonoBehaviour
         return raycastHit.collider != null;
     }
 
+    private IEnumerator dashCoroutine()
+    {
+        yield return new WaitForSeconds(howLongDoesDashLast);
+        endDash();
+    }
     public void endDash()
     {
         if (onWall())
@@ -255,13 +306,38 @@ public class Movement : MonoBehaviour
         dashCounter = 0;
         anim.SetBool("Dash", false);
         hasControl = true;
-       // body.velocity = new Vector2(0, body.velocity.y);
         body.gravityScale = 7;
     }
+
     private void transitionToIdle()
     {
         anim.SetTrigger("TransitionToIdle");
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if ((collision.tag == "Wall" || collision.tag == "Ground") && isWallSliding)
+        {
+            isWallSliding = false;
+            canWallSlide = false;
+        }
+        if (collision.tag == "Grave")
+            onGrave = false;
+
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Wall" || collision.tag == "Ground")
+            canWallSlide = true;
+        if (collision.tag == "Grave")
+            onGrave = true;
+    }
+
+    private IEnumerator walkAfterEnteringRoom()
+    {
+        speed = 5;
+        yield return new WaitForSeconds(0.5f);
+        detectInput = true;
+        speed = defaultSpeed;
+    }
 
 }
-

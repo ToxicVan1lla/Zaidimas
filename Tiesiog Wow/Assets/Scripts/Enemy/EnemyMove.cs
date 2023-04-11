@@ -5,14 +5,14 @@ public class EnemyMove : MonoBehaviour
     [SerializeField] public float speed;
     [SerializeField] private int coinAmount;
     [SerializeField] public bool detectEdges;
-    public Rigidbody2D body;
     public float damage;
     public float repelForce;
     [HideInInspector] public float stopCounter;
     public bool isAlive = true;
     private GameObject player;
-    [HideInInspector] public BoxCollider2D playerCollider;
+    [HideInInspector] public Rigidbody2D enemyBody;
     [SerializeField] public BoxCollider2D boxCollider;
+    [HideInInspector] public BoxCollider2D playerCollider;
     [HideInInspector] public Rigidbody2D playerBody;
     private PlayerHealth playerHealth;
     private Movement movement;
@@ -20,6 +20,7 @@ public class EnemyMove : MonoBehaviour
 
     private void Awake()
     {
+        enemyBody = gameObject.GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
         playerCollider = player.GetComponent<BoxCollider2D>();
         playerBody = player.GetComponent<Rigidbody2D>();
@@ -43,7 +44,7 @@ public class EnemyMove : MonoBehaviour
             stopCounter -= Time.deltaTime;
         }
         else
-            body.velocity = new Vector2(Mathf.Sign(transform.localScale.x) * speed, body.velocity.y);
+            enemyBody.velocity = new Vector2(Mathf.Sign(transform.localScale.x) * speed, enemyBody.velocity.y);
 
     }
 
@@ -71,7 +72,7 @@ public class EnemyMove : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Wall" && detectEdges)
+        if ( collision.tag == "Wall" && detectEdges)
         {
             Flip();
         }
