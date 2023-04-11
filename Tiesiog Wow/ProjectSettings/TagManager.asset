@@ -8,8 +8,6 @@ TagManager:
   - Ground
   - Wall
   - Enemy
-  - UI
-  - Grave
   layers:
   - Default
   - TransparentFX
@@ -46,19 +44,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Background
-    uniqueID: 918022817
-    locked: 0
-  - name: Decorations
-    uniqueID: 3930247539
-    locked: 0
-  - name: PlayerAndEnemies
-    uniqueID: 3416479373
-    locked: 0
-  - name: Ground
-    uniqueID: 2543147839
-    locked: 0
-  - name: Foreground
-    uniqueID: 1269362381
     locked: 0

@@ -12,37 +12,26 @@ public class ChargingEnemy : EnemyMove
     [SerializeField] private float rollDuration;
     private float untilCharge;
     private CircleCollider2D circleCollider;
+    private Rigidbody2D rb;
     private Coroutine roll;
     private bool isRollingForwards;
     [SerializeField] private Animator animator;
     private bool isRolling = false;
-    private bool finishedRolling;
+    
 
-    private float startPossition;
-    private EnemyHealth enemyHealth;
-    private bool turnAround = false;
+    private float startTime;
 
     void Start()
     {
-        enemyHealth = gameObject.GetComponent<EnemyHealth>();
         circleCollider = gameObject.GetComponent<CircleCollider2D>();
+        rb = gameObject.GetComponent<Rigidbody2D>();
+        Physics2D.IgnoreLayerCollision(8, 8, true);
         circleCollider.enabled = false;
 
     }
 
     private void Update()
     {
-        if (enemyHealth.gotHit && isRollingForwards)
-        {
-            turnAround = true;
-            isRollingForwards = false;
-            StopCoroutine(roll);
-            StartCoroutine(RollBack());
-            stopCounter = 0.2f;
-        }
-        else
-            turnAround = false;
-
         Move();
         if (boxCollider.IsTouching(playerCollider) || circleCollider.IsTouching(playerCollider))
         {
@@ -65,7 +54,6 @@ public class ChargingEnemy : EnemyMove
     
     private IEnumerator RollForwards()
     {
-        startPossition = enemyBody.position.x;
         isRolling = true;        
         animator.SetBool("Idle", false);
         animator.SetTrigger("Transform");
@@ -79,47 +67,37 @@ public class ChargingEnemy : EnemyMove
         boxCollider.enabled = false;
         speed = rollSpeed;
         animator.SetBool("Roll", true);
+        startTime = Time.time;
         yield return new WaitForSeconds(rollDuration);
         isRollingForwards = false;
         StartCoroutine(RollBack());
     }
     private IEnumerator RollBack()
     {
-        if (!turnAround)
+        float moveDuration = Time.time - startTime;
+        speed = 0;
+        animator.SetBool("Roll", false);
+        animator.SetTrigger("TransformToStanding");
+        do
         {
-            speed = 0;
-            animator.SetBool("Roll", false);
-            animator.SetTrigger("TransformToStanding");
-            do
-            {
-                yield return null;
-            } while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
+          yield return null;
+        } while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
 
-            animator.SetTrigger("Attack");
-            do
-            {
-                yield return null;
-            } while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
+        animator.SetTrigger("Attack");
+        do
+        {
+            yield return null;
+        } while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
 
-            animator.SetTrigger("Transform");
+        animator.SetTrigger("Transform");
 
-            do
-            {
-                yield return null;
-            } while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
-        }
+        do
+        {
+          yield return null;
+        } while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1);
         animator.SetBool("Roll", true);
         speed = -rollSpeed;
-        finishedRolling = false;
-        while(!finishedRolling)
-        {
-            if (enemyBody.transform.localScale.x > 0 && enemyBody.position.x <= startPossition)
-                finishedRolling = true;
-            else if (enemyBody.transform.localScale.x < 0 && enemyBody.position.x >= startPossition)
-                finishedRolling = true;
-
-            yield return null;
-        }
+        yield return new WaitForSeconds(moveDuration);
 
         animator.SetTrigger("TransformToStanding");
 
@@ -139,7 +117,7 @@ public class ChargingEnemy : EnemyMove
 
     private bool seesPlayer()
     {
-        RaycastHit2D hit = Physics2D.Raycast(boxCollider.bounds.center, new Vector2(1 * Mathf.Sign(enemyBody.transform.localScale.x), 0), range, Enemy);
+        RaycastHit2D hit = Physics2D.Raycast(boxCollider.bounds.center, new Vector2(1 * Mathf.Sign(rb.transform.localScale.x), 0), range, Enemy);
         if (hit.collider != null && hit.collider.CompareTag("Player"))
             return true;
         else
