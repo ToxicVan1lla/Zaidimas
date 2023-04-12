@@ -163,6 +163,8 @@ MonoBehaviour:
   boxCollider: {fileID: 2996342692372854142}
   playerCollider: {fileID: 0}
   playerBody: {fileID: 0}
+  repelResistance: 0
+  stopsWhenHit: 1
   Enemy:
     serializedVersion: 2
     m_Bits: 200

@@ -11,15 +11,18 @@ public class EnemyMove : MonoBehaviour
     public bool isAlive = true;
     private GameObject player;
     [HideInInspector] public Rigidbody2D enemyBody;
-    [SerializeField] public BoxCollider2D boxCollider;
+    [HideInInspector] public BoxCollider2D boxCollider;
     [HideInInspector] public BoxCollider2D playerCollider;
     [HideInInspector] public Rigidbody2D playerBody;
+    public float repelResistance;
+    public bool stopsWhenHit;
     private PlayerHealth playerHealth;
     private Movement movement;
     private CoinSpawn coinSpawn;
 
     private void Awake()
     {
+        boxCollider = gameObject.GetComponent<BoxCollider2D>();
         enemyBody = gameObject.GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
         playerCollider = player.GetComponent<BoxCollider2D>();

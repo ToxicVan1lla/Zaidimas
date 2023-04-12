@@ -161,6 +161,8 @@ MonoBehaviour:
   boxCollider: {fileID: 3299737418750461274}
   playerCollider: {fileID: 0}
   playerBody: {fileID: 0}
+  repelResistance: 0
+  stopsWhenHit: 1
 --- !u!114 &3299737418750461268
 MonoBehaviour:
   m_ObjectHideFlags: 0

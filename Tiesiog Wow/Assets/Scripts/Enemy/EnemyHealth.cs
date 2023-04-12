@@ -18,7 +18,6 @@ public class EnemyHealth : MonoBehaviour
     public float takeDamageEnemie(float _damage)
     {
         health = Mathf.Clamp(health - _damage, 0, maxHealth);
-
         StartCoroutine(Flash());
         return health;
     }
