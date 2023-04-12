@@ -18,7 +18,7 @@ public class KeepData : ScriptableObject
     {
         positionX = checkpointX = -7.03f;
         positionY = checkpointY = -2.76f;
-        health = 3;
+        health = 5;
         facingDirection = 1;
         enteredRoom = false;
         checkpointSceneName = "SampleScene";

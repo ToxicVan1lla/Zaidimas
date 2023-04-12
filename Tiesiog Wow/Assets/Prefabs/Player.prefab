@@ -5106,7 +5106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5a0b6e610e5d44997b5ccc128cf313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 5
   health: 0
   spriteRend: {fileID: 5668186582637033476}
   iFramesDuration: 1.5
