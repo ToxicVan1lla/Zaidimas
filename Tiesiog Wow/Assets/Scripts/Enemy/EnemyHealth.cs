@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    private float health;
+    public float health;
 
     [SerializeField] private float maxHealth;
     private SpriteRenderer spriteRend;

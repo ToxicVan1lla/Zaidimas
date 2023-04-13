@@ -47,7 +47,10 @@ public class EnemyMove : MonoBehaviour
             stopCounter -= Time.deltaTime;
         }
         else
+        {
             enemyBody.velocity = new Vector2(Mathf.Sign(transform.localScale.x) * speed, enemyBody.velocity.y);
+
+        }
 
     }
 

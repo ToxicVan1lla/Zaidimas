@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ccfa6a9e818a234aabda9c8406ab7f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
   maxHealth: 3
   gotHit: 0
   hitParticles: {fileID: 4739786333899423926}
