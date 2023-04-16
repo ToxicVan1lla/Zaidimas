@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -691588337
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 19e371c9be8c2174ca0d5341c281f66f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -148,4 +148,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectName: 
   landPosition: {x: 0, y: 0}
-  CleanersAnimator: {fileID: 0}
+  Tornado: {fileID: 6865619900707737832, guid: a8c9f5fb5dd7ea841a4fff2939c9f04b, type: 3}
+  Rat: {fileID: 8252203330919830395, guid: 64d7300c702053c4f80751417ec96d5a, type: 3}

@@ -45,11 +45,23 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 2800000, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
+    - {fileID: 2800000, guid: 04c738a1b21808b41a245b41df24e997, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 1237363258, guid: 04c738a1b21808b41a245b41df24e997, type: 3}
+  - {fileID: 1782141652, guid: 04c738a1b21808b41a245b41df24e997, type: 3}
+  - {fileID: -1100710347, guid: 04c738a1b21808b41a245b41df24e997, type: 3}
+  - {fileID: 1819082820, guid: 04c738a1b21808b41a245b41df24e997, type: 3}
+  - {fileID: -1454634612, guid: 04c738a1b21808b41a245b41df24e997, type: 3}
+  - {fileID: 1799790085, guid: 04c738a1b21808b41a245b41df24e997, type: 3}
+  - {fileID: 546657381, guid: 04c738a1b21808b41a245b41df24e997, type: 3}
+  - {fileID: -1991987748, guid: 04c738a1b21808b41a245b41df24e997, type: 3}
+  - {fileID: 1697088246, guid: 04c738a1b21808b41a245b41df24e997, type: 3}
+  - {fileID: -251584407, guid: 04c738a1b21808b41a245b41df24e997, type: 3}
+  - {fileID: 1132393238, guid: 04c738a1b21808b41a245b41df24e997, type: 3}
   - {fileID: -1470504659, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
   - {fileID: 79612506, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
   - {fileID: -796515284, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
@@ -68,6 +80,17 @@ SpriteAtlas:
   - {fileID: 506059485, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
   - {fileID: -326660695, guid: 404bb04b633ea4145827aecfa4dab3ce, type: 3}
   m_PackedSpriteNamesToIndex:
+  - pagerinti zoles blokai_8
+  - pagerinti zoles blokai_9
+  - pagerinti zoles blokai_6
+  - pagerinti zoles blokai_7
+  - pagerinti zoles blokai_4
+  - pagerinti zoles blokai_5
+  - pagerinti zoles blokai_2
+  - pagerinti zoles blokai_3
+  - pagerinti zoles blokai_0
+  - pagerinti zoles blokai_1
+  - pagerinti zoles blokai_10
   - DAUGIAU TEKSTURU_12
   - DAUGIAU TEKSTURU_13
   - DAUGIAU TEKSTURU_10

@@ -21,7 +21,7 @@ public class Broom : EnemyMove
     
     private IEnumerator changeDirection()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.35f);
             direction *= -1;
     }
 

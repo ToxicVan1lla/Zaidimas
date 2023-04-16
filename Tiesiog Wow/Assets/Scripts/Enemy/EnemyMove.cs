@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class EnemyMove : MonoBehaviour
 {
@@ -14,12 +15,12 @@ public class EnemyMove : MonoBehaviour
     [HideInInspector] public BoxCollider2D boxCollider;
     [HideInInspector] public BoxCollider2D playerCollider;
     [HideInInspector] public Rigidbody2D playerBody;
-    public float repelResistance;
+    public float repelResistanceX, repelResistanceY;
     public bool stopsWhenHit;
     private PlayerHealth playerHealth;
     private Movement movement;
     private CoinSpawn coinSpawn;
-
+    Tilemap tilemap;
     private void Awake()
     {
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
@@ -60,6 +61,7 @@ public class EnemyMove : MonoBehaviour
         int directionY = (playerCollider.bounds.min.y < boxCollider.bounds.min.y) ? -1 : 1;
         if(movement.dash)
             movement.endDash();
+        if(repelForce!=0)
         playerBody.velocity = Vector2.zero;
 
         playerBody.AddForce(repelForce * directionX * Vector2.right, ForceMode2D.Impulse);
@@ -76,13 +78,23 @@ public class EnemyMove : MonoBehaviour
             Flip();
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if ( collision.tag == "Wall" && detectEdges)
-        {
-            Flip();
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag("Wall") && detectEdges)
+    //    {
+    //        Vector3Int cellPosition = tilemap.WorldToCell(collision.transform.position);
+    //        Vector3 cellCenterPosition = tilemap.GetCellCenterWorld(cellPosition);
+
+    //        if (cellCenterPosition.y >= transform.position.y)
+    //        {
+    //            Debug.Log(cellCenterPosition.y + " " + transform.position.y);
+    //            Flip();
+    //        }
+    //    }
+    //}
+
+
+
     public void Flip()
     {
         Vector3 scale = transform.localScale;

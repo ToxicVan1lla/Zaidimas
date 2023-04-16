@@ -21,7 +21,7 @@ public class KeepData : ScriptableObject
         health = 5;
         facingDirection = 1;
         enteredRoom = false;
-        checkpointSceneName = "SampleScene";
+        checkpointSceneName = "Room1";
         coinAmount = 0;
     }
 }

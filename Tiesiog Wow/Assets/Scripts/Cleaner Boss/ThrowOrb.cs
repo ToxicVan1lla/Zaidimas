@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ThrowOrb : MonoBehaviour
@@ -7,11 +5,14 @@ public class ThrowOrb : MonoBehaviour
     public string objectName;
     public Vector2 landPosition;
     private bool fall = true;
-    private Rigidbody2D body;
+    [SerializeField] GameObject Tornado;
+    [SerializeField] GameObject Rat;
+    private CleanerControl cleaner;
+    private GameObject GO;
 
     private void Start()
     {
-        body = gameObject.GetComponent<Rigidbody2D>();
+        cleaner = GameObject.Find("The Cleaner").GetComponent<CleanerControl>();
     }
     private void Update()
     {
@@ -26,7 +27,16 @@ public class ThrowOrb : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Ground")
+        {
             fall = false;
+            if(objectName == "Tornado")
+                GO = Instantiate(Tornado, transform.position, transform.rotation);
+            if (objectName == "Rat")
+                GO = Instantiate(Rat, transform.position, transform.rotation);
+            cleaner.GoHolder.Add(GO);
+
+            Destroy(gameObject);
+        }
     }
 
 }

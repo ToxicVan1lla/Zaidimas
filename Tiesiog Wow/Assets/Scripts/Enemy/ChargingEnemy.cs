@@ -85,6 +85,7 @@ public class ChargingEnemy : EnemyMove
     }
     private IEnumerator RollBack()
     {
+        float RollingBackTime = 0;
         if (!turnAround)
         {
             speed = 0;
@@ -113,11 +114,9 @@ public class ChargingEnemy : EnemyMove
         finishedRolling = false;
         while(!finishedRolling)
         {
-            if (enemyBody.transform.localScale.x > 0 && enemyBody.position.x <= startPossition)
+            RollingBackTime += Time.deltaTime;
+            if (Mathf.Abs(enemyBody.position.x - startPossition) < 0.15f || RollingBackTime > 1)
                 finishedRolling = true;
-            else if (enemyBody.transform.localScale.x < 0 && enemyBody.position.x >= startPossition)
-                finishedRolling = true;
-
             yield return null;
         }
 

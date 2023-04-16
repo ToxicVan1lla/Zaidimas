@@ -57,12 +57,11 @@ public class PlayerAttack : MonoBehaviour
             {
                 enemy.GetComponent<EnemyMove>().stopCounter = 0.5f;
                 enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-
             }
             int directionX = (collider.bounds.min.x > enemy.GetComponent<BoxCollider2D>().bounds.min.x) ? -1 : 1;
-            int directionY = (collider.bounds.min.y > enemy.GetComponent<BoxCollider2D>().bounds.min.y) ? -1 : 1;
-            enemy.GetComponent<Rigidbody2D>().AddForce(Mathf.Max(0, repelForce - enemy.GetComponent<EnemyMove>().repelResistance) * directionX * Vector2.right, ForceMode2D.Impulse);
-            enemy.GetComponent<Rigidbody2D>().AddForce(Mathf.Max(0, repelForce - enemy.GetComponent<EnemyMove>().repelResistance) * directionY * Vector2.up, ForceMode2D.Impulse);
+            int directionY = 1;
+            enemy.GetComponent<Rigidbody2D>().AddForce(Mathf.Max(0, repelForce - enemy.GetComponent<EnemyMove>().repelResistanceX) * directionX * Vector2.right, ForceMode2D.Impulse);
+            enemy.GetComponent<Rigidbody2D>().AddForce(Mathf.Max(0, repelForce - enemy.GetComponent<EnemyMove>().repelResistanceY) * directionY * Vector2.up, ForceMode2D.Impulse);
 
 
             if (enemy.GetComponent<EnemyHealth>().takeDamageEnemie(damage) == 0)

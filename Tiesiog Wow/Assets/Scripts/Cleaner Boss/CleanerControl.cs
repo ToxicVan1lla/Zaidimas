@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CleanerControl : EnemyMove
@@ -42,12 +43,25 @@ public class CleanerControl : EnemyMove
     public GameObject leftArm, rightArm;
     private float coordinateX;
     private Vector2 throwPosition;
-
     private bool throwingOrb;
     private float timeUntilStop = 10;
     private float untilTurn = 0;
     private float untilLastTurnCounter = 0;
     [SerializeField] private float flyingSpeed;
+    private bool isCleaning;
+    private bool hasToSpawnRat, hasToSpawnTornado;
+    private float timeUntilNextRat = 5, timeUntilNextTornado = 10;
+    [HideInInspector] public List<GameObject> GoHolder = new List<GameObject>();
+    private string objectName;
+    private bool noEnemies;
+    public float maxTimeUntilRatSpawn, maxTimeUntilTornadoSpawn;
+    public float timeUntilLand, timeToSpendLanded;
+    private float timeUntilLandCounter;
+    private bool land;
+    private float timeLanded;
+    int listSize;
+    [SerializeField] Animator wingsAnim;
+    [SerializeField] Animator doorAnim;
 
     private void Start()
     {
@@ -58,36 +72,48 @@ public class CleanerControl : EnemyMove
     }
     void Update()
     {
-        if (Mathf.Abs(playerBody.position.x - enemyBody.position.x) < 5)
+
+        if (Mathf.Abs(playerBody.position.x - enemyBody.position.x) < 5 && Mathf.Abs(playerBody.position.y - enemyBody.position.y) < 5 && !fightHasBegun)
         {
             door.SetActive(true);
+            doorAnim.SetTrigger("Close");
             fightHasBegun = true;
+            anim.SetBool("Walking", true);
         }
         if (boxCollider.IsTouching(playerCollider) || wingsCollider.IsTouching(playerCollider))
-        {
             Attack();
-        }
 
         if(fightHasBegun)
         {
             if(stage1)
             {
-
                 if(justCaughtBroom)
                 {
                     StartCoroutine(runAwayCounter());
                 }
-
+                if(stopCounter <= 0 && !isThrowingBroom && !isRunning && !isDoingMeleeAttack)
+                {
+                    isCleaning = false;
+                    anim.SetBool("Walking", true);
+                }
                 Move();
                 if (enemyHealth.gotHit)
+                {
+                    isCleaning = false;
                     stopCounter = 0;
-                if (timeUntilStop <= 0 && !isRunning && !isThrowingBroom)
+                }
+                if (timeUntilStop <= 0 && !isRunning && !isThrowingBroom && !isDoingMeleeAttack)
+                {
+                    isCleaning = true;
+                    anim.SetBool("Walking", false);
+                    anim.SetTrigger("Clean");
                     stopCounter = 2;
+                    timeUntilStop = Random.Range(5f, 10f);
+                }
                 else
                     timeUntilStop -= Time.deltaTime;
 
-                if (timeUntilStop <= 0 && !isRunning && !isThrowingBroom)
-                    timeUntilStop = Random.Range(5, 15);
+                
                 
                 if(!isRunning && stopCounter <=0)
                 {
@@ -98,27 +124,29 @@ public class CleanerControl : EnemyMove
                         timeUntilThrow = Random.Range(1, maxTimeUntilThrow);
                         rutine = StartCoroutine(countToThrow());
                     }
-                    if (enemyBody.position.x > playerBody.position.x && enemyBody.transform.localScale.x < 0 && !isThrowingBroom && !isTurning)
+                    if (enemyBody.position.x > playerBody.position.x && enemyBody.transform.localScale.x < 0 && !isThrowingBroom && !isTurning && !isCleaning)
                     {
                         StartCoroutine(turnAround());
                     }
-                    else if(enemyBody.position.x < playerBody.position.x && enemyBody.transform.localScale.x > 0 && !isThrowingBroom && !isTurning)
+                    else if(enemyBody.position.x < playerBody.position.x && enemyBody.transform.localScale.x > 0 && !isThrowingBroom && !isTurning && !isCleaning)
                     {
                         StartCoroutine(turnAround());
                     }
-                    if (!isThrowingBroom && (Mathf.Abs(playerBody.position.x - enemyBody.position.x) > disntanceWhenThrowBroom || hasToThrowBroom) && !isDoingMeleeAttack && attackCounter > 0.2f)
+                    if (!isThrowingBroom && (Mathf.Abs(playerBody.position.x - enemyBody.position.x) > disntanceWhenThrowBroom || hasToThrowBroom) && !isDoingMeleeAttack && attackCounter > 0.2f && !isRunning && !isCleaning)
                     {
                         speed = 0;
+                        anim.SetBool("Walking", false);
                         StopCoroutine(rutine);
                         isCountingUntilThrow = false;
                         hasToThrowBroom = false;
                         isThrowingBroom = true;
                         anim.SetTrigger("ThrowBroom");
                     }
-                    if (playerInAttackRange() && !isThrowingBroom && attackCounter > attackCooldown && !isDoingMeleeAttack)
+                    if (playerInAttackRange() && !isThrowingBroom && attackCounter > attackCooldown && !isDoingMeleeAttack && !isRunning && !isCleaning)
                     {
                         speed = 0;
                         isDoingMeleeAttack = true;
+                        anim.SetBool("Walking", false);
                         anim.SetTrigger("Hit");
                     }
                     attackCounter += Time.deltaTime;
@@ -126,7 +154,7 @@ public class CleanerControl : EnemyMove
                 }
 
             }
-            if(enemyHealth.health < 15 && stage1)
+            if(enemyHealth.health <= 15 && stage1 && !isThrowingBroom)
             {
                 Destroy(GO);
                 StopAllCoroutines();
@@ -141,16 +169,18 @@ public class CleanerControl : EnemyMove
             }
             if(stage2)
             {
+
                 if(moveToCenter)
                 {
-                    if (enemyBody.position == new Vector2(middleRoomX, groundY + 6))
+                    timeUntilLandCounter = timeUntilLand;
+                    if (enemyBody.position == new Vector2(middleRoomX, groundY + 7))
                     {
                     boxCollider.enabled = true;
                     wingsCollider.enabled = true;
 
                         moveToCenter = false;
                     }
-                    transform.position = Vector2.MoveTowards(transform.position, new Vector2(middleRoomX, groundY + 6), 3 * Time.deltaTime);
+                    transform.position = Vector2.MoveTowards(transform.position, new Vector2(middleRoomX, groundY + 7), 3 * Time.deltaTime);
                     return;
                 }
                 if (throwingOrb)
@@ -160,45 +190,78 @@ public class CleanerControl : EnemyMove
                 }
                 else
                     stopCounter = 0;
-                
-                Move();
-                verticalMovement();
-                if(!throwingOrb)
-                    horizontalMovement();
-                if(Input.GetKeyDown(KeyCode.Q))
+                timeUntilLandCounter -= Time.deltaTime;
+                if (timeUntilLandCounter <= 0 && !throwingOrb)
                 {
-                    throwingOrb = true;
-                    coordinateX = Random.Range(leftWallX + 1, rightWallX - 1);
-                    if (transform.position.x > coordinateX)
-                    {
-                        if (transform.localScale.x > 0)
-                        {
-                            throwPosition = leftArm.transform.position;
-                            anim.SetTrigger("ThrowLeftOrb");
+                    land = true;
+                    enemyBody.velocity = Vector2.zero;
 
-                        }
-                        else
-                        {
-                            throwPosition = rightArm.transform.position;
-                            anim.SetTrigger("ThrowRightOrb");
-                        }
-                    }
-                    else
-                    {
-                        if (transform.localScale.x < 0)
-                        {
-                            throwPosition = leftArm.transform.position;
-                            anim.SetTrigger("ThrowLeftOrb");
-
-                        }
-                        else
-                        {
-                            throwPosition = rightArm.transform.position;
-                            anim.SetTrigger("ThrowRightOrb");
-                        }
-                    }
-                    StartCoroutine(returnToIdle());
                 }
+                listSize = 0;
+                foreach (GameObject i in GoHolder)
+                    if (i != null)
+                        listSize++;
+                if(land && listSize == 0)
+                {
+                    wingsCollider.enabled = false;
+                    if (Mathf.Abs(enemyBody.position.y - (groundY + 1.4f)) < 0.1)
+                    {
+                        wingsAnim.speed = 0;
+                        timeLanded -= Time.deltaTime;
+                        
+                    }
+                    if(timeLanded <= 0)
+                    {
+                        wingsAnim.speed = 1;
+                        timeUntilLandCounter = timeUntilLand;
+                        land = false;
+                        timeLanded = timeToSpendLanded;
+                        moveToCenter = true;
+                    }
+                    transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, groundY + 1.4f), 3 * Time.deltaTime);
+                    return;
+                }
+                if(!land)
+                {
+                    Move();
+                    timeUntilNextRat -= Time.deltaTime;
+                    timeUntilNextTornado -= Time.deltaTime;
+                    if (timeUntilNextRat <= 0 )
+                        hasToSpawnRat = true;
+                    if (timeUntilNextTornado <= 0)
+                        hasToSpawnTornado = true;
+                    verticalMovement();
+                    if(listSize==0 && !noEnemies)
+                    {
+                        noEnemies = true;
+                        timeUntilNextRat = 0.5f;
+                    }
+
+                    if (!throwingOrb)
+                    {
+                        horizontalMovement();
+                        if(hasToSpawnRat)
+                        {
+                            noEnemies = false;
+                            timeUntilNextRat = Random.Range(4f, maxTimeUntilRatSpawn);
+                            hasToSpawnRat = false;
+                            objectName = "Rat";
+                            spawnOrb();
+                        }
+                        else if (hasToSpawnTornado)
+                        {
+                            noEnemies = false;
+                            timeUntilNextTornado = Random.Range(7f, maxTimeUntilTornadoSpawn);
+                            hasToSpawnTornado = false;
+                            objectName = "Tornado";
+                            spawnOrb();
+                        }
+
+                }
+
+                }
+                
+                
 
 
             }
@@ -219,7 +282,7 @@ public class CleanerControl : EnemyMove
         if (untilTurn <= 0 && untilLastTurnCounter <= 0)
         {
             Flip();
-            untilTurn = Random.Range(3f, 7f);
+            untilTurn = Random.Range(2f, 5f);
         }
         else
             untilTurn -= Time.deltaTime;
@@ -230,12 +293,47 @@ public class CleanerControl : EnemyMove
         if (!movingVertically)
             StartCoroutine(moveDownAndUp());
     }
+    private void spawnOrb()
+    {
+        throwingOrb = true;
+        coordinateX = Random.Range(leftWallX + 1, rightWallX - 1);
+        if (transform.position.x > coordinateX)
+        {
+            if (transform.localScale.x > 0)
+            {
+                throwPosition = leftArm.transform.position;
+                anim.SetTrigger("ThrowLeftOrb");
+
+            }
+            else
+            {
+                throwPosition = rightArm.transform.position;
+                anim.SetTrigger("ThrowRightOrb");
+            }
+        }
+        else
+        {
+            if (transform.localScale.x < 0)
+            {
+                throwPosition = leftArm.transform.position;
+                anim.SetTrigger("ThrowLeftOrb");
+
+            }
+            else
+            {
+                throwPosition = rightArm.transform.position;
+                anim.SetTrigger("ThrowRightOrb");
+            }
+        }
+        StartCoroutine(returnToIdle());
+    }
 
     private void throwOrb()
     {
         GO = Instantiate(Orb, new Vector3(throwPosition.x, throwPosition.y, 0), transform.rotation);
-        GO.GetComponent<ThrowOrb>().objectName = "Tornado";
+        GO.GetComponent<ThrowOrb>().objectName = objectName;
         GO.GetComponent<ThrowOrb>().landPosition = new Vector2(coordinateX, groundY);
+        
     }
     private IEnumerator returnToIdle()
     {
@@ -257,6 +355,7 @@ public class CleanerControl : EnemyMove
 
     private void activateBroom()
     {
+
         GO =  Instantiate(broom, new Vector3(enemyBody.position.x + -1.2f * Mathf.Sign(enemyBody.transform.localScale.x), enemyBody.position.y, 0), transform.rotation);
         GO.GetComponent<Broom>().direction = (int)(-1 * Mathf.Sign(enemyBody.transform.localScale.x));
 
@@ -270,7 +369,7 @@ public class CleanerControl : EnemyMove
     private void stopMeleeAttack()
     {
         speed = defaultSpeed;
-        anim.SetTrigger("Walking");
+        anim.SetBool("Walking", true);
         isDoingMeleeAttack = false;
         attackCounter = 0;
     }
@@ -299,6 +398,7 @@ public class CleanerControl : EnemyMove
             if (transform.position.x > middleRoomX && transform.localScale.x < 0)
                 Flip();
             isRunning = true;
+            anim.SetBool("Walking", true);
             anim.speed = 2;
             speed = -6;
             while (Mathf.Abs(transform.position.x - middleRoomX) > 0.2)
@@ -333,7 +433,7 @@ public class CleanerControl : EnemyMove
         justCaughtBroom = false;
         isRunning = true;
         anim.speed = 2;
-        anim.SetTrigger("Walking");
+        anim.SetBool("Walking", true);
         Flip();
         speed = -6;
         yield return new WaitForSeconds(1.5f);
@@ -348,13 +448,13 @@ public class CleanerControl : EnemyMove
         RaycastHit2D[] hits= Physics2D.RaycastAll(boxCollider.bounds.center, Vector2.left, 20);
         foreach(RaycastHit2D i in hits)
         {
-            if (i.collider.gameObject.layer == 6)
+            if (i.collider.gameObject.layer == 0)
                 distance = Mathf.Min(distance, i.distance);
         }
         hits = Physics2D.RaycastAll(boxCollider.bounds.center, Vector2.right, 20);
         foreach (RaycastHit2D i in hits)
         {
-            if (i.collider.gameObject.layer == 6)
+            if (i.collider.gameObject.layer == 0)
                 distance = Mathf.Min(distance, i.distance);
         }
         return distance;
@@ -371,6 +471,14 @@ public class CleanerControl : EnemyMove
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(BC.bounds.center + transform.right * attackRange * transform.localScale.x * colliderDistance,
         new Vector3(BC.bounds.size.x * attackRange, BC.bounds.size.y -1, BC.bounds.size.z));
+    }
+    private void OnDestroy()
+    {
+        if(door != null)
+        {
+            door.SetActive(false);
+            doorAnim.SetTrigger("Open");
+        }
     }
 
 }

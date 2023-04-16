@@ -376,7 +376,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173890600}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.21, y: -1.0900002, z: -9.956567}
+  m_LocalPosition: {x: -3.2700002, y: -0.39000034, z: -9.956567}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -418,11 +418,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5668186582637033477, guid: cb2d0cfe3a434944180947ee0e436a1c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 29.21
+      value: -3.27
       objectReference: {fileID: 0}
     - target: {fileID: 5668186582637033477, guid: cb2d0cfe3a434944180947ee0e436a1c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.09
+      value: -2.39
       objectReference: {fileID: 0}
     - target: {fileID: 5668186582637033477, guid: cb2d0cfe3a434944180947ee0e436a1c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -459,6 +459,10 @@ PrefabInstance:
     - target: {fileID: 5668186582637033484, guid: cb2d0cfe3a434944180947ee0e436a1c, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5668186582637033484, guid: cb2d0cfe3a434944180947ee0e436a1c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb2d0cfe3a434944180947ee0e436a1c, type: 3}
@@ -557,6 +561,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8936144054769609006, guid: 37e55b0d7e18bec498d98a3da06a4995, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8936144056373864057, guid: 37e55b0d7e18bec498d98a3da06a4995, type: 3}
       propertyPath: playerHealth
       value: 
@@ -652,7 +660,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 370498245}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.205536, y: 0.14252043, z: -9.956567}
+  m_LocalPosition: {x: -2.7992666, y: 0.063129425, z: -9.956567}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2160,8 +2168,8 @@ PolygonCollider2D:
       - {x: 3.968411, y: 7.1412992}
       - {x: 2.4994853, y: 7.2195907}
       - {x: 1.9413643, y: 7.21959}
-      - {x: -4.0476017, y: 7.0660872}
-      - {x: -3.968789, y: -3.7602334}
+      - {x: -4.6885233, y: 7.232822}
+      - {x: -4.671541, y: -3.698094}
       - {x: 52.17961, y: -3.5568283}
       - {x: 52.287697, y: 7.0778675}
 --- !u!4 &1199812805
@@ -2193,7 +2201,7 @@ GameObject:
   - component: {fileID: 1248255042}
   m_Layer: 8
   m_Name: Wings
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2401,6 +2409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keepData: {fileID: 11400000, guid: 9904ca074d59eee438bc2ee20e1e0134, type: 2}
+  playerHealth: {fileID: 0}
 --- !u!212 &1434752390
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2507,11 +2516,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3299737418750461270, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.67
+      value: -0.72
       objectReference: {fileID: 0}
     - target: {fileID: 3299737418750461270, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.49
+      value: 0.97
       objectReference: {fileID: 0}
     - target: {fileID: 3299737418750461270, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2549,6 +2558,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461271, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3299737418750461272, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
       propertyPath: m_SortingLayer
       value: 0
@@ -2556,6 +2569,10 @@ PrefabInstance:
     - target: {fileID: 3299737418750461272, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
       propertyPath: m_SortingLayerID
       value: -878487923
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: speed
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
@@ -2674,6 +2691,10 @@ PrefabInstance:
     - target: {fileID: 2996342692372854141, guid: ec0ba8291f672c6498e51690bc54b4c3, type: 3}
       propertyPath: m_Name
       value: ChargingEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996342692372854141, guid: ec0ba8291f672c6498e51690bc54b4c3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec0ba8291f672c6498e51690bc54b4c3, type: 3}
@@ -2865,9 +2886,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1709818441}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.23, y: -2.61, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 32.23, y: -2.27, z: 0}
+  m_LocalScale: {x: 4, y: 3.9999998, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1248255039}
@@ -2968,7 +2989,8 @@ MonoBehaviour:
   boxCollider: {fileID: 0}
   playerCollider: {fileID: 0}
   playerBody: {fileID: 0}
-  repelResistance: 10
+  repelResistanceX: 10
+  repelResistanceY: 10
   stopsWhenHit: 0
   door: {fileID: 2035496288}
   isThrowingBroom: 0
@@ -2997,6 +3019,12 @@ MonoBehaviour:
   leftArm: {fileID: 415117164}
   rightArm: {fileID: 60566809}
   flyingSpeed: -2
+  GoHolder: []
+  maxTimeUntilRatSpawn: 8
+  maxTimeUntilTornadoSpawn: 12
+  timeUntilLand: 10
+  timeToSpendLanded: 5
+  wingsAnim: {fileID: 1248255040}
 --- !u!114 &1709818448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3010,7 +3038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  maxHealth: 16
+  maxHealth: 35
   gotHit: 0
   hitParticles: {fileID: 1979096437}
 --- !u!114 &1709818450

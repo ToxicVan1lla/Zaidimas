@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class Checkpoint : MonoBehaviour
 {
     [SerializeField] KeepData keepData;
+    [SerializeField] PlayerHealth playerHealth;
     private bool onCheckpoint = false;
     private void Update()
     {
@@ -14,6 +15,8 @@ public class Checkpoint : MonoBehaviour
             keepData.checkpointSceneName = SceneManager.GetActiveScene().name;
             keepData.checkpointX = gameObject.transform.position.x;
             keepData.checkpointY = gameObject.transform.position.y;
+            keepData.health = playerHealth.maxHealth;
+            playerHealth.health = playerHealth.maxHealth;
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)

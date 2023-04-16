@@ -55,6 +55,7 @@ public class Movement : MonoBehaviour
     [SerializeField] ParticleSystem walkParticles;
     void Start()
     {
+
         playerCoins = GameObject.Find("CoinAmount").GetComponent<PlayerCoins>();
         speed = defaultSpeed;
         playerAttack = gameObject.GetComponent<PlayerAttack>();
@@ -84,6 +85,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+
         if (onGrave && Input.GetKeyDown(KeyCode.E) && onGrave)
         {
             keepData.graveActive = false;
@@ -128,7 +130,7 @@ public class Movement : MonoBehaviour
             if (isGrounded())
             {
                 lastGroundedX = body.transform.position.x;
-                lastGroundedY = body.transform.position.y - 0.27f;
+                lastGroundedY = body.transform.position.y - 0.37f;
                 numberOfDashes = 1;
                 jumpCounter = 2;
                 cayotiTimeCounter = cayotiTime;
@@ -179,7 +181,6 @@ public class Movement : MonoBehaviour
     private void Run()
     {
 
-        // Debug.Log(body.velocity.x);
         float targetSpeed = horizontalInput * speed;
         float accelRate;
         if (cayotiTime > 0)
