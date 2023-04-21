@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class Movement : MonoBehaviour
+public class Movement : MonoBehaviour, IDataPersistence
 {
     [SerializeField] private float defaultSpeed;
     private float speed;
@@ -53,16 +53,46 @@ public class Movement : MonoBehaviour
     private PlayerCoins playerCoins;
     public float lastGroundedX, lastGroundedY;
     [SerializeField] ParticleSystem walkParticles;
+    private DataPersistanceManager manager;
+
+    private bool removeGrave = false;
+
+    public void LoadData(GameData data)
+    {
+        if(!keepData.enteredRoom)
+        {
+            if (data.sceneName != SceneManager.GetActiveScene().name)
+                SceneManager.LoadScene(data.sceneName);
+            this.transform.position = data.position;
+        }
+        if(data.graveActive && SceneManager.GetActiveScene().name == data.graveScene)
+        {
+            grave = Instantiate(Grave, data.gravePosition, transform.rotation);
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        if(removeGrave)
+        {
+            removeGrave = false;
+            Destroy(grave);
+            playerCoins.addCoins(data.graveValue);
+            data.graveActive = false;
+        }
+    }
+
     void Start()
     {
-
+        manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
         playerCoins = GameObject.Find("CoinAmount").GetComponent<PlayerCoins>();
         speed = defaultSpeed;
         playerAttack = gameObject.GetComponent<PlayerAttack>();
         body = gameObject.GetComponent<Rigidbody2D>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         anim = gameObject.GetComponent<Animator>();
-        body.transform.position = new Vector3(keepData.positionX, keepData.positionY, 0);
+        if(keepData.enteredRoom)
+            body.transform.position = new Vector3(keepData.positionX, keepData.positionY, 0);
         isFacingRight = true;
         if (keepData.facingDirection == -1)
         {
@@ -76,21 +106,16 @@ public class Movement : MonoBehaviour
         }
         else
             detectInput = true;
-        if (keepData.graveActive && SceneManager.GetActiveScene().name == keepData.graveScene)
-        {
-            grave = Instantiate(Grave, new Vector3(keepData.graveX, keepData.graveY, 0), transform.rotation);
-        }
     }
 
 
     void Update()
     {
 
-        if (onGrave && Input.GetKeyDown(KeyCode.E) && onGrave)
+        if (onGrave && Input.GetKeyDown(KeyCode.E))
         {
-            keepData.graveActive = false;
-            playerCoins.addCoins(keepData.graveValue);
-            Destroy(grave);
+            removeGrave = true;
+            manager.save = true;
         }
 
 

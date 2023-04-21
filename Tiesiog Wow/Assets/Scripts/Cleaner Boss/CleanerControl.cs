@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CleanerControl : EnemyMove
+public class CleanerControl : EnemyMove, IDataPersistence
 {
-    [SerializeField] GameObject door;
     public bool isThrowingBroom = false;
     [SerializeField] GameObject broom;
     [SerializeField] public Animator anim;
@@ -61,10 +60,29 @@ public class CleanerControl : EnemyMove
     private float timeLanded;
     int listSize;
     [SerializeField] Animator wingsAnim;
-    [SerializeField] Animator doorAnim;
+    private Animator doorAnim;
+    [SerializeField] private GameObject door;
+    private DataPersistanceManager manager;
 
+
+    private bool alive = true;
+    public void LoadData(GameData data)
+    {
+        alive = data.cleanerBossAlive;
+        if (!alive)
+            Destroy(gameObject);
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        if (!alive)
+            data.cleanerBossAlive = false;
+    }
     private void Start()
     {
+
+        manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
+        doorAnim = GameObject.Find("Door").GetComponent<Animator>();
         middleRoomX = (rightWallX + leftWallX) / 2;
         wingsCollider = wings.gameObject.GetComponent<BoxCollider2D>();
         enemyHealth = gameObject.GetComponent<EnemyHealth>();
@@ -117,7 +135,7 @@ public class CleanerControl : EnemyMove
                 
                 if(!isRunning && stopCounter <=0)
                 {
-                    if (distanceToClosestWall() < 4)
+                    if (distanceToClosestWall() < 3)
                         StartCoroutine(runFromWall());
                     if(!isCountingUntilThrow && !hasToThrowBroom && !isThrowingBroom)
                     {
@@ -387,8 +405,8 @@ public class CleanerControl : EnemyMove
     
     private IEnumerator runFromWall()
     {
-        yield return new WaitForSeconds(3);
-        if(distanceToClosestWall() < 4)
+        yield return new WaitForSeconds(5);
+        if(distanceToClosestWall() < 3)
         {
                 if (isRunning || isDoingMeleeAttack || isThrowingBroom || isTurning)
                     yield break;
@@ -474,10 +492,12 @@ public class CleanerControl : EnemyMove
     }
     private void OnDestroy()
     {
-        if(door != null)
+        if(door != null && enemyHealth.health <= 0)
         {
             door.SetActive(false);
             doorAnim.SetTrigger("Open");
+            alive = false;
+            manager.save = true;
         }
     }
 

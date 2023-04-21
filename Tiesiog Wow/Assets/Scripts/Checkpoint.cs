@@ -1,22 +1,42 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Checkpoint : MonoBehaviour
+public class Checkpoint : MonoBehaviour, IDataPersistence
 {
     [SerializeField] KeepData keepData;
-    [SerializeField] PlayerHealth playerHealth;
     private bool onCheckpoint = false;
+    private DataPersistanceManager manager;
+    private bool interacted;
+
+    public void LoadData(GameData data)
+    {
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        if(interacted)
+        {
+            data.sceneName = SceneManager.GetActiveScene().name;
+            data.position = transform.position;
+            interacted = false;
+        }
+    }
+
+    private void Start()
+    {
+        manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
+        
+    }
+
     private void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.E) && onCheckpoint)
         {
             keepData.enteredRoom = false;
-            keepData.checkpointSceneName = SceneManager.GetActiveScene().name;
-            keepData.checkpointX = gameObject.transform.position.x;
-            keepData.checkpointY = gameObject.transform.position.y;
-            keepData.health = playerHealth.maxHealth;
-            playerHealth.health = playerHealth.maxHealth;
+            interacted = true;
+            manager.save = true;
+
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)

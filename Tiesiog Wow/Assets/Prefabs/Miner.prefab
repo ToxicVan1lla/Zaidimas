@@ -182,7 +182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6.5
   coinAmount: 4
-  detectEdges: 1
+  detectEdges: 0
   damage: 1
   repelForce: 15
   stopCounter: 0

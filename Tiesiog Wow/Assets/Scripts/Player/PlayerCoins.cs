@@ -2,16 +2,28 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 
-public class PlayerCoins : MonoBehaviour
+public class PlayerCoins : MonoBehaviour, IDataPersistence
 {
-    [SerializeField] KeepData keepData;
     private TextMeshProUGUI displayCoins;
     private TextMeshProUGUI displayCollectedCoins;
     public int coinAmount;
-    private int coinsCollected;
+    public int coinsCollected;
     private float transferTime = 1;
     private float transferCounter;
     private GameObject text;
+
+    public void LoadData(GameData data)
+    {
+        this.coinAmount = data.coins;
+        displayCoins.text = coinAmount.ToString();
+
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.coins = coinAmount + coinsCollected;
+    }
+
     private void Awake()
     {
         displayCoins = gameObject.GetComponent<TextMeshProUGUI>();
@@ -22,7 +34,6 @@ public class PlayerCoins : MonoBehaviour
     private void Start()
     {
         coinsCollected = 0;
-        coinAmount = keepData.coinAmount;
         displayCoins.text = coinAmount.ToString();
     }
     private void Update()
@@ -42,12 +53,12 @@ public class PlayerCoins : MonoBehaviour
             text.SetActive(true);
             transferCounter = 0;
             coinsCollected += amount;
-            keepData.coinAmount += amount;
             displayCollectedCoins.text = "+" + coinsCollected.ToString();
         }
     }
     private IEnumerator Transfer()
     {
+        
         for (int i=1;i<=coinsCollected;i++)
         {
             coinAmount++;

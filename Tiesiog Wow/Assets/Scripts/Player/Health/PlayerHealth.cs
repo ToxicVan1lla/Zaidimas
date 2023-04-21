@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IDataPersistence
 {
     [SerializeField] public float maxHealth;
     public float health;
@@ -13,8 +13,38 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private KeepData keepData;
     private bool invulnerable;
     private Movement movement;
+    private DataPersistanceManager manager;
+    private bool Died = false;
+    private bool switchScene = false;
+    private PlayerCoins playerCoins;
+    public void SaveData(ref GameData data)
+    {
+        if(Died)
+        {
+            data.graveValue = playerCoins.coinAmount + playerCoins.coinsCollected;
+            playerCoins.coinAmount = 0;
+            playerCoins.coinsCollected = 0;
+            data.coins = 0;
+            data.gravePosition = new Vector2(movement.lastGroundedX, movement.lastGroundedY);
+            data.graveActive = true;
+            data.graveScene = SceneManager.GetActiveScene().name;
+            Died = false;
+            switchScene = true;
+        }
+    }
+    public void LoadData(GameData data)
+    {
+        if(switchScene)
+        {
+            switchScene = false;
+            SceneManager.LoadScene(data.sceneName);
+        }
+    }
+
     void Start()
     {
+        playerCoins = GameObject.Find("CoinAmount").GetComponent<PlayerCoins>();
+        manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
         movement = gameObject.GetComponent<Movement>();
         Physics2D.IgnoreLayerCollision(7, 8, false);
         health = maxHealth;
@@ -29,17 +59,12 @@ public class PlayerHealth : MonoBehaviour
             health = Mathf.Clamp(health - _damage, 0, maxHealth);
             if (health == 0)
             {
-                keepData.positionX = keepData.checkpointX;
-                keepData.positionY = keepData.checkpointY;
+
                 keepData.health = maxHealth;
                 keepData.enteredRoom = false;
-                keepData.graveValue = keepData.coinAmount;
-                keepData.graveActive = true;
-                keepData.graveScene = SceneManager.GetActiveScene().name;
-                keepData.graveX = movement.lastGroundedX;
-                keepData.graveY = movement.lastGroundedY;
-                keepData.coinAmount = 0;
-                SceneManager.LoadScene(keepData.checkpointSceneName);
+                Died = true;
+                manager.save = true;
+                manager.load = true;
 
             }
             else

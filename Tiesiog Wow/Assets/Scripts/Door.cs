@@ -10,10 +10,12 @@ public class Door : MonoBehaviour
     private GameObject player;
     [SerializeField] private KeepData keepData;
     private PlayerHealth playerHealth;
+    private DataPersistanceManager manager;
 
 
     private void Start()
     {
+        manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
         anim = transitionScreen.GetComponent<Animator>();
         player = GameObject.FindWithTag("Player");
         playerHealth = player.GetComponent<PlayerHealth>();
@@ -31,6 +33,7 @@ public class Door : MonoBehaviour
         keepData.facingDirection = (int)Mathf.Sign(player.transform.position.x) * 1;
         keepData.health = playerHealth.health;
         anim.SetTrigger("Transition");
+        manager.save = true;
         yield return new WaitForSeconds(1f);
         keepData.positionX = doorLeadsTo.position.x;
         keepData.positionY = doorLeadsTo.position.y;
