@@ -14,7 +14,7 @@ GameObject:
   m_Layer: 0
   m_Name: Door4
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -74,4 +74,5 @@ MonoBehaviour:
   sceneToSwitchToName: Room1
   transitionScreen: {fileID: 0}
   doorLeadsTo: {fileID: 7708642385186646135, guid: f0d5a9822de63674b824aafb6e833ff6, type: 3}
+  directionAfterEntering: -1
   keepData: {fileID: 11400000, guid: 9904ca074d59eee438bc2ee20e1e0134, type: 2}

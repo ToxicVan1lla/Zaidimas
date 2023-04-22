@@ -74,4 +74,5 @@ MonoBehaviour:
   sceneToSwitchToName: CleanerBoss
   transitionScreen: {fileID: 0}
   doorLeadsTo: {fileID: 3754616719163351741, guid: 634b66cfdd7d9d44da603bc709d78b8e, type: 3}
+  directionAfterEntering: 1
   keepData: {fileID: 11400000, guid: 9904ca074d59eee438bc2ee20e1e0134, type: 2}

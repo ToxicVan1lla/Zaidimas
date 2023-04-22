@@ -6,6 +6,7 @@ public class Door : MonoBehaviour
     [SerializeField] string sceneToSwitchToName;
     [SerializeField] GameObject transitionScreen;
     [SerializeField] Transform doorLeadsTo;
+    [SerializeField] public int directionAfterEntering;
     private Animator anim;
     private GameObject player;
     [SerializeField] private KeepData keepData;
@@ -30,7 +31,8 @@ public class Door : MonoBehaviour
     {
         keepData.enteredRoom = true;
         player.GetComponent<Movement>().detectInput = false;
-        keepData.facingDirection = (int)Mathf.Sign(player.transform.position.x) * 1;
+        //keepData.facingDirection = (int)Mathf.Sign(player.transform.position.x) * 1;
+        keepData.facingDirection = directionAfterEntering;
         keepData.health = playerHealth.health;
         anim.SetTrigger("Transition");
         manager.save = true;

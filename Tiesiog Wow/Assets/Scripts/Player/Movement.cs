@@ -14,7 +14,7 @@ public class Movement : MonoBehaviour, IDataPersistence
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
 
-    private float horizontalInput;
+    public float horizontalInput;
     private bool isFacingRight;
     private float accelerationSpeed = 7;
     private float decelerationSpeed = 7;
@@ -118,6 +118,7 @@ public class Movement : MonoBehaviour, IDataPersistence
             manager.save = true;
         }
 
+        anim.SetBool("Run", Mathf.Abs(body.velocity.x) > 0.5 && !onWall());
 
 
         if (!Menu.gameIsPaused && detectInput)
@@ -149,7 +150,6 @@ public class Movement : MonoBehaviour, IDataPersistence
                 anim.SetTrigger("Falling");
             if (Mathf.Abs(body.velocity.x) > 6 && isGrounded())
                 walkParticles.Play();
-            anim.SetBool("Run", Mathf.Abs(body.velocity.x) > 0.5 && !onWall());
             anim.SetBool("Grounded", isGrounded() && !playerAttack.isAttacking);
 
             if (isGrounded())
@@ -298,7 +298,7 @@ public class Movement : MonoBehaviour, IDataPersistence
 
     }
 
-    private void Flip()
+    public void Flip()
     {
         Vector3 scale = transform.localScale;
         scale.x *= -1;

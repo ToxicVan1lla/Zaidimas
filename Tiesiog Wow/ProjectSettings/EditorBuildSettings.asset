@@ -23,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CleanerBoss.unity
     guid: d40cccf5b8413a14ebde6a7da308882d
+  - enabled: 1
+    path: Assets/Scenes/Foje.unity
+    guid: e0e53e2b49d0c2842ad8740550a59b23
+  - enabled: 1
+    path: Assets/Scenes/IrenaKoridor.unity
+    guid: cb02e1e92171e5e43a8f0bd790c5253e
   m_configObjects: {}

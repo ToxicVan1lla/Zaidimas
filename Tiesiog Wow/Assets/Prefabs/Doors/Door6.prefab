@@ -74,4 +74,5 @@ MonoBehaviour:
   sceneToSwitchToName: Room2
   transitionScreen: {fileID: 0}
   doorLeadsTo: {fileID: 1064896690555291252, guid: a09e4e64326fbd841ba0d72e7ce93372, type: 3}
+  directionAfterEntering: -1
   keepData: {fileID: 11400000, guid: 9904ca074d59eee438bc2ee20e1e0134, type: 2}
