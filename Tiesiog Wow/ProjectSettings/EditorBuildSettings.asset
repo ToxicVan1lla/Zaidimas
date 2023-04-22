@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/IrenaKoridor.unity
     guid: cb02e1e92171e5e43a8f0bd790c5253e
+  - enabled: 1
+    path: Assets/Scenes/Irena_Kabinetas.unity
+    guid: 2fd110f7fb5cbac40bfa8ef095132ba3
   m_configObjects: {}
