@@ -4837,8 +4837,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -364719757
-  m_SortingLayer: 0
+  m_SortingLayerID: 1127990755
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -5053,7 +5053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a2f5902ff52bf149a2814ef98c01c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultSpeed: 9
+  defaultSpeed: 8
   jumpForce: 21
   slideSpeed: 2
   groundLayer:
@@ -5062,6 +5062,7 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 72
+  horizontalInput: 0
   dash: 0
   dashSpeed: 11
   dashTime: 0.2
@@ -5112,6 +5113,7 @@ MonoBehaviour:
   iFramesDuration: 1.5
   numberOfFlashes: 3
   keepData: {fileID: 11400000, guid: 9904ca074d59eee438bc2ee20e1e0134, type: 2}
+  potionHealth: 3
 --- !u!114 &5668186582637033486
 MonoBehaviour:
   m_ObjectHideFlags: 0

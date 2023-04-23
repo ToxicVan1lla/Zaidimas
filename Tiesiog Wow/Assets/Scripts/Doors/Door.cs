@@ -31,7 +31,6 @@ public class Door : MonoBehaviour
     {
         keepData.enteredRoom = true;
         player.GetComponent<Movement>().detectInput = false;
-        //keepData.facingDirection = (int)Mathf.Sign(player.transform.position.x) * 1;
         keepData.facingDirection = directionAfterEntering;
         keepData.health = playerHealth.health;
         anim.SetTrigger("Transition");
@@ -40,6 +39,7 @@ public class Door : MonoBehaviour
         keepData.positionX = doorLeadsTo.position.x;
         keepData.positionY = doorLeadsTo.position.y;
         SceneManager.LoadScene(sceneToSwitchToName);
+        
     }
     
 }

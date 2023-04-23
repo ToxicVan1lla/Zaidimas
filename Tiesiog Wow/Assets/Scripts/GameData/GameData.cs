@@ -12,6 +12,8 @@ public class GameData
     public string graveScene;
     public bool graveActive;
     public Vector2 gravePosition;
+    public bool hasPotions;
+    public int numberOfPotions;
     [Header("Boss")]
     public bool cleanerBossAlive;
     public GameData()
@@ -20,10 +22,12 @@ public class GameData
         this.graveActive = false;
         this.graveScene = "Room1";
         this.gravePosition = Vector2.zero;
-        this.sceneName = "Room1";
+        this.sceneName = "Foje";
         this.coins = 0;
         this.position = new Vector2(-7.03f, -2.76f);
         this.cleanerBossAlive = true;
+        this.hasPotions = true;
+        this.numberOfPotions = 5;
     }
 
 }

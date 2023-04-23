@@ -13,6 +13,10 @@ public class DialogController : MonoBehaviour
     private int index = 0;
     private float timeUntilSkip;
     [SerializeField] private Animator anim;
+    [SerializeField] Interaction[] interactions;
+    private int interactionIndex = 0;
+    private bool buttonsActive = false;
+    private bool chose = false;
 
     private void Start()
     {
@@ -39,30 +43,41 @@ public class DialogController : MonoBehaviour
             }
             anim.SetBool("Talk", true);
         }
-        if(isTalking && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space)) && timeUntilSkip < 0)
+        if (interactions.Length != 0 && index == interactions[interactionIndex].Index && !chose)
         {
-            if(isTyping)
+            buttonsActive = true;
+            activateButtons();
+            return;
+        }
+        if(isTalking && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space)) && timeUntilSkip < 0 && !buttonsActive)
+        {
+            skip();
+        }
+    }
+    private void skip()
+    {
+        if (isTyping)
+        {
+            isTyping = false;
+            StopCoroutine(coroutine);
+            text.text = messages[index];
+        }
+        else
+        {
+            chose = false;
+            index++;
+            text.text = "";
+            if (index >= messages.Length)
             {
-                isTyping = false;
-                StopCoroutine(coroutine);
-                text.text = messages[index];
+                canvas.SetActive(false);
+                index = 0;
+                isTalking = false;
+                player.GetComponent<Movement>().detectInput = true;
+                anim.SetBool("Talk", false);
+
             }
             else
-            {
-                text.text = "";
-                index++;
-                if (index >= messages.Length)
-                {
-                    canvas.SetActive(false);
-                    index = 0;
-                    isTalking = false;
-                    player.GetComponent<Movement>().detectInput = true;
-                    anim.SetBool("Talk", false);
-
-                }
-                else
-                    coroutine = StartCoroutine(writeText(index));
-            }
+                coroutine = StartCoroutine(writeText(index));
         }
     }
 
@@ -76,4 +91,28 @@ public class DialogController : MonoBehaviour
         }
         isTyping = false;
     }
+    private void activateButtons()
+    {
+        foreach (GameObject i in interactions[interactionIndex].Buttons)
+            i.SetActive(true);
+    }
+    public void deactivateButtons()
+    {
+        foreach (GameObject i in interactions[interactionIndex].Buttons)
+            i.SetActive(false);
+        interactionIndex++;
+        buttonsActive = false;
+        if (interactionIndex == interactions.Length)
+            interactionIndex = 0;
+        chose = true;
+        skip();
+    }
+
 }
+[System.Serializable]
+public class Interaction
+{
+    public int Index;
+    public GameObject[] Buttons;
+}
+

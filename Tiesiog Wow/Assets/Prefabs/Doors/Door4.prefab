@@ -73,6 +73,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneToSwitchToName: Room1
   transitionScreen: {fileID: 0}
-  doorLeadsTo: {fileID: 7708642385186646135, guid: f0d5a9822de63674b824aafb6e833ff6, type: 3}
+  doorLeadsTo: {fileID: 8939406889390745774, guid: 24d13eb821d37f04eac262fb0371f1c5, type: 3}
   directionAfterEntering: -1
   keepData: {fileID: 11400000, guid: 9904ca074d59eee438bc2ee20e1e0134, type: 2}

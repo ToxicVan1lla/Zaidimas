@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1301403463290019231
+--- !u!1 &7375487315384845004
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7708642385186646135}
-  - component: {fileID: 1728275951421026420}
-  - component: {fileID: 6112232858978020536}
+  - component: {fileID: 5207292111074887228}
+  - component: {fileID: 5206393820812662174}
+  - component: {fileID: 1249077438338190047}
   m_Layer: 0
   m_Name: Door3
   m_TagString: Untagged
-  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7708642385186646135
+--- !u!4 &5207292111074887228
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1301403463290019231}
+  m_GameObject: {fileID: 7375487315384845004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.02, y: -3.75, z: 0}
+  m_LocalPosition: {x: 18.76553, y: -3.640097, z: 9.956567}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1728275951421026420
+--- !u!61 &5206393820812662174
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1301403463290019231}
+  m_GameObject: {fileID: 7375487315384845004}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -59,20 +59,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.26464558, y: 1.5718942}
   m_EdgeRadius: 0
---- !u!114 &6112232858978020536
+--- !u!114 &1249077438338190047
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1301403463290019231}
+  m_GameObject: {fileID: 7375487315384845004}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fd357b811e55014c84a05b4ff4bee39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToSwitchToName: Room2
+  sceneToSwitchToName: Room3
   transitionScreen: {fileID: 0}
-  doorLeadsTo: {fileID: 1460281065455077004, guid: d1deb0ea8aebea54599703cbe5369180, type: 3}
+  doorLeadsTo: {fileID: 5167102822609483933, guid: 3a8f04a1165f8844399fd0a3b605a4c1, type: 3}
   directionAfterEntering: 1
   keepData: {fileID: 11400000, guid: 9904ca074d59eee438bc2ee20e1e0134, type: 2}

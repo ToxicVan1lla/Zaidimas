@@ -11,14 +11,19 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
     [SerializeField] private float iFramesDuration;
     [SerializeField] private int numberOfFlashes;
     [SerializeField] private KeepData keepData;
+    [SerializeField] private int potionHealth;
     private bool invulnerable;
     private Movement movement;
     private DataPersistanceManager manager;
     private bool Died = false;
     private bool switchScene = false;
     private PlayerCoins playerCoins;
+    private bool hasPotionsUnlocked;
+    public int numberOfPotions;
+    private bool isHealing;
     public void SaveData(ref GameData data)
     {
+        data.numberOfPotions = numberOfPotions;
         if(Died)
         {
             data.graveValue = playerCoins.coinAmount + playerCoins.coinsCollected;
@@ -34,6 +39,8 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
     }
     public void LoadData(GameData data)
     {
+        hasPotionsUnlocked = data.hasPotions;
+        numberOfPotions = data.numberOfPotions;
         if(switchScene)
         {
             switchScene = false;
@@ -51,6 +58,12 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         health = keepData.health;
         invulnerable = false;
 
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q) && hasPotionsUnlocked && numberOfPotions > 0 && health != maxHealth && !isHealing)
+            StartCoroutine(Heal());
     }
     public void takeDamagePlayer(float _damage)
     {
@@ -87,6 +100,25 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
         }
         Physics2D.IgnoreLayerCollision(7, 8, false);
         invulnerable = false;
+
+    }
+
+    private IEnumerator Heal()
+    {
+        numberOfPotions--;
+        manager.save = true;
+        manager.load = true;
+        isHealing = true;
+        for(int i=0;i<potionHealth;i++)
+        {
+            if(health < maxHealth)
+            {
+                health++;
+                yield return new WaitForSeconds(0.4f);
+
+            }
+        }
+        isHealing = false;
 
     }
 }
