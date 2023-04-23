@@ -1,9 +1,19 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Menu : MonoBehaviour
+public class Menu : MonoBehaviour,IDataPersistence
 {
     public static bool gameIsPaused = false;
     public GameObject menu;
+    private string newscene;
+    public void LoadData(GameData data)
+    {
+        newscene = data.sceneName;
+    }
+    public void SaveData(ref GameData data)
+    {
+       
+    }
     private void Start()
     {
         menu.SetActive(true);
@@ -28,7 +38,10 @@ public class Menu : MonoBehaviour
         Time.timeScale = 1;
         gameIsPaused = false;
     }
-
+    public void StartGame()
+    {
+        SceneManager.LoadScene("Foje");
+    }
     public void Pause()
     {
         menu.SetActive(true);
