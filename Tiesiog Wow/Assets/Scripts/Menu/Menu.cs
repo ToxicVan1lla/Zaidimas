@@ -5,19 +5,45 @@ public class Menu : MonoBehaviour,IDataPersistence
 {
     public static bool gameIsPaused = false;
     public GameObject menu;
-    private string newscene;
+    public bool startMenu;
+    private DataPersistanceManager manager;
+    private bool startNewGame = false;
+    [SerializeField] PlayerCoins coins;
+    [SerializeField] DisplayHealthPotions potions;
+    [SerializeField] KeepData keepData;
+
     public void LoadData(GameData data)
     {
-        newscene = data.sceneName;
+
     }
     public void SaveData(ref GameData data)
     {
-       
+        if(startNewGame)
+        {
+            keepData.enteredRoom = false;
+            potions.numberOfPotions = 0;
+            coins.coinAmount = 30;
+            data.graveValue = 0;
+            data.graveActive = false;
+            data.graveScene = "Room1";
+            data.gravePosition = Vector2.zero;
+            data.sceneName = "Foje";
+            data.coins = 30;
+            data.position =  new Vector2(4.43f, 0f);
+            data.cleanerBossAlive = true;
+            data.hasPotions = true;
+            data.numberOfPotions = 0;
+
+        }
     }
     private void Start()
     {
-        menu.SetActive(true);
-        menu.SetActive(false);
+        if(!startMenu)
+        {
+            menu.SetActive(true);
+            menu.SetActive(false);
+            manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
+        }
     }
     private void Update()
     {
@@ -51,5 +77,18 @@ public class Menu : MonoBehaviour,IDataPersistence
     public void Quit()
     {
         Application.Quit();
+    }
+
+    public void returnToStartMenu()
+    {
+        Resume();
+        SceneManager.LoadScene("Start_Menu");
+    }
+
+    public void newGame()
+    {
+        startNewGame = true;
+        manager.save = true;
+        returnToStartMenu();
     }
 }

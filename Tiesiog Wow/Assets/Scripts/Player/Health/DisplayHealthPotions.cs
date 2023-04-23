@@ -7,7 +7,7 @@ public class DisplayHealthPotions : MonoBehaviour, IDataPersistence
 {
     [SerializeField] PlayerHealth playerHealth;
     private TextMeshProUGUI displayPotions;
-    private int numberOfPotions;
+    public int numberOfPotions;
     public void LoadData(GameData data)
     {
         numberOfPotions = data.numberOfPotions;

@@ -32,7 +32,6 @@ public class BuyHeals : MonoBehaviour, IDataPersistence
         if (playerCoins.coinAmount >= potionCost)
         {
             playerCoins.coinAmount -= potionCost;
-            dialog.deactivateButtons();
             bought = true;
             manager.save = true;
             manager.load = true;
@@ -42,7 +41,7 @@ public class BuyHeals : MonoBehaviour, IDataPersistence
     }
     public void DontBuy()
     {
-        text.SetActive(false);
         dialog.deactivateButtons();
+        text.SetActive(false);
     }
 }

@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 407454311}
   - component: {fileID: 407454310}
   - component: {fileID: 407454309}
+  - component: {fileID: 407454312}
   m_Layer: 5
   m_Name: ButtonExit
   m_TagString: Untagged
@@ -425,7 +426,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 407454310}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1735867363}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: Quit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &407454310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,6 +477,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407454307}
   m_CullTransparentMesh: 1
+--- !u!114 &407454312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407454307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2064480584}
+          m_TargetAssemblyTypeName: MenuArrow, Assembly-CSharp
+          m_MethodName: hoverOver
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 407454308}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1508268770
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,8 +670,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e74392a7af76394c84aee2297772451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menu: {fileID: 0}
-  newscene: 
+  menu: {fileID: 1869711885}
+  startMenu: 1
 --- !u!4 &1735867364
 Transform:
   m_ObjectHideFlags: 0
@@ -657,6 +699,7 @@ GameObject:
   - component: {fileID: 1801196543}
   - component: {fileID: 1801196542}
   - component: {fileID: 1801196541}
+  - component: {fileID: 1801196544}
   m_Layer: 5
   m_Name: ButtonOptions
   m_TagString: Untagged
@@ -767,6 +810,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1801196539}
   m_CullTransparentMesh: 1
+--- !u!114 &1801196544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801196539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2064480584}
+          m_TargetAssemblyTypeName: MenuArrow, Assembly-CSharp
+          m_MethodName: hoverOver
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1801196540}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1805333103
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,6 +1158,7 @@ GameObject:
   - component: {fileID: 2027633812}
   - component: {fileID: 2027633811}
   - component: {fileID: 2027633810}
+  - component: {fileID: 2027633813}
   m_Layer: 5
   m_Name: ButtonStart
   m_TagString: Untagged
@@ -1157,7 +1230,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2027633811}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1735867363}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2027633811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1196,6 +1281,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2027633808}
   m_CullTransparentMesh: 1
+--- !u!114 &2027633813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027633808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2064480584}
+          m_TargetAssemblyTypeName: MenuArrow, Assembly-CSharp
+          m_MethodName: hoverOver
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 2027633809}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2064480582
 GameObject:
   m_ObjectHideFlags: 0

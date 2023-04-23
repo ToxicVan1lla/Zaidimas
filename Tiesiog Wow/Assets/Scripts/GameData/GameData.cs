@@ -23,11 +23,11 @@ public class GameData
         this.graveScene = "Room1";
         this.gravePosition = Vector2.zero;
         this.sceneName = "Foje";
-        this.coins = 0;
-        this.position = new Vector2(-7.03f, -2.76f);
+        this.coins = 30;
+        this.position = new Vector2(4.43f, 0f);
         this.cleanerBossAlive = true;
         this.hasPotions = true;
-        this.numberOfPotions = 5;
+        this.numberOfPotions = 0;
     }
 
 }
