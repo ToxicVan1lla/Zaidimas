@@ -21,7 +21,6 @@ public class Menu : MonoBehaviour,IDataPersistence
         if(startNewGame)
         {
             keepData.enteredRoom = false;
-            potions.numberOfPotions = 0;
             coins.coinAmount = 30;
             data.graveValue = 0;
             data.graveActive = false;

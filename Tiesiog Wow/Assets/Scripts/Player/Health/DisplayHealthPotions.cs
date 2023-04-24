@@ -7,25 +7,45 @@ public class DisplayHealthPotions : MonoBehaviour, IDataPersistence
 {
     [SerializeField] PlayerHealth playerHealth;
     private TextMeshProUGUI displayPotions;
-    public int numberOfPotions;
+    private int numberOfPotions;
+    private bool bought = false;
+    private bool paimti = true;
+    private DataPersistanceManager manager;
+
+
     public void LoadData(GameData data)
     {
-        numberOfPotions = data.numberOfPotions;
+        if (paimti)
+        {
+            numberOfPotions = data.numberOfPotions;
+            paimti = false;
+        }
     }
-
     public void SaveData(ref GameData data)
     {
-
+        if (bought)
+        {
+            Debug.Log(numberOfPotions);
+            data.numberOfPotions = numberOfPotions;
+            bought = false;
+        }
     }
 
     private void Start()
     {
         displayPotions = gameObject.GetComponent<TextMeshProUGUI>();
+        manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
     }
 
     private void Update()
     {
         displayPotions.text = numberOfPotions.ToString();
+    }
+    public void addPotions(int amount)
+    {
+        numberOfPotions += amount;
+        bought = true;
+        manager.save = true;
     }
 
 }

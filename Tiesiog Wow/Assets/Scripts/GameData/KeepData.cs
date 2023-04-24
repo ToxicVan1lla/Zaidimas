@@ -14,6 +14,7 @@ public class KeepData : ScriptableObject
     public string graveScene;
     public float graveX, graveY;
     public int graveValue;
+    public int healNumber;
     private void OnEnable()
     {
         positionX = checkpointX = -7.03f;
@@ -23,5 +24,6 @@ public class KeepData : ScriptableObject
         enteredRoom = false;
         checkpointSceneName = "Room1";
         coinAmount = 0;
+        healNumber = 0;
     }
 }

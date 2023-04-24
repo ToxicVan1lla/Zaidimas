@@ -7,6 +7,7 @@ public class BuyHeals : MonoBehaviour, IDataPersistence
     [SerializeField] private DialogController dialog;
     [SerializeField] private PlayerCoins playerCoins;
     [SerializeField] private GameObject text;
+    [SerializeField] DisplayHealthPotions potion;
     private DataPersistanceManager manager;
     private bool bought;
     
@@ -16,11 +17,7 @@ public class BuyHeals : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
-        if(bought)
-        {
-            data.numberOfPotions++;
-            bought = false;
-        }
+
     }
     private void Start()
     {
@@ -32,6 +29,7 @@ public class BuyHeals : MonoBehaviour, IDataPersistence
         if (playerCoins.coinAmount >= potionCost)
         {
             playerCoins.coinAmount -= potionCost;
+            potion.addPotions(1);
             bought = true;
             manager.save = true;
             manager.load = true;

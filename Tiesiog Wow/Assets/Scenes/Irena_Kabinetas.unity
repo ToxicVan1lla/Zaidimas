@@ -1126,11 +1126,11 @@ PrefabInstance:
     - target: {fileID: 2297715239296572443, guid: 08e778f75e3c3fc4491c4bd6f8d46627, type: 3}
       propertyPath: messages.Array.data[0]
       value: "Tai tu tas dr\u0105suolis? \u0160e nusipirk eleksyr\u0105 u\u017E 10
-        eur\u0173, kuris paspaudus \"Q\" gr\u0105\u017Einsgyvyb\u0119."
+        eur\u0173, kuris paspaudus \"Q\" gr\u0105\u017Eins gyvyb\u0119."
       objectReference: {fileID: 0}
     - target: {fileID: 2297715239296572443, guid: 08e778f75e3c3fc4491c4bd6f8d46627, type: 3}
       propertyPath: messages.Array.data[1]
-      value: "Lauksiu sugr\u012F\u017Etan\u010Dio."
+      value: "O dabar \u017Eygiuok pro pagrindines duris \u012F kov\u0105!"
       objectReference: {fileID: 0}
     - target: {fileID: 2297715239296572443, guid: 08e778f75e3c3fc4491c4bd6f8d46627, type: 3}
       propertyPath: interactions.Array.size
@@ -1717,6 +1717,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 694c9b2c3b8d7ed4c92cedc37bc3d417, type: 3}
+--- !u!114 &1338070101 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7840419397115006661, guid: 37e55b0d7e18bec498d98a3da06a4995, type: 3}
+  m_PrefabInstance: {fileID: 1637785850}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7db6a5182c7dbd40a008473c17a949e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1340611736
 GameObject:
   m_ObjectHideFlags: 0
@@ -2742,10 +2753,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373b397ca444e9d4799247405b7e5718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potionCost: 5
+  potionCost: 10
   dialog: {fileID: 2056820832}
   playerCoins: {fileID: 1060364287}
   text: {fileID: 2006907848}
+  potion: {fileID: 1338070101}
 --- !u!1 &2089851294
 GameObject:
   m_ObjectHideFlags: 0

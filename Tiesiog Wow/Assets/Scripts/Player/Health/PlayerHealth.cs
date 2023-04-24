@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
     [SerializeField] private int numberOfFlashes;
     [SerializeField] private KeepData keepData;
     [SerializeField] private int potionHealth;
+    private DisplayHealthPotions displayPotions;
     private bool invulnerable;
     private Movement movement;
     private DataPersistanceManager manager;
@@ -19,11 +20,12 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
     private bool switchScene = false;
     private PlayerCoins playerCoins;
     private bool hasPotionsUnlocked;
-    public int numberOfPotions;
+    private int numberOfPotions;
     private bool isHealing;
+    private bool heal = false;
     public void SaveData(ref GameData data)
     {
-        data.numberOfPotions = numberOfPotions;
+
         if(Died)
         {
             data.graveValue = playerCoins.coinAmount + playerCoins.coinsCollected;
@@ -50,6 +52,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
 
     void Start()
     {
+        displayPotions = GameObject.Find("HealthPotions").GetComponent<DisplayHealthPotions>();
         playerCoins = GameObject.Find("CoinAmount").GetComponent<PlayerCoins>();
         manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
         movement = gameObject.GetComponent<Movement>();
@@ -105,7 +108,9 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
 
     private IEnumerator Heal()
     {
+        heal = true;
         numberOfPotions--;
+        displayPotions.addPotions(-1);
         manager.save = true;
         manager.load = true;
         isHealing = true;
