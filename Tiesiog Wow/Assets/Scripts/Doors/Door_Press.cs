@@ -43,6 +43,7 @@ public class Door_Press : MonoBehaviour
     {
         keepData.enteredRoom = true;
         player.GetComponent<Movement>().detectInput = false;
+        player.GetComponent<Movement>().horizontalInput = 0;
         keepData.facingDirection = directionAfterEntering;
         keepData.health = playerHealth.health;
         anim.SetTrigger("Transition");

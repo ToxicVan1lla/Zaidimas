@@ -237,6 +237,15 @@ public class CleanerControl : EnemyMove, IDataPersistence
                         moveToCenter = true;
                     }
                     transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, groundY + 1.4f), 3 * Time.deltaTime);
+                    if(enemyHealth.health <= 0)
+                    {
+                        wingsAnim.speed = 1;
+                        timeUntilLandCounter = timeUntilLand;
+                        land = false;
+                        timeLanded = timeToSpendLanded;
+                        moveToCenter = true;
+                    }
+
                     return;
                 }
                 if(!land)

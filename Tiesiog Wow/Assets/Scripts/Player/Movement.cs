@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour, IDataPersistence
 {
-    [SerializeField] private float defaultSpeed;
-    private float speed;
+    [SerializeField] public float defaultSpeed;
+    [HideInInspector] public float speed;
     [SerializeField] private float jumpForce;
     [SerializeField] private float slideSpeed;
     [SerializeField] private LayerMask groundLayer;
@@ -16,7 +16,7 @@ public class Movement : MonoBehaviour, IDataPersistence
 
     public float horizontalInput;
     private bool isFacingRight;
-    private float accelerationSpeed = 7;
+    private float accelerationSpeed = 6.5f;
     private float decelerationSpeed = 7;
     private float accelerationInAir = 10;
     private float decelerationInAir = 20;
@@ -56,6 +56,7 @@ public class Movement : MonoBehaviour, IDataPersistence
     private DataPersistanceManager manager;
 
     private bool removeGrave = false;
+
 
     public void LoadData(GameData data)
     {
@@ -111,7 +112,6 @@ public class Movement : MonoBehaviour, IDataPersistence
 
     void Update()
     {
-
         if (onGrave && Input.GetKeyDown(KeyCode.E))
         {
             removeGrave = true;
@@ -130,7 +130,7 @@ public class Movement : MonoBehaviour, IDataPersistence
             dashCounter += Time.deltaTime;
 
             if (hasControl)
-                if (horizontalInput != 0 && (horizontalInput > 0) != isFacingRight)
+                if (horizontalInput != 0 && (horizontalInput > 0) != isFacingRight && !playerAttack.isAttacking)
                 {
                     Flip();
                 }
@@ -324,7 +324,7 @@ public class Movement : MonoBehaviour, IDataPersistence
     }
     public void endDash()
     {
-        if (onWall())
+        if (onWall() && canWallSlide)
             isWallSliding = true;
         numberOfDashes = 0;
         spr.color = Color.white;
@@ -341,9 +341,10 @@ public class Movement : MonoBehaviour, IDataPersistence
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if ((collision.tag == "Wall" || collision.tag == "Ground") && isWallSliding)
+        if ((collision.tag == "Wall" || collision.tag == "Ground"))
         {
-            isWallSliding = false;
+            if(isWallSliding)
+                isWallSliding = false;
             canWallSlide = false;
         }
         if (collision.tag == "Grave")

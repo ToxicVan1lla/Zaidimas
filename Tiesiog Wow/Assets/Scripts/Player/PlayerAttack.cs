@@ -13,6 +13,7 @@ public class PlayerAttack : MonoBehaviour
     private float attackRateCounter;
     [HideInInspector] public bool isAttacking;
     private Movement movement;
+    [HideInInspector] public bool canAttack = true;
 
     private Animator animator;
 
@@ -28,9 +29,9 @@ public class PlayerAttack : MonoBehaviour
     {
         if(!Menu.gameIsPaused && movement.detectInput)
         {
-            attack = Input.GetButtonDown("Fire1");
+            attack = Input.GetKeyDown(KeyCode.Mouse0);
 
-            if (attack && attackRateCounter > attackRateTime && !isAttacking && !movement.dash)
+            if (canAttack && attack && attackRateCounter > attackRateTime && !isAttacking && !movement.dash)
             {
                 isAttacking = true;
                 animator.SetBool("Attack", true);

@@ -1,11 +1,12 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class EnemyMove : MonoBehaviour
 {
     [SerializeField] public float speed;
     [SerializeField] private int coinAmount;
     [SerializeField] public bool detectEdges;
+    [SerializeField] public float attackCooldownTime;
+    private float attackCooldownCounter;
     public float damage;
     public float repelForce;
     [HideInInspector] public float stopCounter;
@@ -20,7 +21,7 @@ public class EnemyMove : MonoBehaviour
     private PlayerHealth playerHealth;
     private Movement movement;
     private CoinSpawn coinSpawn;
-    Tilemap tilemap;
+    private Shield shield;
     private void Awake()
     {
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
@@ -31,6 +32,7 @@ public class EnemyMove : MonoBehaviour
         movement = player.GetComponent<Movement>();
         playerHealth = player.GetComponent<PlayerHealth>();
         coinSpawn = gameObject.GetComponent<CoinSpawn>();
+        shield = player.GetComponent<Shield>();
     }
 
     public void Move()
@@ -52,22 +54,51 @@ public class EnemyMove : MonoBehaviour
             enemyBody.velocity = new Vector2(Mathf.Sign(transform.localScale.x) * speed, enemyBody.velocity.y);
 
         }
+        attackCooldownCounter -= Time.deltaTime;
 
     }
 
     public void Attack()
     {
-        int directionX = (playerCollider.bounds.min.x > boxCollider.bounds.min.x) ? 1 : -1;
-        int directionY = (playerCollider.bounds.min.y < boxCollider.bounds.min.y) ? -1 : 1;
-        if(movement.dash)
-            movement.endDash();
-        if(repelForce!=0)
-        playerBody.velocity = Vector2.zero;
+        if (attackCooldownCounter <= 0)
+            attackCooldownCounter = attackCooldownTime;
+        else return;
 
-        playerBody.AddForce(repelForce * directionX * Vector2.right, ForceMode2D.Impulse);
-        playerBody.AddForce(repelForce * directionY * Vector2.up, ForceMode2D.Impulse);
+        bool playerisFacing = false;
 
-        playerHealth.takeDamagePlayer(damage);
+        if (player.transform.position.x > transform.position.x && player.transform.localScale.x < 0)
+            playerisFacing = true;
+        if (player.transform.position.x < transform.position.x && player.transform.localScale.x > 0)
+            playerisFacing = true;
+
+        if (!shield.shieldAcitve || !playerisFacing)
+        {
+            int directionX = (playerCollider.bounds.min.x > boxCollider.bounds.min.x) ? 1 : -1;
+            int directionY = (playerCollider.bounds.min.y < boxCollider.bounds.min.y) ? -1 : 1;
+            if(movement.dash)
+                movement.endDash();
+            if(repelForce!=0)
+            playerBody.velocity = Vector2.zero;
+
+            playerBody.AddForce(repelForce * directionX * Vector2.right, ForceMode2D.Impulse);
+            playerBody.AddForce(repelForce * directionY * Vector2.up, ForceMode2D.Impulse);
+
+            playerHealth.takeDamagePlayer(damage);
+        }
+        else if(shield.shieldAcitve)
+        {
+            if (stopsWhenHit)
+            {
+                stopCounter = 0.3f;
+                enemyBody.velocity = new Vector2(0, 0);
+            }
+            int directionX = (playerCollider.bounds.min.x > boxCollider.bounds.min.x) ? -1 : 1;
+            int directionY = 1;
+            enemyBody.AddForce(Mathf.Max(0, 5 - repelResistanceX * 0.5f) * directionX * Vector2.right, ForceMode2D.Impulse);
+            enemyBody.AddForce(Mathf.Max(0, 2 - repelResistanceY * 0.5f) * directionY * Vector2.up, ForceMode2D.Impulse);
+            shield.deactivateShield();
+            
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -78,22 +109,6 @@ public class EnemyMove : MonoBehaviour
             Flip();
         }
     }
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.CompareTag("Wall") && detectEdges)
-    //    {
-    //        Vector3Int cellPosition = tilemap.WorldToCell(collision.transform.position);
-    //        Vector3 cellCenterPosition = tilemap.GetCellCenterWorld(cellPosition);
-
-    //        if (cellCenterPosition.y >= transform.position.y)
-    //        {
-    //            Debug.Log(cellCenterPosition.y + " " + transform.position.y);
-    //            Flip();
-    //        }
-    //    }
-    //}
-
-
 
     public void Flip()
     {

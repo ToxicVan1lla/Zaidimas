@@ -65,6 +65,8 @@ public class Menu : MonoBehaviour,IDataPersistence
     }
     public void StartGame()
     {
+        keepData.enteredRoom = false;
+        keepData.health = 5;
         SceneManager.LoadScene("Foje");
     }
     public void Pause()

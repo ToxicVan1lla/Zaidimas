@@ -672,6 +672,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 1869711885}
   startMenu: 1
+  coins: {fileID: 0}
+  potions: {fileID: 0}
+  keepData: {fileID: 11400000, guid: 9904ca074d59eee438bc2ee20e1e0134, type: 2}
 --- !u!4 &1735867364
 Transform:
   m_ObjectHideFlags: 0

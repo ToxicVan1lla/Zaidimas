@@ -6340,6 +6340,7 @@ MonoBehaviour:
   speed: -2
   coinAmount: 50
   detectEdges: 0
+  attackCooldownTime: 0.1
   damage: 1
   repelForce: 5
   stopCounter: 0

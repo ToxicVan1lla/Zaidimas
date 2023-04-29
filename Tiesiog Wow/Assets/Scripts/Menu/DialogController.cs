@@ -49,7 +49,7 @@ public class DialogController : MonoBehaviour
             activateButtons();
             return;
         }
-        if(isTalking && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space)) && timeUntilSkip < 0 && !buttonsActive)
+        if(isTalking && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Space)) && timeUntilSkip < 0)
         {
             skip();
         }
@@ -62,7 +62,7 @@ public class DialogController : MonoBehaviour
             StopCoroutine(coroutine);
             text.text = messages[index];
         }
-        else
+        else if(!buttonsActive)
         {
             chose = false;
             index++;
@@ -105,6 +105,8 @@ public class DialogController : MonoBehaviour
         if (interactionIndex == interactions.Length)
             interactionIndex = 0;
         chose = true;
+        if(isTyping)
+            skip();
         skip();
     }
 

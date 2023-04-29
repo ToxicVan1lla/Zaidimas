@@ -180,9 +180,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d17c07e6e522e747bb30d076ca7784f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6.5
+  speed: 6
   coinAmount: 4
   detectEdges: 0
+  attackCooldownTime: 0.2
   damage: 1
   repelForce: 15
   stopCounter: 0
