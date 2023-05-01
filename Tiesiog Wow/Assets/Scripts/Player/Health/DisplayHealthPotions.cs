@@ -25,7 +25,6 @@ public class DisplayHealthPotions : MonoBehaviour, IDataPersistence
     {
         if (bought)
         {
-            Debug.Log(numberOfPotions);
             data.numberOfPotions = numberOfPotions;
             bought = false;
         }

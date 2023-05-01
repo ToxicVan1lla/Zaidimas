@@ -176,6 +176,9 @@ public class CleanerControl : EnemyMove, IDataPersistence
             {
                 Destroy(GO);
                 StopAllCoroutines();
+                player.GetComponent<Movement>().playerAttack.noCooldown = false;
+                player.GetComponent<Movement>().playerAttack.attackSpeed = 1;
+                Time.timeScale = 1;
                 anim.SetTrigger("Transform");
                 stage1 = false;
                 enemyBody.gravityScale = 0;

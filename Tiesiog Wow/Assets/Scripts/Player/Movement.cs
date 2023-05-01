@@ -6,7 +6,8 @@ public class Movement : MonoBehaviour, IDataPersistence
 {
     [SerializeField] public float defaultSpeed;
     [HideInInspector] public float speed;
-    [SerializeField] private float jumpForce;
+    [SerializeField] public float DefaultjumpForce;
+    [HideInInspector] public float jumpForce;
     [SerializeField] private float slideSpeed;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
@@ -35,7 +36,7 @@ public class Movement : MonoBehaviour, IDataPersistence
     private float jumpBufferCounter;
 
     private bool hasControl = true;
-    private PlayerAttack playerAttack;
+    [HideInInspector] public PlayerAttack playerAttack;
 
     private int numberOfDashes = 1;
     public bool dash = false;
@@ -44,6 +45,8 @@ public class Movement : MonoBehaviour, IDataPersistence
     [SerializeField] private float dashTime;
     [SerializeField] SpriteRenderer spr;
     [SerializeField] private float howLongDoesDashLast;
+    public bool canDash = true;
+
     [SerializeField] KeepData keepData;
 
     [SerializeField] GameObject Grave;
@@ -85,9 +88,11 @@ public class Movement : MonoBehaviour, IDataPersistence
 
     void Start()
     {
+        Time.timeScale = 1;
         manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
         playerCoins = GameObject.Find("CoinAmount").GetComponent<PlayerCoins>();
         speed = defaultSpeed;
+        jumpForce = DefaultjumpForce;
         playerAttack = gameObject.GetComponent<PlayerAttack>();
         body = gameObject.GetComponent<Rigidbody2D>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
@@ -125,7 +130,7 @@ public class Movement : MonoBehaviour, IDataPersistence
         {
             horizontalInput = Input.GetAxisRaw("Horizontal");
 
-            if (Input.GetKeyDown("left shift") && !playerAttack.isAttacking)
+            if (Input.GetKeyDown("left shift") && !playerAttack.isAttacking && canDash)
                 dash = true;
             dashCounter += Time.deltaTime;
 
@@ -177,7 +182,6 @@ public class Movement : MonoBehaviour, IDataPersistence
     {
         if (dash && dashCounter > dashTime)
         {
-            spr.color = Color.blue;
             hasControl = false;
             Dash();
         }
@@ -327,7 +331,6 @@ public class Movement : MonoBehaviour, IDataPersistence
         if (onWall() && canWallSlide)
             isWallSliding = true;
         numberOfDashes = 0;
-        spr.color = Color.white;
         dash = false;
         dashCounter = 0;
         anim.SetBool("Dash", false);
@@ -366,5 +369,4 @@ public class Movement : MonoBehaviour, IDataPersistence
         detectInput = true;
         speed = defaultSpeed;
     }
-
 }

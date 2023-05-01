@@ -24,7 +24,7 @@ public class GameData
         this.gravePosition = Vector2.zero;
         this.sceneName = "Foje";
         this.coins = 30;
-        this.position = new Vector2(4.43f, 0f);
+        this.position = new Vector2(4.43f, -1.5f);
         this.cleanerBossAlive = true;
         this.hasPotions = true;
         this.numberOfPotions = 0;

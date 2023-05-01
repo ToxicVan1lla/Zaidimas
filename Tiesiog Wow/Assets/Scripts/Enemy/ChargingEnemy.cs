@@ -44,8 +44,9 @@ public class ChargingEnemy : EnemyMove
             turnAround = false;
 
         Move();
-        if (boxCollider.IsTouching(playerCollider) || circleCollider.IsTouching(playerCollider))
+        if (boxCollider.IsTouching(playerCollider) || circleCollider.IsTouching(playerCollider) || blocked)
         {
+            blocked = false;
             Attack();
             if(isRollingForwards)
             {

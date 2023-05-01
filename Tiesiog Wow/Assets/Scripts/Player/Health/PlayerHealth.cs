@@ -93,6 +93,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
     {
         invulnerable = true;
         Physics2D.IgnoreLayerCollision(7, 8, true);
+        Physics2D.IgnoreLayerCollision(11, 8, true);
         for (int i = 0; i < numberOfFlashes; i++)
         {
             spriteRend.color = new Color(1, 0, 0, 0.5f);
@@ -102,6 +103,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
 
         }
         Physics2D.IgnoreLayerCollision(7, 8, false);
+        Physics2D.IgnoreLayerCollision(11, 8, false);
         invulnerable = false;
 
     }

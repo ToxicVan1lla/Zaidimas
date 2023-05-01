@@ -38,20 +38,23 @@ public class Door_Press : MonoBehaviour
     {
         if(collision.tag == "Player")
             StandingOnDoor = false;
-    } 
+    }
     private IEnumerator Transition()
     {
         keepData.enteredRoom = true;
         player.GetComponent<Movement>().detectInput = false;
         player.GetComponent<Movement>().horizontalInput = 0;
+        player.GetComponent<Movement>().detectInput = false;
         keepData.facingDirection = directionAfterEntering;
         keepData.health = playerHealth.health;
         anim.SetTrigger("Transition");
-        manager.save = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.8f);
         keepData.positionX = doorLeadsTo.position.x;
         keepData.positionY = doorLeadsTo.position.y;
+        manager.save = true;
+        yield return new WaitForSeconds(0.2f);
         SceneManager.LoadScene(sceneToSwitchToName);
+
     }
 
 }   

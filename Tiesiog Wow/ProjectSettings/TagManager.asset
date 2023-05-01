@@ -4,12 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ladder
   - Ground
   - Wall
   - Enemy
   - Grave
   - UI
+  - Shield
   layers:
   - Default
   - TransparentFX
@@ -22,7 +22,7 @@ TagManager:
   - Enemy
   - Coin
   - InteractsOnlyWithGround
-  - 
+  - Shield
   - 
   - 
   - 

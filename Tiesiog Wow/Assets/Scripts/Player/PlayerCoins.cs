@@ -11,6 +11,7 @@ public class PlayerCoins : MonoBehaviour, IDataPersistence
     private float transferTime = 1;
     private float transferCounter;
     private GameObject text;
+    private int coinsLeft = 0;
 
     public void LoadData(GameData data)
     {
@@ -21,7 +22,7 @@ public class PlayerCoins : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
-        data.coins = coinAmount + coinsCollected;
+        data.coins = (int)Mathf.Clamp(coinAmount + coinsLeft, 0, Mathf.Infinity);
     }
 
     private void Awake()
@@ -58,10 +59,11 @@ public class PlayerCoins : MonoBehaviour, IDataPersistence
     }
     private IEnumerator Transfer()
     {
-        
+        coinsLeft = coinsCollected;
         for (int i=1;i<=coinsCollected;i++)
         {
             coinAmount++;
+            coinsLeft--;
             displayCoins.text = coinAmount.ToString();
             displayCollectedCoins.text = "+" + (coinsCollected - i).ToString();
             yield return new WaitForSeconds(0.5f / coinsCollected);

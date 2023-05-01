@@ -34,12 +34,13 @@ public class Door : MonoBehaviour
         keepData.facingDirection = directionAfterEntering;
         keepData.health = playerHealth.health;
         anim.SetTrigger("Transition");
-        manager.save = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.8f);
         keepData.positionX = doorLeadsTo.position.x;
         keepData.positionY = doorLeadsTo.position.y;
+        manager.save = true;
+        yield return new WaitForSeconds(0.2f);
         SceneManager.LoadScene(sceneToSwitchToName);
-        
+
     }
-    
+
 }

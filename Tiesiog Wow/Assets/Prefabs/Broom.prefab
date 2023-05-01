@@ -150,6 +150,7 @@ MonoBehaviour:
   speed: 0
   coinAmount: 0
   detectEdges: 0
+  attackCooldownTime: 0
   damage: 1
   repelForce: 0
   stopCounter: 0
@@ -161,6 +162,8 @@ MonoBehaviour:
   repelResistanceX: 0
   repelResistanceY: 0
   stopsWhenHit: 0
+  blocked: 0
+  health: {fileID: 0}
   direction: 0
   accelataration: 70
   maxSpeed: 35

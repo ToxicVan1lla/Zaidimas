@@ -14,11 +14,15 @@ public class PlayerAttack : MonoBehaviour
     [HideInInspector] public bool isAttacking;
     private Movement movement;
     [HideInInspector] public bool canAttack = true;
+    public float attackSpeed;
+    public bool noCooldown;
+    private int counter;
 
     private Animator animator;
 
     private void Start()
     {
+        attackSpeed = 1;
         movement = gameObject.GetComponent<Movement>();
         collider = gameObject.GetComponent<BoxCollider2D>();
         animator = gameObject.GetComponent<Animator>();
@@ -31,9 +35,12 @@ public class PlayerAttack : MonoBehaviour
         {
             attack = Input.GetKeyDown(KeyCode.Mouse0);
 
-            if (canAttack && attack && attackRateCounter > attackRateTime && !isAttacking && !movement.dash)
+            if (canAttack && attack && (attackRateCounter > attackRateTime || noCooldown) && !isAttacking && !movement.dash)
             {
+                counter++;
+                Debug.Log(counter);
                 isAttacking = true;
+                animator.speed = attackSpeed;
                 animator.SetBool("Attack", true);
             
             }
@@ -45,6 +52,7 @@ public class PlayerAttack : MonoBehaviour
     }
     private void finishAttack()
     {
+        animator.speed = 1;
         isAttacking = false;
         animator.SetBool("Attack", false);
         attackRateCounter = 0;

@@ -28,7 +28,7 @@ public class Menu : MonoBehaviour,IDataPersistence
             data.gravePosition = Vector2.zero;
             data.sceneName = "Foje";
             data.coins = 30;
-            data.position =  new Vector2(4.43f, 0f);
+            data.position =  new Vector2(4.43f, -1.5f);
             data.cleanerBossAlive = true;
             data.hasPotions = true;
             data.numberOfPotions = 0;

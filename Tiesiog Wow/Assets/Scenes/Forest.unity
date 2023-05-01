@@ -1305,6 +1305,10 @@ PrefabInstance:
       propertyPath: jumpForce
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 5668186582637033473, guid: cb2d0cfe3a434944180947ee0e436a1c, type: 3}
+      propertyPath: DefaultjumpForce
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 5668186582637033477, guid: cb2d0cfe3a434944180947ee0e436a1c, type: 3}
       propertyPath: m_RootOrder
       value: 2

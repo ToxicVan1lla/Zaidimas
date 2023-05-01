@@ -5057,6 +5057,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultSpeed: 8
   speed: 0
+  DefaultjumpForce: 21
   jumpForce: 21
   slideSpeed: 2
   groundLayer:
@@ -5066,11 +5067,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 72
   horizontalInput: 0
+  playerAttack: {fileID: 0}
   dash: 0
   dashSpeed: 11
   dashTime: 0.2
   spr: {fileID: 5668186582637033476}
   howLongDoesDashLast: 0.19
+  canDash: 1
   keepData: {fileID: 11400000, guid: 9904ca074d59eee438bc2ee20e1e0134, type: 2}
   Grave: {fileID: 9052186884879588437, guid: 849f51aa3f78aff4fbbc24eee77abf80, type: 3}
   detectInput: 0
@@ -5140,6 +5143,8 @@ MonoBehaviour:
   attackRateTime: 0.2
   isAttacking: 0
   canAttack: 1
+  attackSpeed: 0
+  noCooldown: 0
 --- !u!61 &5668186582637033485
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5179,9 +5184,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldAcitve: 0
-  timeAfterHit: 0
   speedWithShield: 3
+  jumpForceWithShield: 15
   shield: {fileID: 8886792670526962802}
+  parryTime: 0.1
+  parryCounter: 0
 --- !u!1 &8886792670526962802
 GameObject:
   m_ObjectHideFlags: 0
@@ -5192,9 +5199,10 @@ GameObject:
   m_Component:
   - component: {fileID: 885002185778192949}
   - component: {fileID: 6203853101584505691}
-  m_Layer: 7
-  m_Name: Square
-  m_TagString: Untagged
+  - component: {fileID: 1612441542825298870}
+  m_Layer: 11
+  m_Name: Shield
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5266,3 +5274,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1612441542825298870
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8886792670526962802}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.32791907, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.3441616, y: 1}
+  m_EdgeRadius: 0

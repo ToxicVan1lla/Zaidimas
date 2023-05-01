@@ -11,7 +11,7 @@ public class EnemyMove : MonoBehaviour
     public float repelForce;
     [HideInInspector] public float stopCounter;
     public bool isAlive = true;
-    private GameObject player;
+    [HideInInspector] public GameObject player;
     [HideInInspector] public Rigidbody2D enemyBody;
     [HideInInspector] public BoxCollider2D boxCollider;
     [HideInInspector] public BoxCollider2D playerCollider;
@@ -22,6 +22,8 @@ public class EnemyMove : MonoBehaviour
     private Movement movement;
     private CoinSpawn coinSpawn;
     private Shield shield;
+    public bool blocked = false;
+    [SerializeField] private EnemyHealth health;
     private void Awake()
     {
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
@@ -41,7 +43,6 @@ public class EnemyMove : MonoBehaviour
         {
             for(int i=0;i<coinAmount;i++)
                 coinSpawn.spawnCoin(gameObject.transform);
-
             Destroy(gameObject);
         }
 
@@ -87,9 +88,15 @@ public class EnemyMove : MonoBehaviour
         }
         else if(shield.shieldAcitve)
         {
+            if (shield.parryCounter > 0)
+            {
+                StartCoroutine(shield.Parry());
+            }
+
+            blocked = true;
             if (stopsWhenHit)
             {
-                stopCounter = 0.3f;
+                stopCounter = 0.4f;
                 enemyBody.velocity = new Vector2(0, 0);
             }
             int directionX = (playerCollider.bounds.min.x > boxCollider.bounds.min.x) ? -1 : 1;
@@ -97,17 +104,22 @@ public class EnemyMove : MonoBehaviour
             enemyBody.AddForce(Mathf.Max(0, 5 - repelResistanceX * 0.5f) * directionX * Vector2.right, ForceMode2D.Impulse);
             enemyBody.AddForce(Mathf.Max(0, 2 - repelResistanceY * 0.5f) * directionY * Vector2.up, ForceMode2D.Impulse);
             shield.deactivateShield();
-            
+
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
 
-        if (collision.tag == "Ground" && detectEdges)
+        if (collision.tag == "Ground" && detectEdges && !health.gotHit)
         {
             Flip();
         }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Shield")
+            Attack();
     }
 
     public void Flip()
@@ -117,4 +129,12 @@ public class EnemyMove : MonoBehaviour
         transform.localScale = scale;
     }
 
+    private void OnDestroy()
+    {
+        player.GetComponent<Movement>().playerAttack.noCooldown = false;
+        player.GetComponent<Movement>().playerAttack.attackSpeed = 1;
+        player.GetComponent<Movement>().speed = player.GetComponent<Movement>().defaultSpeed;
+
+        Time.timeScale = 1;
+    }
 }
