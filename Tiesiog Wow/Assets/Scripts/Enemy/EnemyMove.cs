@@ -88,8 +88,10 @@ public class EnemyMove : MonoBehaviour
         }
         else if(shield.shieldAcitve)
         {
+            bool Parried = false;
             if (shield.parryCounter > 0)
             {
+                Parried = true;
                 StartCoroutine(shield.Parry());
             }
 
@@ -103,6 +105,11 @@ public class EnemyMove : MonoBehaviour
             int directionY = 1;
             enemyBody.AddForce(Mathf.Max(0, 5 - repelResistanceX * 0.5f) * directionX * Vector2.right, ForceMode2D.Impulse);
             enemyBody.AddForce(Mathf.Max(0, 2 - repelResistanceY * 0.5f) * directionY * Vector2.up, ForceMode2D.Impulse);
+            if(!Parried)
+            {
+                playerBody.AddForce(2 * -directionX * Vector2.right, ForceMode2D.Impulse);
+                shield.blocked = true;
+            }
             shield.deactivateShield();
 
         }
@@ -131,10 +138,14 @@ public class EnemyMove : MonoBehaviour
 
     private void OnDestroy()
     {
-        player.GetComponent<Movement>().playerAttack.noCooldown = false;
-        player.GetComponent<Movement>().playerAttack.attackSpeed = 1;
-        player.GetComponent<Movement>().speed = player.GetComponent<Movement>().defaultSpeed;
+        if(player != null)
+        {
+            player.GetComponent<Movement>().playerAttack.noCooldown = false;
+            player.GetComponent<Movement>().playerAttack.attackSpeed = 1;
+            player.GetComponent<Movement>().speed = player.GetComponent<Movement>().defaultSpeed;
 
-        Time.timeScale = 1;
+            Time.timeScale = 1;
+
+        }
     }
 }

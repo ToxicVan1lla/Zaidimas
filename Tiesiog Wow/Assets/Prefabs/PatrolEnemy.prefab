@@ -160,6 +160,7 @@ MonoBehaviour:
   repelForce: 15
   stopCounter: 0
   isAlive: 1
+  player: {fileID: 0}
   enemyBody: {fileID: 0}
   boxCollider: {fileID: 3299737418750461274}
   playerCollider: {fileID: 0}
@@ -267,7 +268,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.41183734, y: -0.43194306}
+  m_Offset: {x: 0.4137606, y: -0.43194306}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -278,7 +279,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.06290221, y: 0.50218594}
+  m_Size: {x: 0.059055656, y: 0.50218594}
   m_EdgeRadius: 0
 --- !u!1 &9096628563434585931
 GameObject:

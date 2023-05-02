@@ -16,7 +16,7 @@ public class PlayerAttack : MonoBehaviour
     [HideInInspector] public bool canAttack = true;
     public float attackSpeed;
     public bool noCooldown;
-    private int counter;
+    private float timeSinceAttack;
 
     private Animator animator;
 
@@ -31,14 +31,17 @@ public class PlayerAttack : MonoBehaviour
     private bool attack;
     private void Update()
     {
+        if(isAttacking)
+            timeSinceAttack += Time.deltaTime;
+        if (isAttacking && timeSinceAttack > 1.5f)
+            finishAttack();
         if(!Menu.gameIsPaused && movement.detectInput)
         {
             attack = Input.GetKeyDown(KeyCode.Mouse0);
 
             if (canAttack && attack && (attackRateCounter > attackRateTime || noCooldown) && !isAttacking && !movement.dash)
             {
-                counter++;
-                Debug.Log(counter);
+                timeSinceAttack = 0;
                 isAttacking = true;
                 animator.speed = attackSpeed;
                 animator.SetBool("Attack", true);

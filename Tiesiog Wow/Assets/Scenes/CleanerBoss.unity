@@ -6345,6 +6345,7 @@ MonoBehaviour:
   repelForce: 5
   stopCounter: 0
   isAlive: 1
+  player: {fileID: 0}
   enemyBody: {fileID: 0}
   boxCollider: {fileID: 0}
   playerCollider: {fileID: 0}
@@ -6352,6 +6353,8 @@ MonoBehaviour:
   repelResistanceX: 10
   repelResistanceY: 10
   stopsWhenHit: 0
+  blocked: 0
+  health: {fileID: 1920821592}
   isThrowingBroom: 0
   broom: {fileID: 8391667271324378576, guid: 41fb4fa4dab600a40b065fa391736a35, type: 3}
   anim: {fileID: 1920821595}

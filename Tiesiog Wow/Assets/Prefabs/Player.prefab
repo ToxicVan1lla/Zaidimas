@@ -5080,6 +5080,10 @@ MonoBehaviour:
   lastGroundedX: 0
   lastGroundedY: 0
   walkParticles: {fileID: 1857067328}
+  scenesWhereNoAttack:
+  - Foje
+  - IrenaKoridor
+  - Irena_Kabinetas
 --- !u!95 &5668186582637033472
 Animator:
   serializedVersion: 5
@@ -5140,7 +5144,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   enemyHealth: {fileID: 0}
-  attackRateTime: 0.2
+  attackRateTime: 0.5
   isAttacking: 0
   canAttack: 1
   attackSpeed: 0
@@ -5188,7 +5192,10 @@ MonoBehaviour:
   jumpForceWithShield: 15
   shield: {fileID: 8886792670526962802}
   parryTime: 0.1
+  dechargeTime: 0.25
+  rechargeTime: 1
   parryCounter: 0
+  blocked: 0
 --- !u!1 &8886792670526962802
 GameObject:
   m_ObjectHideFlags: 0

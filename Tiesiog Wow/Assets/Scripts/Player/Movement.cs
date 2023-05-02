@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class Movement : MonoBehaviour, IDataPersistence
 {
@@ -58,6 +59,8 @@ public class Movement : MonoBehaviour, IDataPersistence
     [SerializeField] ParticleSystem walkParticles;
     private DataPersistanceManager manager;
 
+    [SerializeField] private string[] scenesWhereNoAttack;
+
     private bool removeGrave = false;
 
 
@@ -88,6 +91,7 @@ public class Movement : MonoBehaviour, IDataPersistence
 
     void Start()
     {
+        
         Time.timeScale = 1;
         manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
         playerCoins = GameObject.Find("CoinAmount").GetComponent<PlayerCoins>();
@@ -103,6 +107,14 @@ public class Movement : MonoBehaviour, IDataPersistence
         if (keepData.facingDirection == -1)
         {
             Flip();
+        }
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if(scenesWhereNoAttack.Contains(currentScene))
+        {
+            canDash = false;
+            playerAttack.canAttack = false;
+
         }
 
         if (keepData.enteredRoom)

@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Shield : MonoBehaviour
 {
@@ -13,9 +13,18 @@ public class Shield : MonoBehaviour
     private float afterHitCounter;
     private float activateCounter;
     [SerializeField] private float parryTime;
+    [SerializeField] private float dechargeTime;
+    [SerializeField] private float rechargeTime;
     public float parryCounter;
+    public bool blocked;
+    private float blockEnergy = 1;
+    private bool isRecharging;
+    private bool isDecharging;
+    private Image image;
     private void Start()
     {
+        image = GameObject.Find("Current").GetComponent<Image>();
+
         playerScript = GameObject.Find("Player").GetComponent<Movement>();
         attack = GameObject.Find("Player").GetComponent<PlayerAttack>();
     }
@@ -25,10 +34,21 @@ public class Shield : MonoBehaviour
         parryCounter -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Mouse1))
             activateCounter = 0.3f;
+        image.fillAmount = blockEnergy;
+        if(blocked)
+        {
+            StartCoroutine(changeEnergyAmmount());
+            blocked = false;
+        }
+        if(!isDecharging && !isRecharging && blockEnergy != 1)
+        {
+            StartCoroutine(changeEnergyAmmount());
+        }
+
         if (playerScript.detectInput)
         {
 
-            if (activateCounter > 0 && afterHitCounter < 0 && !attack.isAttacking)
+            if (activateCounter > 0 && afterHitCounter < 0 && !attack.isAttacking && blockEnergy == 1)
             {
                 parryCounter = parryTime;
                 activateCounter = 0;
@@ -76,5 +96,36 @@ public class Shield : MonoBehaviour
         playerScript.playerAttack.attackSpeed = 1;
         Time.timeScale = 1;
     }
+    private IEnumerator changeEnergyAmmount()
+    {
+        float currentTime = 0;
+        if(blockEnergy==1)
+        {
+            isDecharging = true;
+            while(currentTime <= dechargeTime)
+            {
 
+                blockEnergy = Mathf.Lerp(1, 0, currentTime / dechargeTime);
+                currentTime += Time.deltaTime;
+                yield return 0;
+            }
+            blockEnergy = 0;
+            isDecharging = false;
+        }
+        else
+        {
+            isRecharging = true;
+            yield return new WaitForSeconds(0.2f);
+            while (currentTime <= rechargeTime)
+            {
+
+                blockEnergy = Mathf.Lerp(0, 1, currentTime / rechargeTime);
+                currentTime += Time.deltaTime;
+                yield return 0;
+            }
+            blockEnergy = 1;
+            isRecharging = false;
+
+        }
+    }
 }
