@@ -28,6 +28,7 @@ public class GameData
         this.cleanerBossAlive = true;
         this.hasPotions = true;
         this.numberOfPotions = 0;
+
     }
 
 }

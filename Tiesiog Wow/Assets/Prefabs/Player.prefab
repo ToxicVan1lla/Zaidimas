@@ -5144,7 +5144,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   enemyHealth: {fileID: 0}
-  attackRateTime: 0.5
+  attackRateTime: 0.3
   isAttacking: 0
   canAttack: 1
   attackSpeed: 0
@@ -5187,6 +5187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ecef4cac150a144599544e49036a46b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBlock: 1
   shieldAcitve: 0
   speedWithShield: 3
   jumpForceWithShield: 15

@@ -33,7 +33,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if(isAttacking)
             timeSinceAttack += Time.deltaTime;
-        if (isAttacking && timeSinceAttack > 1.5f)
+        if (isAttacking && timeSinceAttack > 0.4f)
             finishAttack();
         if(!Menu.gameIsPaused && movement.detectInput)
         {

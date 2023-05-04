@@ -7,7 +7,6 @@ public class CleanerControl : EnemyMove, IDataPersistence
     public bool isThrowingBroom = false;
     [SerializeField] GameObject broom;
     [SerializeField] public Animator anim;
-    [SerializeField] private float disntanceWhenThrowBroom;
     [SerializeField] private float maxTimeUntilThrow;
     private bool isCountingUntilThrow = false;
     private float timeUntilThrow;
@@ -64,7 +63,6 @@ public class CleanerControl : EnemyMove, IDataPersistence
     [SerializeField] private GameObject door;
     private DataPersistanceManager manager;
 
-
     private bool alive = true;
     public void LoadData(GameData data)
     {
@@ -90,7 +88,6 @@ public class CleanerControl : EnemyMove, IDataPersistence
     }
     void Update()
     {
-
         if (Mathf.Abs(playerBody.position.x - enemyBody.position.x) < 5 && Mathf.Abs(playerBody.position.y - enemyBody.position.y) < 5 && !fightHasBegun)
         {
             door.SetActive(true);
@@ -120,7 +117,7 @@ public class CleanerControl : EnemyMove, IDataPersistence
                     isCleaning = false;
                     stopCounter = 0;
                 }
-                if (timeUntilStop <= 0 && !isRunning && !isThrowingBroom && !isDoingMeleeAttack)
+                if (timeUntilStop <= 0 && !isRunning && !isThrowingBroom && !isDoingMeleeAttack && anim.GetCurrentAnimatorStateInfo(0).IsName("Running"))
                 {
                     isCleaning = true;
                     anim.SetBool("Walking", false);
@@ -150,7 +147,7 @@ public class CleanerControl : EnemyMove, IDataPersistence
                     {
                         StartCoroutine(turnAround());
                     }
-                    if (!isThrowingBroom && (Mathf.Abs(playerBody.position.x - enemyBody.position.x) > disntanceWhenThrowBroom || hasToThrowBroom) && !isDoingMeleeAttack && attackCounter > 0.2f && !isRunning && !isCleaning)
+                    if (!isThrowingBroom && hasToThrowBroom && !isDoingMeleeAttack && attackCounter > 0.2f && !isRunning && !isCleaning)
                     {
                         speed = 0;
                         anim.SetBool("Walking", false);
@@ -420,7 +417,7 @@ public class CleanerControl : EnemyMove, IDataPersistence
         yield return new WaitForSeconds(5);
         if(distanceToClosestWall() < 3)
         {
-                if (isRunning || isDoingMeleeAttack || isThrowingBroom || isTurning)
+                if (isRunning || isDoingMeleeAttack || isThrowingBroom || isTurning || isCleaning)
                     yield break;
             
             if (transform.position.x < middleRoomX && transform.localScale.x > 0)

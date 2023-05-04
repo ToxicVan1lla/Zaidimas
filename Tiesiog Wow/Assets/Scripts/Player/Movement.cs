@@ -58,7 +58,6 @@ public class Movement : MonoBehaviour, IDataPersistence
     public float lastGroundedX, lastGroundedY;
     [SerializeField] ParticleSystem walkParticles;
     private DataPersistanceManager manager;
-
     [SerializeField] private string[] scenesWhereNoAttack;
 
     private bool removeGrave = false;
@@ -114,7 +113,7 @@ public class Movement : MonoBehaviour, IDataPersistence
         {
             canDash = false;
             playerAttack.canAttack = false;
-
+            GetComponent<Shield>().canBlock = false;
         }
 
         if (keepData.enteredRoom)

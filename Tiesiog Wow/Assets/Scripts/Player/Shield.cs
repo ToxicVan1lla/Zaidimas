@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class Shield : MonoBehaviour
 {
+    public bool canBlock = true;
     public bool shieldAcitve;
     private PlayerAttack attack;
     private Movement playerScript;
@@ -32,7 +33,7 @@ public class Shield : MonoBehaviour
     {
         activateCounter -= Time.deltaTime;
         parryCounter -= Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse1) && canBlock)
             activateCounter = 0.3f;
         image.fillAmount = blockEnergy;
         if(blocked)
@@ -61,7 +62,7 @@ public class Shield : MonoBehaviour
             }
             else
                 afterHitCounter -= Time.deltaTime;
-            if(Input.GetKeyUp(KeyCode.Mouse1))
+            if(Input.GetKeyUp(KeyCode.Mouse1) && canBlock)
             {
                 activateCounter = 0;
                 shield.SetActive(false);
