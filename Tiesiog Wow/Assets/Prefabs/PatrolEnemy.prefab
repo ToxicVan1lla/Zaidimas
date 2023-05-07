@@ -170,6 +170,8 @@ MonoBehaviour:
   stopsWhenHit: 1
   blocked: 0
   health: {fileID: 3299737418750461268}
+  respawnsInstantly: 1
+  ID: 0
   anim: {fileID: 5645062996429630288}
   timeInOneSpot: 5
   maxTimeUntilStop: 4

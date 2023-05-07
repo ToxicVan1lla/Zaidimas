@@ -15,8 +15,9 @@ public class KeepData : ScriptableObject
     public float graveX, graveY;
     public int graveValue;
     public int healNumber;
+    public bool findingEnemys;
     private void OnEnable()
-    {
+    { 
         positionX = checkpointX = -7.03f;
         positionY = checkpointY = -2.76f;
         health = 5;

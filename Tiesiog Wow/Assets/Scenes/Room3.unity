@@ -178,6 +178,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolEnemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: ID
+      value: 512df3d9-4087-4f8d-b556-b14e9fd47cb3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: respawnsInstantly
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
 --- !u!1001 &374703686
@@ -284,6 +292,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5218605428935372554, guid: f8f45843196b05345b69a36de018e1d3, type: 3}
+      propertyPath: ID
+      value: 5c00b17a-40a4-4bdb-a4be-5bab4c12cae8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218605428935372554, guid: f8f45843196b05345b69a36de018e1d3, type: 3}
+      propertyPath: respawnsInstantly
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7324876437976430390, guid: f8f45843196b05345b69a36de018e1d3, type: 3}
       propertyPath: m_Name
       value: Miner (1)
@@ -486,6 +502,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: ID
+      value: 388c9a38-2c62-4b7d-a7fa-7cd187a9a7cd
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: respawnsInstantly
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
 --- !u!1 &540821849
@@ -653,6 +677,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolEnemy (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: ID
+      value: 885ac337-b291-4530-9690-2cbbbba7f026
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: respawnsInstantly
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
 --- !u!1001 &778366969
@@ -709,6 +741,10 @@ PrefabInstance:
     - target: {fileID: 2996342692372854136, guid: ec0ba8291f672c6498e51690bc54b4c3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996342692372854139, guid: ec0ba8291f672c6498e51690bc54b4c3, type: 3}
+      propertyPath: ID
+      value: f5e2daad-ecc9-4e92-8ee1-1e3f6f35417f
       objectReference: {fileID: 0}
     - target: {fileID: 2996342692372854141, guid: ec0ba8291f672c6498e51690bc54b4c3, type: 3}
       propertyPath: m_Name
@@ -770,6 +806,14 @@ PrefabInstance:
     - target: {fileID: 3299737418750461271, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
       propertyPath: m_Name
       value: PatrolEnemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: ID
+      value: 84bd72b2-3cfb-410d-8c38-15e78db4552e
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: respawnsInstantly
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
@@ -1144,6 +1188,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5218605428935372554, guid: f8f45843196b05345b69a36de018e1d3, type: 3}
+      propertyPath: ID
+      value: 6bf72c95-ae59-4bbd-8862-4bb9668765b6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218605428935372554, guid: f8f45843196b05345b69a36de018e1d3, type: 3}
+      propertyPath: respawnsInstantly
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7324876437976430390, guid: f8f45843196b05345b69a36de018e1d3, type: 3}
       propertyPath: m_Name
       value: Miner
@@ -1369,6 +1421,14 @@ PrefabInstance:
     - target: {fileID: 3299737418750461271, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
       propertyPath: m_Name
       value: PatrolEnemy (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: ID
+      value: 83c6e93e-7058-4261-ab0a-b154b6f934ec
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: respawnsInstantly
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
@@ -6276,6 +6336,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolEnemy (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: ID
+      value: a63bdb1d-fa7b-426a-995b-b920b8cc895f
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: blocked
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: respawnsInstantly
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
 --- !u!1 &1340611736
@@ -6744,6 +6816,10 @@ PrefabInstance:
     - target: {fileID: 2996342692372854136, guid: ec0ba8291f672c6498e51690bc54b4c3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996342692372854139, guid: ec0ba8291f672c6498e51690bc54b4c3, type: 3}
+      propertyPath: ID
+      value: e93b28d7-0c90-4cc0-9367-8ab77aad664b
       objectReference: {fileID: 0}
     - target: {fileID: 2996342692372854141, guid: ec0ba8291f672c6498e51690bc54b4c3, type: 3}
       propertyPath: m_Name

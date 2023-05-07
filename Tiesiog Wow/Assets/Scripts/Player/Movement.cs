@@ -69,11 +69,11 @@ public class Movement : MonoBehaviour, IDataPersistence
         {
             if (data.sceneName != SceneManager.GetActiveScene().name)
                 SceneManager.LoadScene(data.sceneName);
-            this.transform.position = data.position;
+            transform.position = new Vector2(data.positionX, data.positionY);
         }
         if(data.graveActive && SceneManager.GetActiveScene().name == data.graveScene)
         {
-            grave = Instantiate(Grave, data.gravePosition, transform.rotation);
+            grave = Instantiate(Grave, new Vector2(data.gravePositionX, data.gravePositionY), transform.rotation);
         }
     }
 

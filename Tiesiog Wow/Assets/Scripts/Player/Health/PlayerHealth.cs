@@ -32,7 +32,8 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
             playerCoins.coinAmount = 0;
             playerCoins.coinsCollected = 0;
             data.coins = 0;
-            data.gravePosition = new Vector2(movement.lastGroundedX, movement.lastGroundedY);
+            data.gravePositionX = movement.lastGroundedX;
+            data.gravePositionY = movement.lastGroundedY;
             data.graveActive = true;
             data.graveScene = SceneManager.GetActiveScene().name;
             Died = false;
@@ -75,7 +76,6 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
             health = Mathf.Clamp(health - _damage, 0, maxHealth);
             if (health == 0)
             {
-
                 keepData.health = maxHealth;
                 keepData.enteredRoom = false;
                 Died = true;

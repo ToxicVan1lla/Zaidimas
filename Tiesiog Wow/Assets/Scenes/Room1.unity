@@ -178,6 +178,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2996342692372854139, guid: ec0ba8291f672c6498e51690bc54b4c3, type: 3}
+      propertyPath: ID
+      value: 705c60e7-0ed9-4f54-b794-607cf164cf9a
+      objectReference: {fileID: 0}
+    - target: {fileID: 2996342692372854139, guid: ec0ba8291f672c6498e51690bc54b4c3, type: 3}
+      propertyPath: respawnsInstantly
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2996342692372854141, guid: ec0ba8291f672c6498e51690bc54b4c3, type: 3}
       propertyPath: m_Name
       value: ChargingEnemy
@@ -733,6 +741,14 @@ PrefabInstance:
     - target: {fileID: 3299737418750461271, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
       propertyPath: m_Name
       value: PatrolEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: ID
+      value: e4ec03c9-7e2e-4ad3-9ba9-d16eb8b45c36
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: respawnsInstantly
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}

@@ -247,6 +247,7 @@ MonoBehaviour:
   repelForce: 15
   stopCounter: 0
   isAlive: 1
+  player: {fileID: 0}
   enemyBody: {fileID: 0}
   boxCollider: {fileID: 0}
   playerCollider: {fileID: 0}
@@ -256,6 +257,8 @@ MonoBehaviour:
   stopsWhenHit: 1
   blocked: 0
   health: {fileID: 7324876437976430389}
+  respawnsInstantly: 1
+  ID: 0
   anim: {fileID: 3299737418453444960}
   sightRange: 5
   distanceWhenStopsAttacking: 5

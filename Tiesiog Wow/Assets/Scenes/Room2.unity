@@ -4441,6 +4441,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5218605428935372554, guid: f8f45843196b05345b69a36de018e1d3, type: 3}
+      propertyPath: ID
+      value: 5b46cffe-e106-457e-8f50-0f44dea17ab2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218605428935372554, guid: f8f45843196b05345b69a36de018e1d3, type: 3}
+      propertyPath: respawnsInstantly
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7324876437976430390, guid: f8f45843196b05345b69a36de018e1d3, type: 3}
       propertyPath: m_Name
       value: Miner
@@ -5027,6 +5035,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: ID
+      value: 5cbee81a-3eff-4a30-8a79-f8ebac7212eb
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: stopsWhenHit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: respawnsInstantly
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
 --- !u!1001 &1814783376
@@ -5084,6 +5104,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolEnemy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: ID
+      value: 95fe4990-2dd6-4785-a4fd-1beb89477b58
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: respawnsInstantly
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
 --- !u!1001 &1882163537
@@ -5140,6 +5168,14 @@ PrefabInstance:
     - target: {fileID: 3299737418750461271, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
       propertyPath: m_Name
       value: PatrolEnemy (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: ID
+      value: d9b52f26-69a3-4a88-ad32-6bce8c9c1e48
+      objectReference: {fileID: 0}
+    - target: {fileID: 3299737418750461275, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}
+      propertyPath: respawnsInstantly
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 290b88a9e24fb4840a4f7e86c6066daa, type: 3}

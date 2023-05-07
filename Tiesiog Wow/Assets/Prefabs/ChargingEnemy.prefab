@@ -219,6 +219,7 @@ MonoBehaviour:
   repelForce: 15
   stopCounter: 0
   isAlive: 1
+  player: {fileID: 0}
   enemyBody: {fileID: 0}
   boxCollider: {fileID: 2996342692372854142}
   playerCollider: {fileID: 0}
@@ -228,6 +229,8 @@ MonoBehaviour:
   stopsWhenHit: 1
   blocked: 0
   health: {fileID: 2996342692372854138}
+  respawnsInstantly: 1
+  ID: 0
   Enemy:
     serializedVersion: 2
     m_Bits: 200

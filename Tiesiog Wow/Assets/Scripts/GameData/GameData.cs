@@ -6,29 +6,37 @@ using UnityEngine;
 public class GameData
 {
     public int coins;
-    public Vector2 position;
+    public float positionX;
+    public float positionY;
     public string sceneName;
     public int graveValue;
     public string graveScene;
     public bool graveActive;
-    public Vector2 gravePosition;
+    public float gravePositionX;
+    public float gravePositionY;
     public bool hasPotions;
     public int numberOfPotions;
-    [Header("Boss")]
     public bool cleanerBossAlive;
+    public bool newGame;
+    public float gameTime;
+    public Dictionary<string, float> enemies;
     public GameData()
     {
+        this.gameTime = 0;
+        this.enemies = new Dictionary<string, float>();
+        this.newGame = true;
         this.graveValue = 0;
         this.graveActive = false;
         this.graveScene = "Room1";
-        this.gravePosition = Vector2.zero;
         this.sceneName = "Foje";
+        this.gravePositionX = 0;
+        this.gravePositionY = 0;
         this.coins = 30;
-        this.position = new Vector2(4.43f, -1.5f);
+        this.positionX = 4.43f;
+        this.positionY = -1.5f;
         this.cleanerBossAlive = true;
         this.hasPotions = true;
         this.numberOfPotions = 0;
-
     }
 
 }

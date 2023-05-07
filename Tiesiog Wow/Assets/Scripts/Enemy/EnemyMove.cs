@@ -1,6 +1,7 @@
+using System.Collections;
 using UnityEngine;
 
-public class EnemyMove : MonoBehaviour
+public class EnemyMove : MonoBehaviour, IDataPersistence
 {
     [SerializeField] public float speed;
     [SerializeField] private int coinAmount;
@@ -24,8 +25,24 @@ public class EnemyMove : MonoBehaviour
     private Shield shield;
     public bool blocked = false;
     [SerializeField] private EnemyHealth health;
+    [SerializeField] private bool respawnsInstantly = true;
+    [SerializeField] private string ID;
+    private bool alive = true;
+    private Timer time;
+    [ContextMenu("Generate ID")]
+    private void GenerateGuid()
+    {
+        ID = System.Guid.NewGuid().ToString();
+    }
+    private DataPersistanceManager manager;
+    private bool died;
+    private float timeWhenKilled;
+    private float timer;
+
     private void Awake()
     {
+        time = GameObject.Find("Timer").GetComponent<Timer>();
+        manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
         boxCollider = gameObject.GetComponent<BoxCollider2D>();
         enemyBody = gameObject.GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
@@ -43,6 +60,11 @@ public class EnemyMove : MonoBehaviour
         {
             for(int i=0;i<coinAmount;i++)
                 coinSpawn.spawnCoin(gameObject.transform);
+            if(!respawnsInstantly)
+            {
+                died = true;
+                manager.save = true;
+            }
             Destroy(gameObject);
         }
 
@@ -148,4 +170,27 @@ public class EnemyMove : MonoBehaviour
 
         }
     }
+
+    public void LoadData(GameData data)
+    {
+        timer = data.gameTime;
+        if (data.enemies.ContainsKey(ID))
+            timeWhenKilled = data.enemies[ID];
+        if (data.enemies.ContainsKey(ID) && timer - timeWhenKilled < 15 && alive && boxCollider!=null)
+        {
+            Destroy(gameObject);
+            alive = false;
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        if(died)
+        {
+            if (data.enemies.ContainsKey(ID))
+                data.enemies.Remove(ID);
+            data.enemies.Add(ID, time.timer);
+        }
+    }
+
 }

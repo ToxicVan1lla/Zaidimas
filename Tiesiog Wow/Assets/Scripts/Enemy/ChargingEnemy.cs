@@ -32,6 +32,7 @@ public class ChargingEnemy : EnemyMove
 
     private void Update()
     {
+
         if (enemyHealth.gotHit && isRollingForwards)
         {
             turnAround = true;

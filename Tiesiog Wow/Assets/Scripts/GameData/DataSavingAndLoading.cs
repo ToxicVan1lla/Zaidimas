@@ -21,7 +21,7 @@ public class DataSavingAndLoading
         try
         {
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-            string dataToStore = JsonUtility.ToJson(Data, true);
+            string dataToStore = JsonConvert.SerializeObject(Data, Formatting.Indented);
 
             using(FileStream stream = new FileStream(fullPath, FileMode.Create))
             {

@@ -5144,7 +5144,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   enemyHealth: {fileID: 0}
-  attackRateTime: 0.3
+  attackRateTime: 0.15
   isAttacking: 0
   canAttack: 1
   attackSpeed: 0

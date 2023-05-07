@@ -17,7 +17,8 @@ public class Checkpoint : MonoBehaviour, IDataPersistence
         if(interacted)
         {
             data.sceneName = SceneManager.GetActiveScene().name;
-            data.position = transform.position;
+            data.positionX = transform.position.x;
+            data.positionY = transform.position.y;
             interacted = false;
         }
     }
