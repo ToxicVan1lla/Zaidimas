@@ -5472,6 +5472,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &774072032
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 236055578041169841, guid: 6aa67717216e4b240a80f8e5645ab71b, type: 3}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 236055578041169846, guid: 6aa67717216e4b240a80f8e5645ab71b, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 236055578041169846, guid: 6aa67717216e4b240a80f8e5645ab71b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.14389971
+      objectReference: {fileID: 0}
+    - target: {fileID: 236055578041169846, guid: 6aa67717216e4b240a80f8e5645ab71b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5945349
+      objectReference: {fileID: 0}
+    - target: {fileID: 236055578041169846, guid: 6aa67717216e4b240a80f8e5645ab71b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.17055306
+      objectReference: {fileID: 0}
+    - target: {fileID: 236055578041169846, guid: 6aa67717216e4b240a80f8e5645ab71b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 236055578041169846, guid: 6aa67717216e4b240a80f8e5645ab71b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 236055578041169846, guid: 6aa67717216e4b240a80f8e5645ab71b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 236055578041169846, guid: 6aa67717216e4b240a80f8e5645ab71b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 236055578041169846, guid: 6aa67717216e4b240a80f8e5645ab71b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 236055578041169846, guid: 6aa67717216e4b240a80f8e5645ab71b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 236055578041169846, guid: 6aa67717216e4b240a80f8e5645ab71b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6aa67717216e4b240a80f8e5645ab71b, type: 3}
 --- !u!1 &1004213295
 GameObject:
   m_ObjectHideFlags: 0
@@ -6337,6 +6394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c504ddf7e4c6048a3298a6db0b7e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitSound: {fileID: 8300000, guid: 2e5c2168482d02d41ab97ea4972f2bff, type: 3}
   speed: -2
   coinAmount: 50
   detectEdges: 0
@@ -6355,10 +6413,11 @@ MonoBehaviour:
   stopsWhenHit: 0
   blocked: 0
   health: {fileID: 1920821592}
+  respawnsInstantly: 1
+  ID: 
   isThrowingBroom: 0
   broom: {fileID: 8391667271324378576, guid: 41fb4fa4dab600a40b065fa391736a35, type: 3}
   anim: {fileID: 1920821595}
-  disntanceWhenThrowBroom: 10
   maxTimeUntilThrow: 5
   defaultSpeed: 0
   justCaughtBroom: 0

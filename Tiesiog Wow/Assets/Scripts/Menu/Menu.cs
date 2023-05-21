@@ -40,6 +40,8 @@ public class Menu : MonoBehaviour, IDataPersistence
             data.teachBlock = true;
             data.teachAttack = true;
             data.teachHeal = true;
+            data.principalActive = true;
+            Debug.Log("Naujas");
 
         }
     }

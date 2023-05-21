@@ -1,7 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-public class DialogController : MonoBehaviour
+public class DialogController : MonoBehaviour, IDataPersistence
 {
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] GameObject canvas;
@@ -17,7 +17,7 @@ public class DialogController : MonoBehaviour
     private int interactionIndex = 0;
     private bool buttonsActive = false;
     private bool chose = false;
-
+    private bool talked;
     private void Start()
     {
         player = GameObject.Find("Player");
@@ -28,6 +28,7 @@ public class DialogController : MonoBehaviour
         timeUntilSkip -= Time.deltaTime;
         if(Input.GetKeyDown(KeyCode.E) && !isTalking && Mathf.Abs(player.transform.position.x - transform.position.x) < 3)
         {
+            talked = true;
             player.GetComponent<Movement>().detectInput = false;
             player.GetComponent<Movement>().horizontalInput = 0;
             canvas.SetActive(true);
@@ -110,6 +111,16 @@ public class DialogController : MonoBehaviour
         skip();
     }
 
+    public void LoadData(GameData data)
+    {
+        
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        if (talked)
+            data.principalActive = false;
+    }
 }
 [System.Serializable]
 public class Interaction

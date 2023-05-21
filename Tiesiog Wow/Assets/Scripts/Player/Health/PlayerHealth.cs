@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour, IDataPersistence
 {
+    [SerializeField] private AudioClip hitSound;
     [SerializeField] public float maxHealth;
     public float health;
     [SerializeField] private SpriteRenderer spriteRend;
@@ -71,6 +72,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
     {
         if (!invulnerable)
         {
+            soundManager.instance.playSound(hitSound);
             health = Mathf.Clamp(health - _damage, 0, maxHealth);
             if (health == 0)
             {

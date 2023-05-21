@@ -49,7 +49,7 @@ public class Shield : MonoBehaviour
         if (playerScript.detectInput)
         {
 
-            if (activateCounter > 0 && afterHitCounter < 0 && !attack.isAttacking && blockEnergy == 1)
+            if (activateCounter > 0 && afterHitCounter < 0 && !attack.isAttacking && !playerScript.dash && blockEnergy == 1)
             {
                 parryCounter = parryTime;
                 activateCounter = 0;

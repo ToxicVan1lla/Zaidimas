@@ -16,6 +16,7 @@ public class Tutorial : MonoBehaviour, IDataPersistence
     private bool getInfo = true;
     private Movement movement;
     private PlayerHealth health;
+    private bool activeBlock;
     public void LoadData(GameData data)
     {
         if(getInfo)
@@ -66,10 +67,10 @@ public class Tutorial : MonoBehaviour, IDataPersistence
             if (shield.shieldAcitve)
             {
                 teachBlock = false;
-                if(active)
+                if(activeBlock)
                 {
                     movement.canTurn = true;
-                    active = false;
+                    activeBlock = false;
                     Time.timeScale = 1;
                     BlockMessage.SetActive(false);
                 }
@@ -106,7 +107,7 @@ public class Tutorial : MonoBehaviour, IDataPersistence
             movement.canTurn = false;
             AttackMessage.SetActive(false);
             BlockMessage.SetActive(true);
-            active = true;
+            activeBlock = true;
             Time.timeScale = 0;
 
         }

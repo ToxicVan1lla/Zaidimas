@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+    [SerializeField] AudioClip attackSound;
     private new BoxCollider2D collider;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float repelForce;
@@ -45,6 +46,7 @@ public class PlayerAttack : MonoBehaviour
                 isAttacking = true;
                 animator.speed = attackSpeed;
                 animator.SetBool("Attack", true);
+                soundManager.instance.playSound(attackSound);
             
             }
             else

@@ -5,6 +5,9 @@ using System.Linq;
 
 public class Movement : MonoBehaviour, IDataPersistence
 {
+    [SerializeField] AudioClip dashSound;
+    private AudioSource Audio;
+    private bool runningSound;
     [SerializeField] public float defaultSpeed;
     [HideInInspector] public float speed;
     [SerializeField] public float DefaultjumpForce;
@@ -47,6 +50,7 @@ public class Movement : MonoBehaviour, IDataPersistence
     [SerializeField] SpriteRenderer spr;
     [SerializeField] private float howLongDoesDashLast;
     public bool canDash = true;
+    public bool isDashing;
 
     [SerializeField] KeepData keepData;
 
@@ -90,7 +94,8 @@ public class Movement : MonoBehaviour, IDataPersistence
 
     void Start()
     {
-        
+        Audio = GetComponent<AudioSource>();
+
         Time.timeScale = 1;
         manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
         playerCoins = GameObject.Find("CoinAmount").GetComponent<PlayerCoins>();
@@ -136,6 +141,22 @@ public class Movement : MonoBehaviour, IDataPersistence
 
         anim.SetBool("Run", Mathf.Abs(body.velocity.x) > 0.5 && !onWall());
 
+        if (Mathf.Abs(body.velocity.x) > 0.5 && !onWall() && isGrounded() && !dash)
+        {
+            if(!runningSound)
+            {
+                runningSound = true;
+                Audio.Play();
+
+            }
+        }
+        else
+        {
+            runningSound = false;
+            Audio.Stop();
+
+        }
+
 
         if (!Menu.gameIsPaused && detectInput)
         {
@@ -180,7 +201,7 @@ public class Movement : MonoBehaviour, IDataPersistence
             else
                 cayotiTimeCounter -= Time.deltaTime;
 
-            if (!isWallSliding)
+            if (!isWallSliding && !isDashing)
                 body.gravityScale = 7;
 
             if (isWallSliding)
@@ -212,10 +233,16 @@ public class Movement : MonoBehaviour, IDataPersistence
 
     private void Dash()
     {
-        jumpBufferCounter -= Time.deltaTime;
-        body.gravityScale = 0;
-        body.velocity = new Vector2(dashSpeed * Mathf.Sign(body.transform.localScale.x), 0);
-        StartCoroutine(dashCoroutine());
+        if(!isDashing)
+        {
+            isDashing = true;
+            soundManager.instance.playSound(dashSound);
+            jumpBufferCounter -= Time.deltaTime;
+            body.gravityScale = 0;
+            body.velocity = new Vector2(dashSpeed * Mathf.Sign(body.transform.localScale.x), 0);
+            StartCoroutine(dashCoroutine());
+
+        }
 
     }
 
@@ -340,6 +367,7 @@ public class Movement : MonoBehaviour, IDataPersistence
     }
     public void endDash()
     {
+        isDashing = false;
         if (onWall() && canWallSlide)
             isWallSliding = true;
         numberOfDashes = 0;

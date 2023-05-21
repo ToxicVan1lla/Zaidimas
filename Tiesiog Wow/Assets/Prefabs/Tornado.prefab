@@ -121,13 +121,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 578227f438cfbc449a38cd74cd9df1f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitSound: {fileID: 8300000, guid: 2e5c2168482d02d41ab97ea4972f2bff, type: 3}
   speed: 5
   coinAmount: 0
   detectEdges: 0
+  attackCooldownTime: 0
   damage: 1
   repelForce: 0
   stopCounter: 0
   isAlive: 1
+  player: {fileID: 0}
   enemyBody: {fileID: 0}
   boxCollider: {fileID: 0}
   playerCollider: {fileID: 0}
@@ -135,6 +138,10 @@ MonoBehaviour:
   repelResistanceX: 0
   repelResistanceY: 0
   stopsWhenHit: 0
+  blocked: 0
+  health: {fileID: 0}
+  respawnsInstantly: 1
+  ID: 
   anim: {fileID: 6214004220736200274}
   duration: 5
 --- !u!50 &2809395828203330260

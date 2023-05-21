@@ -105,7 +105,9 @@ public class EnemyMove : MonoBehaviour, IDataPersistence
             usedTutorial = true;
             teachToBlock = false;
             tutorial.activateBlock();
-            CantAttackCounter = 0.8f;
+            movement.dash = false;
+            movement.playerAttack.isAttacking = false;
+            CantAttackCounter = 2f;
             return;
         }
 
