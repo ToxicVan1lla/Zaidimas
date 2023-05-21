@@ -62,7 +62,7 @@ public class Movement : MonoBehaviour, IDataPersistence
 
     private bool removeGrave = false;
 
-
+    public bool canTurn = true;
     public void LoadData(GameData data)
     {
         if(!keepData.enteredRoom)
@@ -139,7 +139,8 @@ public class Movement : MonoBehaviour, IDataPersistence
 
         if (!Menu.gameIsPaused && detectInput)
         {
-            horizontalInput = Input.GetAxisRaw("Horizontal");
+            if(canTurn)
+                horizontalInput = Input.GetAxisRaw("Horizontal");
 
             if (Input.GetKeyDown("left shift") && !playerAttack.isAttacking && canDash)
                 dash = true;
@@ -375,7 +376,7 @@ public class Movement : MonoBehaviour, IDataPersistence
 
     private IEnumerator walkAfterEnteringRoom()
     {
-        speed = 5;
+        speed = 4;
         yield return new WaitForSeconds(0.5f);
         detectInput = true;
         speed = defaultSpeed;

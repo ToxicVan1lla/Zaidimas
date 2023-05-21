@@ -29,6 +29,10 @@ public class EnemyMove : MonoBehaviour, IDataPersistence
     [SerializeField] private string ID;
     private bool alive = true;
     private Timer time;
+    private bool teachToBlock;
+    private Tutorial tutorial;
+    private float CantAttackCounter;
+    private bool usedTutorial;
     [ContextMenu("Generate ID")]
     private void GenerateGuid()
     {
@@ -52,10 +56,12 @@ public class EnemyMove : MonoBehaviour, IDataPersistence
         playerHealth = player.GetComponent<PlayerHealth>();
         coinSpawn = gameObject.GetComponent<CoinSpawn>();
         shield = player.GetComponent<Shield>();
+        tutorial = GameObject.Find("Tutorial").GetComponent<Tutorial>();
     }
 
     public void Move()
     {
+        CantAttackCounter -= Time.deltaTime;
         if (!isAlive)
         {
             for(int i=0;i<coinAmount;i++)
@@ -93,8 +99,17 @@ public class EnemyMove : MonoBehaviour, IDataPersistence
             playerisFacing = true;
         if (player.transform.position.x < transform.position.x && player.transform.localScale.x > 0)
             playerisFacing = true;
+        
+        if(teachToBlock && playerisFacing && !usedTutorial)
+        {
+            usedTutorial = true;
+            teachToBlock = false;
+            tutorial.activateBlock();
+            CantAttackCounter = 0.8f;
+            return;
+        }
 
-        if (!shield.shieldAcitve || !playerisFacing)
+        if ((!shield.shieldAcitve || !playerisFacing) && CantAttackCounter <= 0)
         {
             int directionX = (playerCollider.bounds.min.x > boxCollider.bounds.min.x) ? 1 : -1;
             int directionY = (playerCollider.bounds.min.y < boxCollider.bounds.min.y) ? -1 : 1;
@@ -110,6 +125,7 @@ public class EnemyMove : MonoBehaviour, IDataPersistence
         }
         else if(shield.shieldAcitve)
         {
+            CantAttackCounter = 0.2f;
             bool Parried = false;
             if (shield.parryCounter > 0)
             {
@@ -173,6 +189,7 @@ public class EnemyMove : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
+        teachToBlock = data.teachBlock;
         timer = data.gameTime;
         if (data.enemies.ContainsKey(ID))
             timeWhenKilled = data.enemies[ID];

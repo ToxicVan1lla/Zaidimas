@@ -19,10 +19,9 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
     private bool Died = false;
     private bool switchScene = false;
     private PlayerCoins playerCoins;
-    private bool hasPotionsUnlocked;
-    private int numberOfPotions;
+    public int numberOfPotions;
     private bool isHealing;
-    private bool heal = false;
+    public bool heal = false;
     public void SaveData(ref GameData data)
     {
 
@@ -42,7 +41,6 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
     }
     public void LoadData(GameData data)
     {
-        hasPotionsUnlocked = data.hasPotions;
         numberOfPotions = data.numberOfPotions;
         if(switchScene)
         {
@@ -66,7 +64,7 @@ public class PlayerHealth : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && hasPotionsUnlocked && numberOfPotions > 0 && health != maxHealth && !isHealing)
+        if (Input.GetKeyDown(KeyCode.Q) && numberOfPotions > 0 && health != maxHealth && !isHealing)
             StartCoroutine(Heal());
     }
     public void takeDamagePlayer(float _damage)

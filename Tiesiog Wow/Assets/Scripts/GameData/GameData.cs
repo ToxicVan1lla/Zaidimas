@@ -20,6 +20,7 @@ public class GameData
     public bool newGame;
     public float gameTime;
     public Dictionary<string, float> enemies;
+    public bool teachAttack, teachBlock, teachHeal;
     public GameData()
     {
         this.gameTime = 0;
@@ -37,6 +38,7 @@ public class GameData
         this.cleanerBossAlive = true;
         this.hasPotions = true;
         this.numberOfPotions = 0;
+        this.teachAttack = this.teachBlock = teachHeal =true;
     }
 
 }

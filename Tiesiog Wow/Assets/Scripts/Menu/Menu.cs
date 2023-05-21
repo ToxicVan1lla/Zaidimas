@@ -37,6 +37,9 @@ public class Menu : MonoBehaviour, IDataPersistence
             data.cleanerBossAlive = true;
             data.hasPotions = true;
             data.numberOfPotions = 0;
+            data.teachBlock = true;
+            data.teachAttack = true;
+            data.teachHeal = true;
 
         }
     }
@@ -90,6 +93,7 @@ public class Menu : MonoBehaviour, IDataPersistence
 
     public void returnToStartMenu()
     {
+        manager.save = true;                    
         Resume();
         SceneManager.LoadScene("Start_Menu");
     }
