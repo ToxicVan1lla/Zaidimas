@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System;
 public class MenuArrow : MonoBehaviour
 {
+    [SerializeField] private AudioClip swithchSound;
     private RectTransform rect;
     [SerializeField] private RectTransform[] options;
     private int currentOption;
@@ -43,6 +44,7 @@ public class MenuArrow : MonoBehaviour
 
     private void changeOption(int changeAmount)
     {
+        soundManager.instance.playSound(swithchSound);
         currentOption += changeAmount;
         if (currentOption < 0)
             currentOption = options.Length - 1;
@@ -57,6 +59,7 @@ public class MenuArrow : MonoBehaviour
     }
     public void hoverOver(RectTransform button)
     {
+        soundManager.instance.playSound(swithchSound);
         currentOption = Array.IndexOf(options, button);
         rect.position = new Vector3(rect.position.x, options[currentOption].position.y, 0);
     }

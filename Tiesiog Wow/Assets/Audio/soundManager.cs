@@ -9,7 +9,13 @@ public class soundManager : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (instance != null && instance != this)
+            Destroy(gameObject);
         Audio = GetComponent<AudioSource>();
     }
     public void playSound(AudioClip sound)

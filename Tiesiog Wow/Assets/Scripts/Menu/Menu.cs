@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour, IDataPersistence
 {
+    [SerializeField] private AudioClip clickSound;
     public static bool gameIsPaused = false;
     public GameObject menu;
     public bool startMenu;
@@ -70,13 +71,14 @@ public class Menu : MonoBehaviour, IDataPersistence
 
     public void Resume()
     {
+        soundManager.instance.playSound(clickSound);
         menu.SetActive(false);
         Time.timeScale = 1;
         gameIsPaused = false;
     }
     public void StartGame()
     {
-
+        soundManager.instance.playSound(clickSound);
         keepData.enteredRoom = false;
         keepData.health = 5;
         SceneManager.LoadScene("Foje");
@@ -90,11 +92,13 @@ public class Menu : MonoBehaviour, IDataPersistence
     }
     public void Quit()
     {
+        soundManager.instance.playSound(clickSound);
         Application.Quit();
     }
 
     public void returnToStartMenu()
     {
+        soundManager.instance.playSound(clickSound);
         manager.save = true;                    
         Resume();
         SceneManager.LoadScene("Start_Menu");
@@ -102,6 +106,7 @@ public class Menu : MonoBehaviour, IDataPersistence
 
     public void newGame()
     {
+        soundManager.instance.playSound(clickSound);
         startNewGame = true;
         manager.save = true;
         returnToStartMenu();

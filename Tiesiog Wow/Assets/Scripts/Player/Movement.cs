@@ -5,6 +5,8 @@ using System.Linq;
 
 public class Movement : MonoBehaviour, IDataPersistence
 {
+    [SerializeField] AudioClip runSound;
+    [SerializeField] AudioClip wallSlideSound;
     [SerializeField] AudioClip dashSound;
     private AudioSource Audio;
     private bool runningSound;
@@ -28,6 +30,7 @@ public class Movement : MonoBehaviour, IDataPersistence
 
     private bool isWallSliding;
     private bool canWallSlide = true;
+    private bool startedWallSliding;
 
     private float wallJumpTime = 0.2f;
     private float wallJumpCounter;
@@ -146,6 +149,7 @@ public class Movement : MonoBehaviour, IDataPersistence
             if(!runningSound)
             {
                 runningSound = true;
+                Audio.clip = runSound;
                 Audio.Play();
 
             }
@@ -153,7 +157,8 @@ public class Movement : MonoBehaviour, IDataPersistence
         else
         {
             runningSound = false;
-            Audio.Stop();
+            if(!isWallSliding)
+                Audio.Stop();
 
         }
 
@@ -291,9 +296,24 @@ public class Movement : MonoBehaviour, IDataPersistence
             isWallSliding = false;
         if (isWallSliding)
         {
+            if(!startedWallSliding)
+            {
+                startedWallSliding = true;
+                Audio.clip = wallSlideSound;
+                Audio.Play();
+            }
             numberOfDashes = 1;
             body.gravityScale = 0;
             body.velocity = new Vector2(body.velocity.x, -slideSpeed);
+        }
+        else
+        {
+            if(startedWallSliding)
+            {
+                startedWallSliding = false;
+                Audio.Stop();
+
+            }
         }
 
 

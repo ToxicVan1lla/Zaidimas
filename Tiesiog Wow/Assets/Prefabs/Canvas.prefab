@@ -2065,6 +2065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc7143cf851c20f41a23ee2ed241e6a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swithchSound: {fileID: 8300000, guid: f7bf82fd6503e8040b1d7e22cea8150a, type: 3}
   options:
   - {fileID: 7453021882970495656}
   - {fileID: 5122989513157727545}
@@ -2903,6 +2904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e74392a7af76394c84aee2297772451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: 07bf4ffff5381fb46859be9c095ca015, type: 3}
   menu: {fileID: 8585989763337314974}
   startMenu: 0
   coins: {fileID: 6084243351294181952}

@@ -5056,6 +5056,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a2f5902ff52bf149a2814ef98c01c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  runSound: {fileID: 8300000, guid: db9bf2b3af45a764f92caf72aca372e0, type: 3}
+  wallSlideSound: {fileID: 8300000, guid: 77b249f838ad0ee4a8e029d9872898e0, type: 3}
   dashSound: {fileID: 8300000, guid: f5d6c7de418cc8942bf8329e7828e49c, type: 3}
   defaultSpeed: 8
   speed: 0
@@ -5215,7 +5217,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: db9bf2b3af45a764f92caf72aca372e0, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 77b249f838ad0ee4a8e029d9872898e0, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.2
   m_Pitch: 1
