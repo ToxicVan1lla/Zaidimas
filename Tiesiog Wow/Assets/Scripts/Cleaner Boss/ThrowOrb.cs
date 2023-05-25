@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ThrowOrb : MonoBehaviour
 {
+    [SerializeField] AudioClip spawnSound;
     public string objectName;
     public Vector2 landPosition;
     private bool fall = true;
@@ -28,6 +29,7 @@ public class ThrowOrb : MonoBehaviour
     {
         if (collision.tag == "Ground")
         {
+            soundManager.instance.playSound(spawnSound);
             fall = false;
             if(objectName == "Tornado")
                 GO = Instantiate(Tornado, transform.position, transform.rotation);

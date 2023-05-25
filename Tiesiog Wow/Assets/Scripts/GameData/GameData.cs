@@ -22,6 +22,8 @@ public class GameData
     public Dictionary<string, float> enemies;
     public bool teachAttack, teachBlock, teachHeal;
     public bool principalActive;
+    public float volumeValue;
+
     public GameData()
     {
         this.gameTime = 0;
@@ -41,6 +43,7 @@ public class GameData
         this.numberOfPotions = 0;
         this.teachAttack = this.teachBlock = teachHeal = true;
         this.principalActive = true;
+        this.volumeValue = 1;
     }
 
 }

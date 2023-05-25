@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cab9be4059d2905408d976ac84c390b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitSound: {fileID: 8300000, guid: 2e5c2168482d02d41ab97ea4972f2bff, type: 3}
+  blockSound: {fileID: 8300000, guid: cd857021385fb8b43b482157d4ba553c, type: 3}
   speed: 0
   coinAmount: 0
   detectEdges: 0

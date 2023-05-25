@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a610187b293c7024e8411abdcfa9a15b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnSound: {fileID: 8300000, guid: 8b2c615168303ef4dac21b18188ddc24, type: 3}
   objectName: 
   landPosition: {x: 0, y: 0}
   Tornado: {fileID: 6865619900707737832, guid: a8c9f5fb5dd7ea841a4fff2939c9f04b, type: 3}

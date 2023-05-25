@@ -5056,9 +5056,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a2f5902ff52bf149a2814ef98c01c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSound: {fileID: 8300000, guid: db9bf2b3af45a764f92caf72aca372e0, type: 3}
+  runSound: {fileID: 8300000, guid: 49b49782f9caa2e46a66425ed059caf8, type: 3}
   wallSlideSound: {fileID: 8300000, guid: 77b249f838ad0ee4a8e029d9872898e0, type: 3}
   dashSound: {fileID: 8300000, guid: f5d6c7de418cc8942bf8329e7828e49c, type: 3}
+  Audio: {fileID: 456449967492919117}
   defaultSpeed: 8
   speed: 0
   DefaultjumpForce: 21
@@ -5090,6 +5091,7 @@ MonoBehaviour:
   - IrenaKoridor
   - Irena_Kabinetas
   canTurn: 1
+  usedTutorial: 0
 --- !u!95 &5668186582637033472
 Animator:
   serializedVersion: 5
@@ -5145,7 +5147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac3ffe941a7cff4fbb2e231ea10925f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSound: {fileID: 8300000, guid: c9e07fae09106cd43bbb336451bc857e, type: 3}
+  attackSound: {fileID: 8300000, guid: 70b377021b5d14a4cbdcf74ba615f808, type: 3}
   attackPoint: {fileID: 5668186582565272762}
   repelForce: 6
   damage: 1
@@ -5219,7 +5221,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 77b249f838ad0ee4a8e029d9872898e0, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5329,8 +5331,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8886792670526962802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.093, y: 0.0236, z: -0.043433245}
-  m_LocalScale: {x: 0.035654627, y: 0.22194189, z: 1}
+  m_LocalPosition: {x: 0.063, y: 0.015, z: -0.043433245}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5668186582637033477}
@@ -5374,10 +5376,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -691588337
-  m_SortingLayer: 3
+  m_SortingLayerID: 2032816805
+  m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e859bd6d1fe068f4db34a261c07dd989, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -5401,7 +5403,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.32791907, y: 0}
+  m_Offset: {x: 0.039107285, y: -0.062095128}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5412,5 +5414,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3441616, y: 1}
+  m_Size: {x: 0.19114162, y: 0.4322737}
   m_EdgeRadius: 0

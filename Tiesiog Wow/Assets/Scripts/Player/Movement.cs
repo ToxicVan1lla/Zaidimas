@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour, IDataPersistence
     [SerializeField] AudioClip runSound;
     [SerializeField] AudioClip wallSlideSound;
     [SerializeField] AudioClip dashSound;
-    private AudioSource Audio;
+    public AudioSource Audio;
     private bool runningSound;
     [SerializeField] public float defaultSpeed;
     [HideInInspector] public float speed;
@@ -18,7 +18,7 @@ public class Movement : MonoBehaviour, IDataPersistence
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
     private Animator anim;
-    private Rigidbody2D body;
+    [HideInInspector] public Rigidbody2D body;
     private BoxCollider2D boxCollider;
 
     public float horizontalInput;
@@ -68,39 +68,44 @@ public class Movement : MonoBehaviour, IDataPersistence
     [SerializeField] private string[] scenesWhereNoAttack;
 
     private bool removeGrave = false;
+    private bool spawnedGrave;
 
     public bool canTurn = true;
+    public bool usedTutorial;
+    private bool TimeIs0;
     public void LoadData(GameData data)
     {
+        keepData.volumeValue = data.volumeValue;
         if(!keepData.enteredRoom)
         {
             if (data.sceneName != SceneManager.GetActiveScene().name)
                 SceneManager.LoadScene(data.sceneName);
             transform.position = new Vector2(data.positionX, data.positionY);
         }
-        if(data.graveActive && SceneManager.GetActiveScene().name == data.graveScene)
+        if(data.graveActive && SceneManager.GetActiveScene().name == data.graveScene && !spawnedGrave)
         {
             grave = Instantiate(Grave, new Vector2(data.gravePositionX, data.gravePositionY), transform.rotation);
+            spawnedGrave = true;
         }
     }
 
     public void SaveData(ref GameData data)
     {
+        data.volumeValue = keepData.volumeValue;
         if(removeGrave)
         {
+            data.graveActive = false;
             removeGrave = false;
             Destroy(grave);
             playerCoins.addCoins(data.graveValue);
-            data.graveActive = false;
         }
     }
 
     void Start()
     {
-        Audio = GetComponent<AudioSource>();
-
-        Time.timeScale = 1;
         manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
+        manager.load = true;
+        Time.timeScale = 1;
         playerCoins = GameObject.Find("CoinAmount").GetComponent<PlayerCoins>();
         speed = defaultSpeed;
         jumpForce = DefaultjumpForce;
@@ -136,6 +141,8 @@ public class Movement : MonoBehaviour, IDataPersistence
 
     void Update()
     {
+        soundManager.instance.adjustVolume(keepData.volumeValue);
+
         if (onGrave && Input.GetKeyDown(KeyCode.E))
         {
             removeGrave = true;
@@ -160,6 +167,16 @@ public class Movement : MonoBehaviour, IDataPersistence
             if(!isWallSliding)
                 Audio.Stop();
 
+        }
+        if (Time.timeScale == 0 && !TimeIs0)
+        {
+            TimeIs0 = true;
+            Audio.Stop();
+        }
+        if(Time.timeScale != 0 && TimeIs0)
+        {
+            Audio.Play();
+            TimeIs0 = false;
         }
 
 
@@ -193,7 +210,7 @@ public class Movement : MonoBehaviour, IDataPersistence
                 anim.SetTrigger("Falling");
             if (Mathf.Abs(body.velocity.x) > 6 && isGrounded())
                 walkParticles.Play();
-            anim.SetBool("Grounded", isGrounded() && !playerAttack.isAttacking);
+            anim.SetBool("Grounded", isGrounded() && !playerAttack.isAttacking && !isDashing);
 
             if (isGrounded())
             {
@@ -428,5 +445,9 @@ public class Movement : MonoBehaviour, IDataPersistence
         yield return new WaitForSeconds(0.5f);
         detectInput = true;
         speed = defaultSpeed;
+    }
+    public void changeVolume(float volume)
+    {
+        Audio.volume = volume;
     }
 }

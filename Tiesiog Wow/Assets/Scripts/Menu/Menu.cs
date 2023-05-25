@@ -12,7 +12,11 @@ public class Menu : MonoBehaviour, IDataPersistence
     [SerializeField] PlayerCoins coins;
     [SerializeField] DisplayHealthPotions potions;
     [SerializeField] KeepData keepData;
+    [SerializeField] GameObject Options;
+    [SerializeField] GameObject instructions;
     private bool NewGame = true;
+    private bool optionsActive;
+    private float gameSpeed = 1;
     public void LoadData(GameData data)
     {
         NewGame = data.newGame;
@@ -42,7 +46,6 @@ public class Menu : MonoBehaviour, IDataPersistence
             data.teachAttack = true;
             data.teachHeal = true;
             data.principalActive = true;
-            Debug.Log("Naujas");
 
         }
     }
@@ -52,9 +55,9 @@ public class Menu : MonoBehaviour, IDataPersistence
         {
             menu.SetActive(true);
             menu.SetActive(false);
-            manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
         }
-;
+            manager = GameObject.Find("SaveManager").GetComponent<DataPersistanceManager>();
+
     }
     private void Update()
     {
@@ -71,9 +74,21 @@ public class Menu : MonoBehaviour, IDataPersistence
 
     public void Resume()
     {
+        if (SceneManager.GetActiveScene().name == "Start_Menu")
+            return;
         soundManager.instance.playSound(clickSound);
+        if(optionsActive)
+        {
+            
+            Options.SetActive(false);
+            instructions.SetActive(false);
+            optionsActive = false;
+            menu.SetActive(true);
+            gameIsPaused = true;
+            return;
+        }
         menu.SetActive(false);
-        Time.timeScale = 1;
+        Time.timeScale = gameSpeed;
         gameIsPaused = false;
     }
     public void StartGame()
@@ -86,6 +101,9 @@ public class Menu : MonoBehaviour, IDataPersistence
     }
     public void Pause()
     {
+        if (SceneManager.GetActiveScene().name == "Start_Menu")
+            return;
+        gameSpeed = Time.timeScale;
         menu.SetActive(true);
         Time.timeScale = 0;
         gameIsPaused = true;
@@ -109,7 +127,39 @@ public class Menu : MonoBehaviour, IDataPersistence
         soundManager.instance.playSound(clickSound);
         startNewGame = true;
         manager.save = true;
-        returnToStartMenu();
+        StartGame();
     }
 
+    public void options()
+    {
+        optionsActive = true;
+        soundManager.instance.playSound(clickSound);
+        Options.SetActive(true);
+        menu.SetActive(false);
+
+    }
+    public void deactivateOptions()
+    {
+        optionsActive = false;
+        soundManager.instance.playSound(clickSound);
+        menu.SetActive(true);
+        instructions.SetActive(false);
+        Options.SetActive(false);
+    }
+
+    public void finishGame()
+    {
+        soundManager.instance.playSound(clickSound);
+        startNewGame = true;
+        manager.save = true;
+        SceneManager.LoadScene("Start_Menu");
+    }
+
+    public void openInstructions()
+    {
+        soundManager.instance.playSound(clickSound);
+        instructions.SetActive(true);
+        menu.SetActive(false);
+        optionsActive = true;
+    }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EnemyMove : MonoBehaviour, IDataPersistence
 {
+    [SerializeField] AudioClip blockSound;
     [SerializeField] public float speed;
     [SerializeField] private int coinAmount;
     [SerializeField] public bool detectEdges;
@@ -100,14 +101,26 @@ public class EnemyMove : MonoBehaviour, IDataPersistence
         if (player.transform.position.x < transform.position.x && player.transform.localScale.x > 0)
             playerisFacing = true;
         
-        if(teachToBlock && playerisFacing && !usedTutorial)
+        if(teachToBlock && playerisFacing && !player.GetComponent<Movement>().usedTutorial)
         {
-            usedTutorial = true;
+            player.GetComponent<Movement>().canDash = false;
+            player.GetComponent<Movement>().playerAttack.canAttack = false;
+            player.GetComponent<Movement>().usedTutorial = true;
             teachToBlock = false;
             tutorial.activateBlock();
             movement.dash = false;
             movement.playerAttack.isAttacking = false;
             CantAttackCounter = 2f;
+            if (stopsWhenHit)
+            {
+                stopCounter = 0.4f;
+                enemyBody.velocity = new Vector2(0, 0);
+            }
+            int directionX = (playerCollider.bounds.min.x > boxCollider.bounds.min.x) ? -1 : 1;
+            int directionY = 1;
+            enemyBody.AddForce(Mathf.Max(0, 5 - repelResistanceX * 0.5f) * directionX * Vector2.right, ForceMode2D.Impulse);
+            enemyBody.AddForce(Mathf.Max(0, 2 - repelResistanceY * 0.5f) * directionY * Vector2.up, ForceMode2D.Impulse);
+
             return;
         }
 
@@ -122,11 +135,12 @@ public class EnemyMove : MonoBehaviour, IDataPersistence
 
             playerBody.AddForce(repelForce * directionX * Vector2.right, ForceMode2D.Impulse);
             playerBody.AddForce(repelForce * directionY * Vector2.up, ForceMode2D.Impulse);
-
+                
             playerHealth.takeDamagePlayer(damage);
         }
         else if(shield.shieldAcitve)
         {
+            soundManager.instance.playSound(blockSound);
             CantAttackCounter = 0.2f;
             bool Parried = false;
             if (shield.parryCounter > 0)

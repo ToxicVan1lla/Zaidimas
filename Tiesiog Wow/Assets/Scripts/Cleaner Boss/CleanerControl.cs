@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CleanerControl : EnemyMove, IDataPersistence
 {
+    [SerializeField] GameObject endScreed;
     public bool isThrowingBroom = false;
     [SerializeField] GameObject broom;
     [SerializeField] public Animator anim;
@@ -185,6 +186,8 @@ public class CleanerControl : EnemyMove, IDataPersistence
                 wingsCollider.enabled = false;
 
             }
+
+
             if(stage2)
             {
 
@@ -507,6 +510,10 @@ public class CleanerControl : EnemyMove, IDataPersistence
             doorAnim.SetTrigger("Open");
             alive = false;
             manager.save = true;
+            player.GetComponent<Movement>().detectInput = false;
+            player.GetComponent<Movement>().body.velocity = Vector2.zero;
+            player.GetComponent<Movement>().horizontalInput = 0;
+            endScreed.SetActive(true);
         }
     }
 
